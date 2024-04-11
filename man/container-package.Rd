@@ -4,9 +4,9 @@
 \name{container-package}
 \alias{container}
 \alias{container-package}
-\title{container: Sandbox for a postprocessor container.}
+\title{container: Sandbox for a postprocessor object}
 \description{
-Sandbox for a postprocessor container.
+Sandbox for a postprocessor object.
 }
 \seealso{
 Useful links:
