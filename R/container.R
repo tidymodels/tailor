@@ -30,6 +30,11 @@ container <- function(mode = "unknown", type = "unknown", outcome = character(0)
 
 new_container <- function(mode, type, operations, columns, ptype) {
   mode <- rlang::arg_match0(mode, c("unknown", "regression", "classification", "censored regression"))
+
+  if ( mode == "regression" ) {
+    type <- "regression"
+  }
+
   type <- rlang::arg_match0(type, c("unknown", "regression", "binary", "multiclass"))
 
   if ( !is.list(operations) ) {
