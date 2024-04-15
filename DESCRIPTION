@@ -11,6 +11,7 @@ Authors@R: c(
 Description: Sandbox for a postprocessor object.
 License: MIT + file LICENSE
 Suggests: 
+    modeldata,
     testthat (>= 3.0.0)
 Config/testthat/edition: 3
 Encoding: UTF-8
@@ -20,4 +21,10 @@ URL: https://github.com/tidymodels/container
 BugReports: https://github.com/tidymodels/container/issues
 Imports: 
     cli,
-    rlang (>= 1.1.0)
+    dplyr,
+    generics,
+    hardhat,
+    purrr,
+    rlang (>= 1.1.0),
+    tibble,
+    tidyselect

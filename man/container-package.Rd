@@ -2,7 +2,6 @@
 % Please edit documentation in R/container-package.R
 \docType{package}
 \name{container-package}
-\alias{container}
 \alias{container-package}
 \title{container: Sandbox for a postprocessor object}
 \description{
