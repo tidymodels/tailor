@@ -23,6 +23,11 @@
 #' predict(post_res, two_class_example) %>% count(predicted)
 #' @export
 adjust_prob_threshold <- function(x, threshold = 0.5) {
+
+  if ( !is_tune(threshold) ) {
+    check_number_decimal(threshold, min = 10^-10, max = 1 - 10^-10)
+  }
+
   op <-
     new_operation(
       "prob_threshold",
@@ -39,10 +44,13 @@ adjust_prob_threshold <- function(x, threshold = 0.5) {
 print.prob_threshold <- function(x, ...) {
   # check for tune() first
 
-  trn <- ifelse(x$results$trained, " [trained]", "")
-
-  cli::cli_inform(c("Adjust probability threshold to  \\
+  if ( is_tune(x$arguments$threshold) ) {
+    cli::cli_inform("Adjust probability threshold to optimized value.")
+  } else {
+    trn <- ifelse(x$results$trained, " [trained]", "")
+    cli::cli_inform(c("Adjust probability threshold to  \\
                     {signif(x$arguments$threshold, digits = 3)}{trn}"))
+  }
   invisible(x)
 }
 
