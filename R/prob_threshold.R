@@ -27,9 +27,9 @@ adjust_prob_threshold <- function(x, threshold = 0.5) {
     new_operation(
       "prob_threshold",
       inputs = "probability",
-      outputs = c("probability", "class"),
+      outputs = "class",
       arguments = list(threshold = threshold),
-      results = list()
+      results = list(trained = FALSE)
     )
   x$operations <- c(x$operations, list(op))
   x
