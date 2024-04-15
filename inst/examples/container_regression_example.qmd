@@ -1,0 +1,154 @@
+---
+title: "container regression example"
+---
+
+This is an example regression analysis to show how the container package might work. 
+
+We'll use the [food delivery data](https://aml4td.org/chapters/whole-game.html) and start with a three-way split:
+
+```{r}
+#| label: ssshhh
+#| include: false
+
+library(tidymodels)
+library(bonsai) 
+library(container)
+library(probably)
+library(patchwork)
+```
+```{r}
+#| label: startup
+library(tidymodels)
+library(bonsai) # also requires lightgbm package
+library(container) # pak::pak(c("tidymodels/container@max"), ask = FALSE)
+library(probably)
+library(patchwork)
+
+# ------------------------------------------------------------------------------
+
+tidymodels_prefer()
+theme_set(theme_bw())
+options(pillar.advice = FALSE, pillar.min_title_chars = Inf)
+
+# ------------------------------------------------------------------------------
+
+data(deliveries, package = "modeldata")
+
+set.seed(991)
+delivery_split <- initial_validation_split(deliveries, prop = c(0.6, 0.2), 
+                                           strata = time_to_delivery)
+delivery_train <- training(delivery_split)
+delivery_test  <- testing(delivery_split)
+delivery_val   <- validation(delivery_split)
+```
+
+Let's deliberately fit a regression model that has poor predicted values: a boosted tree with only three ensemble members: 
+
+```{r}
+#| label: bad-boost
+
+bst_fit <-
+  boost_tree(trees = 3) %>%
+  set_engine("lightgbm") %>%
+  set_mode("regression") %>%
+  fit(time_to_delivery ~ ., data = delivery_train)
+```
+
+We predict the validation set and see how bad things are:
+
+```{r}
+#| label: bad-pred
+
+reg_metrics <- metric_set(rmse, rsq)
+
+bst_val_pred <- augment(bst_fit, delivery_val)
+reg_metrics(bst_val_pred, truth = time_to_delivery, estimate = .pred)
+```
+
+That R<sup>2</sup> looks _great_! How well is it calibrated? 
+
+```{r}
+#| label: bad-pred-plot
+cal_plot_regression(bst_val_pred, truth = time_to_delivery, estimate = .pred)
+```
+
+
+Ooof. One of the calibration tools for the probably package might help this. Let's use a linear regression with spline terms to fix it. First, we'll resample the calibration model to see if it helps:
+
+```{r}
+#| label: cal-resample
+
+set.seed(10)
+bst_val_pred %>%
+  vfold_cv() %>%
+  cal_validate_linear(truth = time_to_delivery, estimate = .pred, 
+                      smooth = TRUE, metrics = reg_metrics) %>%
+  collect_metrics()
+```
+
+That seems promising. Let's fit it to the validation set predictions:
+
+```{r}
+#| label: cal-obj
+
+bst_cal <- cal_estimate_linear(bst_val_pred, truth = time_to_delivery, 
+                               estimate = .pred, smooth = TRUE)
+```
+
+We could manually use `cal_apply()` to adjust predictions, but instead, we'll add it to the post-processing object:
+
+```{r}
+#| label: post-1
+
+post_obj <-
+  container(mode = "regression") %>%
+  adjust_numeric_calibration(bst_cal) 
+post_obj
+```
+
+Let's add another post-processor to limit the range of predictions (just as a demonstration):
+
+```{r}
+#| label: post-2
+
+post_obj <-
+  post_obj %>%
+  adjust_numeric_range(lower_limit = 0, upper_limit = 50)
+post_obj
+```
+
+We have to fit the post-processor to use it. However, there are no estimation steps in this instance since everything is either pre-trained (e.g., the calibrator) or user-defined (e.g., the limits). We'll run `fit()` anyway, then apply it to the test results:
+
+```{r}
+#| label: test-pred
+
+post_res <- 
+  post_obj %>% 
+  fit(bst_val_pred, outcome = c(time_to_delivery), estimate = c(.pred))
+
+bst_test_pred <- augment(bst_fit, delivery_test)
+
+# Without: 
+reg_metrics(bst_test_pred, truth = time_to_delivery, estimate = .pred)
+
+# With: 
+bst_test_proc_pred <- 
+  post_res %>% 
+  predict(bst_test_pred)
+
+bst_test_proc_pred %>% 
+  reg_metrics(truth = time_to_delivery, estimate = .pred)
+```
+
+Visually:
+
+```{r}
+#| label: test-plot
+
+before <- cal_plot_regression(bst_test_pred, truth = time_to_delivery, 
+                              estimate = .pred)
+after <- cal_plot_regression(bst_test_proc_pred, truth = time_to_delivery, 
+                             estimate = .pred)
+
+before + after
+```
