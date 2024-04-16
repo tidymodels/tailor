@@ -4,8 +4,8 @@
 # without changing the classes. This is important because we are going to have
 # to define constrains on the order of adjustments.
 
-input_vals  <- c("numeric", "probability", "class")
-output_vals <- c("numeric", "probability_class", "class")
+input_vals  <- c("numeric", "probability", "class", "everything")
+output_vals <- c("numeric", "probability_class", "class", "everything")
 
 new_operation <- function(cls, inputs, outputs, arguments, results = list(trained = FALSE), ...) {
   inputs  <- rlang::arg_match0(inputs,  input_vals)
