@@ -17,7 +17,7 @@ validate_oper_order <- function(ops, mode, call) {
   if ( mode == "classification" ) {
     check_classification_order(oper_data, call)
   } else {
-
+    check_regression_order(oper_data, call)
   }
 
   invisible(oper_data)
@@ -38,8 +38,7 @@ check_classification_order <- function(x, call) {
     }
   }
 
-  # calibration should _probably_ come before anything that is not a mutate
-
+  # todo ? calibration should _probably_ come before anything that is not a mutate
 
   # do any steps come before Eq zones
   if ( length(eq_ind) > 0 ) {
@@ -51,6 +50,31 @@ check_classification_order <- function(x, call) {
   }
 
   # besides mutates, are there duplicate steps?
+  check_duplicates(x, call)
+
+  invisible(x)
+}
+
+check_regression_order <- function(x, call) {
+  cal_ind <- which(grepl("calibration$", x$name))
+  num_ind <- which(x$output_numeric)
+
+  # does calibration come after other steps?
+  # currently excluding mutates form this check
+  if ( length(cal_ind) > 0 ) {
+    if ( any(num_ind < cal_ind) ) {
+      cli::cli_abort("Calibration should come before other operations.",
+                     call = call)
+    }
+  }
+
+  # besides mutates, are there duplicate steps?
+  check_duplicates(x, call)
+
+  invisible(x)
+}
+
+check_duplicates <- function(x, call) {
   non_mutates <- table(x$name[x$name != "predictions_custom"])
   if ( any(non_mutates > 1) ) {
     bad_oper <- names(non_mutates[non_mutates > 1])
@@ -58,4 +82,3 @@ check_classification_order <- function(x, call) {
   }
   invisible(x)
 }
-
