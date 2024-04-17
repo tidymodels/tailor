@@ -152,3 +152,25 @@ after <- cal_plot_regression(bst_test_proc_pred, truth = time_to_delivery,
 
 before + after
 ```
+
+
+Add an applicability domain analysis:
+
+```{r}
+library(applicable)
+
+set.seed(162)
+irf_ad <- apd_isolation(delivery_test %>% select(-time_to_delivery))
+
+# example usage: 
+score(irf_ad, delivery_val %>% slice(1:3))
+
+post_res <-
+  post_obj %>%
+  adjust_predictions_custom(
+    ad_score = score(irf_ad, new_data)$score_pctl,
+    .pkgs = c("applicable", "isotree")
+  ) %>% 
+  fit(bst_val_pred, outcome = c(time_to_delivery), estimate = c(.pred))
+```
+
