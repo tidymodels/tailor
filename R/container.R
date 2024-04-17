@@ -10,6 +10,7 @@
 #' classification, these should be given in the order of the factor levels of
 #' the `estimate`.
 #' @param time The name of the predicted event time. (not yet supported)
+#' @param call The call to be displayed in warnings or errors.
 #' @examples
 #'
 #' container()
