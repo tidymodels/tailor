@@ -1,21 +1,22 @@
-#' Re-calibrate numeric predictions
+#' Re-calibrate classification probability predictions
 #'
 #' @param x A [container()].
 #' @param calibrator A pre-trained calibration method from the \pkg{probably}
-#' package, such as [probably::cal_estimate_linear()].
+#' package, such as [probably::cal_estimate_logistic()].
 #' @export
-adjust_numeric_calibration <- function(x, calibrator) {
+adjust_probability_calibration <- function(x, calibrator) {
 
-  if ( !inherits(calibrator, "cal_regression") ) {
+  cls <- c("cal_binary", "cal_multinomial")
+  if ( !inherits(calibrator, cls) ) {
     cli::cli_abort("The {.arg calibrator} argument should be an object of //
-                   class {.val 'cal_regression'}.")
+                   class {.val cls}.")
   }
 
   op <-
     new_operation(
-      "numeric_calibration",
-      inputs = "numeric",
-      outputs = "numeric",
+      "probability_calibration",
+      inputs = "probability",
+      outputs = "probability_class",
       arguments = list(calibrator = calibrator),
       results = list(trained = FALSE)
     )
@@ -31,14 +32,14 @@ adjust_numeric_calibration <- function(x, calibrator) {
 }
 
 #' @export
-print.numeric_calibration <- function(x, ...) {
+print.probability_calibration <- function(x, ...) {
   trn <- ifelse(x$results$trained, " [trained]", "")
-  cli::cli_inform(c("Re-calibrate numeric predictions{trn}"))
+  cli::cli_inform(c("Re-calibrate classification probabilities{trn}"))
   invisible(x)
 }
 
 #' @export
-fit.numeric_calibration <- function(object, data, parent = NULL, ...) {
+fit.probability_calibration <- function(object, data, parent = NULL, ...) {
   new_operation(
     class(object),
     inputs = object$inputs,
@@ -49,18 +50,18 @@ fit.numeric_calibration <- function(object, data, parent = NULL, ...) {
 }
 
 #' @export
-predict.numeric_calibration <- function(object, new_data, parent, ...) {
+predict.probability_calibration <- function(object, new_data, parent, ...) {
   probably::cal_apply(new_data, object$argument$calibrator)
 }
 
 # todo probably needs required_pkgs methods for cal objects
 #' @export
-required_pkgs.numeric_calibration <- function(x, ...) {
+required_pkgs.probability_calibration <- function(x, ...) {
   c("container", "probably")
 }
 
 #' @export
-tunable.numeric_calibration <- function (x, ...) {
+tunable.probability_calibration <- function (x, ...) {
   no_param
 }
 

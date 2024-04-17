@@ -36,8 +36,15 @@ adjust_predictions_custom <- function(x, ..., .pkgs = character(0)) {
       arguments = list(commands = cmds, pkgs = .pkgs),
       results = list(trained = FALSE)
     )
-  x$operations <- c(x$operations, list(op))
-  x
+
+  new_container(
+    mode = x$mode,
+    type = x$type,
+    operations = c(x$operations, list(op)),
+    columns = x$dat,
+    ptype = x$ptype,
+    call = rlang::current_env()
+  )
 }
 
 #' @export

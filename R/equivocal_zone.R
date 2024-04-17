@@ -40,8 +40,15 @@ adjust_equivocal_zone <- function(x, value = 0.1, threshold = 1 / 2) {
       arguments = list(value = value, threshold = threshold),
       results = list(trained = FALSE)
     )
-  x$operations <- c(x$operations, list(op))
-  x
+
+  new_container(
+    mode = x$mode,
+    type = x$type,
+    operations = c(x$operations, list(op)),
+    columns = x$dat,
+    ptype = x$ptype,
+    call = rlang::current_env()
+  )
 }
 
 #' @export

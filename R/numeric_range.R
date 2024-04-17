@@ -16,8 +16,15 @@ adjust_numeric_range <- function(x, lower_limit = -Inf, upper_limit = Inf) {
       arguments = list(lower_limit = lower_limit, upper_limit = upper_limit),
       results = list(trained = FALSE)
     )
-  x$operations <- c(x$operations, list(op))
-  x
+
+  new_container(
+    mode = x$mode,
+    type = x$type,
+    operations = c(x$operations, list(op)),
+    columns = x$dat,
+    ptype = x$ptype,
+    call = rlang::current_env()
+  )
 }
 
 #' @export

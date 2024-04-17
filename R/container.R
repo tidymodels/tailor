@@ -9,14 +9,14 @@
 #' @param probabilities The names of class probability estimates (if any). For
 #' classification, these should be given in the order of the factor levels of
 #' the `estimate`.
-#' @param time The name of the predicted event time.
+#' @param time The name of the predicted event time. (not yet supported)
 #' @examples
 #'
 #' container()
 #' @export
 container <- function(mode = "unknown", type = "unknown", outcome = character(0),
                       estimate = character(0), probabilities = character(0),
-                      time = character(0)) {
+                      time = character(0), call = rlang::current_env()) {
   dat <-
     list(
       outcome = outcome,
@@ -25,10 +25,17 @@ container <- function(mode = "unknown", type = "unknown", outcome = character(0)
       probabilities = probabilities,
       time = time
     )
-  new_container(mode, type, operations = list(), columns = dat, ptype = tibble::tibble())
+  new_container(
+    mode,
+    type,
+    operations = list(),
+    columns = dat,
+    ptype = tibble::tibble(),
+    call = call
+  )
 }
 
-new_container <- function(mode, type, operations, columns, ptype) {
+new_container <- function(mode, type, operations, columns, ptype, call) {
   mode <- rlang::arg_match0(mode, c("unknown", "regression", "classification", "censored regression"))
 
   if ( mode == "regression" ) {
@@ -38,17 +45,21 @@ new_container <- function(mode, type, operations, columns, ptype) {
   type <- rlang::arg_match0(type, c("unknown", "regression", "binary", "multiclass"))
 
   if ( !is.list(operations) ) {
-
+    cli::cli_abort("The {.arg operations} argument should be a list.", call = call)
   }
 
   is_oper <- purrr::map_lgl(operations, ~ inherits(.x, "operation"))
-  if ( !any(is_oper) ) {
-
+  if ( length(is_oper) > 0 & !any(is_oper) ) {
+    bad_oper <- names(is_oper)[!is_oper]
+    cli::cli_abort("The following {.arg operations} do not have the class \\
+                   {.val operation}: {bad_oper}.", call = call)
   }
 
-  # check columns
-
   # validate operation order and check duplicates
+  validate_oper_order(operations, mode, call)
+
+
+  # check columns
 
   res <- list(mode = mode, type = type, operations = operations,
               columns = columns, ptype = ptype)
@@ -76,7 +87,7 @@ print.container <- function(x, ...) {
 
 #' @export
 fit.container <- function(object, .data, outcome, estimate, probabilities = c(),
-                          time = c(), ...) {
+                          time = c(), call = rlang::current_env(), ...) {
 
   # ------------------------------------------------------------------------------
   # set columns via tidyselect
@@ -109,7 +120,7 @@ fit.container <- function(object, .data, outcome, estimate, probabilities = c(),
 
   object <- new_container(object$mode, object$type,
                           operations = object$operations,
-                          columns = dat, ptype = ptype)
+                          columns = dat, ptype = ptype, call = call)
 
   # ------------------------------------------------------------------------------
 

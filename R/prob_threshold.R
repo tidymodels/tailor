@@ -8,7 +8,7 @@
 #'
 #' post_obj <-
 #'   container(mode = "classification") %>%
-#'   adjust_prob_threshold(threshold = .1)
+#'   adjust_probability_threshold(threshold = .1)
 #'
 #' two_class_example %>% count(predicted)
 #'
@@ -22,7 +22,7 @@
 #'
 #' predict(post_res, two_class_example) %>% count(predicted)
 #' @export
-adjust_prob_threshold <- function(x, threshold = 0.5) {
+adjust_probability_threshold <- function(x, threshold = 0.5) {
 
   if ( !is_tune(threshold) ) {
     check_number_decimal(threshold, min = 10^-10, max = 1 - 10^-10)
@@ -30,18 +30,25 @@ adjust_prob_threshold <- function(x, threshold = 0.5) {
 
   op <-
     new_operation(
-      "prob_threshold",
+      "probability_threshold",
       inputs = "probability",
       outputs = "class",
       arguments = list(threshold = threshold),
       results = list(trained = FALSE)
     )
-  x$operations <- c(x$operations, list(op))
-  x
+
+  new_container(
+    mode = x$mode,
+    type = x$type,
+    operations = c(x$operations, list(op)),
+    columns = x$dat,
+    ptype = x$ptype,
+    call = rlang::current_env()
+  )
 }
 
 #' @export
-print.prob_threshold <- function(x, ...) {
+print.probability_threshold <- function(x, ...) {
   # check for tune() first
 
   if ( is_tune(x$arguments$threshold) ) {
@@ -55,7 +62,7 @@ print.prob_threshold <- function(x, ...) {
 }
 
 #' @export
-fit.prob_threshold <- function(object, data, parent = NULL, ...) {
+fit.probability_threshold <- function(object, data, parent = NULL, ...) {
   new_operation(
     class(object),
     inputs = object$inputs,
@@ -66,7 +73,7 @@ fit.prob_threshold <- function(object, data, parent = NULL, ...) {
 }
 
 #' @export
-predict.prob_threshold <- function(object, new_data, parent, ...) {
+predict.probability_threshold <- function(object, new_data, parent, ...) {
   est_nm <- parent$columns$estimate
   prob_nm <- parent$columns$probabilities[1]
   lvls <- levels(new_data[[ est_nm ]])
@@ -78,18 +85,18 @@ predict.prob_threshold <- function(object, new_data, parent, ...) {
 }
 
 #' @export
-required_pkgs.prob_threshold <- function(x, ...) {
+required_pkgs.probability_threshold <- function(x, ...) {
   c("container")
 }
 
 #' @export
-tunable.prob_threshold <- function(x, ...) {
+tunable.probability_threshold <- function(x, ...) {
   tibble::tibble(
     name = "threshold",
     call_info = list(list(pkg = "dials", fun = "threshold")),
     source = "container",
-    component = "prob_threshold",
-    component_id = "prob_threshold")
+    component = "probability_threshold",
+    component_id = "probability_threshold")
 }
 
 # todo missing methods:

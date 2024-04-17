@@ -25,6 +25,6 @@ new_operation <- function(cls, inputs, outputs, arguments, results = list(traine
       arguments = arguments,
       results = results
     )
-  class(res) <- cls
+  class(res) <- c(cls, "operation")
   res
 }

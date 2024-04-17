@@ -10,7 +10,8 @@ container(
   outcome = character(0),
   estimate = character(0),
   probabilities = character(0),
-  time = character(0)
+  time = character(0),
+  call = rlang::current_env()
 )
 }
 \arguments{
@@ -28,7 +29,7 @@ container(
 classification, these should be given in the order of the factor levels of
 the \code{estimate}.}
 
-\item{time}{The name of the predicted event time.}
+\item{time}{The name of the predicted event time. (not yet supported)}
 }
 \description{
 Declare post-processing for model predictions
