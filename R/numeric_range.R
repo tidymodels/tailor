@@ -75,8 +75,8 @@ predict.numeric_range <- function(object, new_data, parent, ...) {
   hi <- object$arguments$upper_limit
 
   # todo depends on tm predict col names
-  new_data[[ est_nm ]] <-
-    probably::bound_prediction(new_data, lower_limit = lo, upper_limit = hi)[[ est_nm ]]
+  new_data[[est_nm]] <-
+    probably::bound_prediction(new_data, lower_limit = lo, upper_limit = hi)[[est_nm]]
   new_data
 }
 

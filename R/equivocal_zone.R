@@ -80,12 +80,12 @@ fit.equivocal_zone <- function(object, data, parent = NULL, ...) {
 predict.equivocal_zone <- function(object, new_data, parent, ...) {
   est_nm <- parent$columns$estimate
   prob_nm <- parent$columns$probabilities[1]
-  lvls <- levels(new_data[[ est_nm ]])
+  lvls <- levels(new_data[[est_nm]])
   col_syms <- syms(prob_nm[1])
   cls_pred <- probably::make_two_class_pred(new_data[[prob_nm]], levels = lvls,
                                             buffer = object$arguments$value,
                                             threshold = object$arguments$threshold)
-  new_data[[ est_nm ]] <- cls_pred # todo convert to factor?
+  new_data[[est_nm]] <- cls_pred # todo convert to factor?
   new_data
 }
 

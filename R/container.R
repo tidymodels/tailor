@@ -116,7 +116,7 @@ fit.container <- function(object, .data, outcome, estimate, probabilities = c(),
 
 
 
-  object <- set_container_type(object, .data[[ dat$outcome ]])
+  object <- set_container_type(object, .data[[dat$outcome]])
 
   object <- new_container(object$mode, object$type,
                           operations = object$operations,

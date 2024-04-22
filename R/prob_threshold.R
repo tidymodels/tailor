@@ -76,11 +76,11 @@ fit.probability_threshold <- function(object, data, parent = NULL, ...) {
 predict.probability_threshold <- function(object, new_data, parent, ...) {
   est_nm <- parent$columns$estimate
   prob_nm <- parent$columns$probabilities[1]
-  lvls <- levels(new_data[[ est_nm ]])
+  lvls <- levels(new_data[[est_nm]])
 
-  new_data[[ est_nm ]] <-
-    ifelse(new_data[[ prob_nm ]] >= object$arguments$threshold, lvls[1], lvls[2])
-  new_data[[ est_nm ]] <- factor(new_data[[ est_nm ]], levels = lvls)
+  new_data[[est_nm]] <-
+    ifelse(new_data[[prob_nm]] >= object$arguments$threshold, lvls[1], lvls[2])
+  new_data[[est_nm]] <- factor(new_data[[est_nm]], levels = lvls)
   new_data
 }
 
