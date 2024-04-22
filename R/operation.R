@@ -8,8 +8,8 @@ input_vals  <- c("numeric", "probability", "class", "everything")
 output_vals <- c("numeric", "probability_class", "class", "everything")
 
 new_operation <- function(cls, inputs, outputs, arguments, results = list(trained = FALSE), ...) {
-  inputs  <- rlang::arg_match0(inputs,  input_vals)
-  outputs <- rlang::arg_match0(outputs, output_vals)
+  inputs  <- arg_match0(inputs,  input_vals)
+  outputs <- arg_match0(outputs, output_vals)
 
   if (!any(names(results) == "trained")) {
     cli::cli_abort("The {.arg results} slot requires a logical variable called \\

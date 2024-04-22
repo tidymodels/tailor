@@ -17,7 +17,7 @@
 #' @export
 container <- function(mode = "unknown", type = "unknown", outcome = character(0),
                       estimate = character(0), probabilities = character(0),
-                      time = character(0), call = rlang::current_env()) {
+                      time = character(0), call = current_env()) {
   dat <-
     list(
       outcome = outcome,
@@ -37,13 +37,13 @@ container <- function(mode = "unknown", type = "unknown", outcome = character(0)
 }
 
 new_container <- function(mode, type, operations, columns, ptype, call) {
-  mode <- rlang::arg_match0(mode, c("unknown", "regression", "classification", "censored regression"))
+  mode <- arg_match0(mode, c("unknown", "regression", "classification", "censored regression"))
 
   if (mode == "regression") {
     type <- "regression"
   }
 
-  type <- rlang::arg_match0(type, c("unknown", "regression", "binary", "multiclass"))
+  type <- arg_match0(type, c("unknown", "regression", "binary", "multiclass"))
 
   if (!is.list(operations)) {
     cli::cli_abort("The {.arg operations} argument should be a list.", call = call)
@@ -88,23 +88,23 @@ print.container <- function(x, ...) {
 
 #' @export
 fit.container <- function(object, .data, outcome, estimate, probabilities = c(),
-                          time = c(), call = rlang::current_env(), ...) {
+                          time = c(), call = current_env(), ...) {
 
   # ------------------------------------------------------------------------------
   # set columns via tidyselect
 
   dat <- list()
-  dat$outcome <- names(tidyselect::eval_select(rlang::enquo(outcome), .data))
-  dat$estimate <- names(tidyselect::eval_select(rlang::enquo(estimate), .data))
+  dat$outcome <- names(tidyselect::eval_select(enquo(outcome), .data))
+  dat$estimate <- names(tidyselect::eval_select(enquo(estimate), .data))
 
-  probabilities <- tidyselect::eval_select(rlang::enquo(probabilities), .data)
+  probabilities <- tidyselect::eval_select(enquo(probabilities), .data)
   if (length(probabilities) > 0) {
     dat$probabilities <- names(probabilities)
   } else {
     dat$probabilities <- character(0)
   }
 
-  time <- tidyselect::eval_select(rlang::enquo(time), .data)
+  time <- tidyselect::eval_select(enquo(time), .data)
   if (length(time) > 0) {
     dat$time <- names(time)
   }    else {

@@ -26,7 +26,7 @@ adjust_numeric_calibration <- function(x, calibrator) {
     operations = c(x$operations, list(op)),
     columns = x$dat,
     ptype = x$ptype,
-    call = rlang::current_env()
+    call = current_env()
   )
 }
 

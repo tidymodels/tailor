@@ -26,7 +26,7 @@
 #' @export
 adjust_predictions_custom <- function(x, ..., .pkgs = character(0)) {
 
-  cmds <- rlang::enquos(...)
+  cmds <- enquos(...)
 
   op <-
     new_operation(
@@ -43,7 +43,7 @@ adjust_predictions_custom <- function(x, ..., .pkgs = character(0)) {
     operations = c(x$operations, list(op)),
     columns = x$dat,
     ptype = x$ptype,
-    call = rlang::current_env()
+    call = current_env()
   )
 }
 

@@ -47,7 +47,7 @@ adjust_equivocal_zone <- function(x, value = 0.1, threshold = 1 / 2) {
     operations = c(x$operations, list(op)),
     columns = x$dat,
     ptype = x$ptype,
-    call = rlang::current_env()
+    call = current_env()
   )
 }
 
@@ -81,7 +81,7 @@ predict.equivocal_zone <- function(object, new_data, parent, ...) {
   est_nm <- parent$columns$estimate
   prob_nm <- parent$columns$probabilities[1]
   lvls <- levels(new_data[[ est_nm ]])
-  col_syms <- rlang::syms(prob_nm[1])
+  col_syms <- syms(prob_nm[1])
   cls_pred <- probably::make_two_class_pred(new_data[[prob_nm]], levels = lvls,
                                             buffer = object$arguments$value,
                                             threshold = object$arguments$threshold)

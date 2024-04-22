@@ -43,7 +43,7 @@ adjust_probability_threshold <- function(x, threshold = 0.5) {
     operations = c(x$operations, list(op)),
     columns = x$dat,
     ptype = x$ptype,
-    call = rlang::current_env()
+    call = current_env()
   )
 }
 

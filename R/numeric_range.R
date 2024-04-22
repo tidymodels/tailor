@@ -23,7 +23,7 @@ adjust_numeric_range <- function(x, lower_limit = -Inf, upper_limit = Inf) {
     operations = c(x$operations, list(op)),
     columns = x$dat,
     ptype = x$ptype,
-    call = rlang::current_env()
+    call = current_env()
   )
 }
 

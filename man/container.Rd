@@ -11,7 +11,7 @@ container(
   estimate = character(0),
   probabilities = character(0),
   time = character(0),
-  call = rlang::current_env()
+  call = current_env()
 )
 }
 \arguments{
