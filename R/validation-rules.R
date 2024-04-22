@@ -1,13 +1,13 @@
 validate_oper_order <- function(ops, mode, call) {
   oper_data <-
-    tibble::tibble(
+    tibble::new_tibble(list(
       name = purrr::map_chr(ops, ~ class(.x)[1]),
       input = purrr::map_chr(ops, ~ .x$inputs),
       output_numeric = purrr::map_lgl(ops, ~ grepl("numeric", .x$outputs)),
       output_prob    = purrr::map_lgl(ops, ~ grepl("probability", .x$outputs)),
       output_class   = purrr::map_lgl(ops, ~ grepl("class", .x$outputs)),
       output_all     = purrr::map_lgl(ops, ~ grepl("everything", .x$outputs))
-    )
+    ))
 
   if (length(ops) < 2) {
     return(invisible(oper_data))

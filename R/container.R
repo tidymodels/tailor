@@ -30,7 +30,7 @@ container <- function(mode = "unknown", type = "unknown", outcome = character(0)
     type,
     operations = list(),
     columns = dat,
-    ptype = tibble::tibble(),
+    ptype = tibble::new_tibble(list()),
     call = current_env()
   )
 }
@@ -105,7 +105,9 @@ fit.container <- function(object, .data, outcome, estimate, probabilities = c(),
   }
 
   .data <- .data[, names(.data) %in% unlist(dat)]
-  .data <- tibble::as_tibble(.data)
+  if (!tibble::is_tibble(.data)) {
+    .data  <- tibble::as_tibble(.data)
+  }
   ptype <- .data[0,]
 
   object <- set_container_type(object, .data[[dat$outcome]])
@@ -131,7 +133,10 @@ predict.container <- function(object, new_data, ...) {
   for (op in 1:num_oper) {
     new_data <- predict(object$operations[[op]], new_data, object)
   }
-  tibble::as_tibble(new_data)
+  if (!tibble::is_tibble(new_data)) {
+    new_data <- tibble::as_tibble(new_data)
+  }
+  new_data
 }
 
 set_container_type <- function(object, y) {

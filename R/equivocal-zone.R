@@ -96,12 +96,13 @@ required_pkgs.equivocal_zone <- function(x, ...) {
 
 #' @export
 tunable.equivocal_zone <- function(x, ...) {
-  tibble::tibble(
+  tibble::new_tibble(list(
     name = "buffer",
     call_info = list(list(pkg = "dials", fun = "buffer")),
     source = "container",
     component = "equivocal_zone",
-    component_id = "equivocal_zone")
+    component_id = "equivocal_zone"
+  ))
 }
 
 # todo missing methods:
