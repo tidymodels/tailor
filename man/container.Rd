@@ -10,8 +10,7 @@ container(
   outcome = character(0),
   estimate = character(0),
   probabilities = character(0),
-  time = character(0),
-  call = current_env()
+  time = character(0)
 )
 }
 \arguments{
@@ -30,8 +29,6 @@ classification, these should be given in the order of the factor levels of
 the \code{estimate}.}
 
 \item{time}{The name of the predicted event time. (not yet supported)}
-
-\item{call}{The call to be displayed in warnings or errors.}
 }
 \description{
 Declare post-processing for model predictions

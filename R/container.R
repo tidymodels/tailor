@@ -10,14 +10,13 @@
 #' classification, these should be given in the order of the factor levels of
 #' the `estimate`.
 #' @param time The name of the predicted event time. (not yet supported)
-#' @param call The call to be displayed in warnings or errors.
 #' @examples
 #'
 #' container()
 #' @export
 container <- function(mode = "unknown", type = "unknown", outcome = character(0),
                       estimate = character(0), probabilities = character(0),
-                      time = character(0), call = current_env()) {
+                      time = character(0)) {
   dat <-
     list(
       outcome = outcome,
@@ -32,7 +31,7 @@ container <- function(mode = "unknown", type = "unknown", outcome = character(0)
     operations = list(),
     columns = dat,
     ptype = tibble::tibble(),
-    call = call
+    call = current_env()
   )
 }
 
@@ -88,7 +87,7 @@ print.container <- function(x, ...) {
 
 #' @export
 fit.container <- function(object, .data, outcome, estimate, probabilities = c(),
-                          time = c(), call = current_env(), ...) {
+                          time = c(), ...) {
 
   # ------------------------------------------------------------------------------
   # set columns via tidyselect
@@ -121,7 +120,7 @@ fit.container <- function(object, .data, outcome, estimate, probabilities = c(),
 
   object <- new_container(object$mode, object$type,
                           operations = object$operations,
-                          columns = dat, ptype = ptype, call = call)
+                          columns = dat, ptype = ptype, call = current_env())
 
   # ------------------------------------------------------------------------------
 
