@@ -57,7 +57,7 @@ new_container <- function(mode, type, operations, columns, ptype, call) {
   }
 
   # validate operation order and check duplicates
-  validate_oper_order(operations, mode, call)
+  validate_order(operations, mode, call)
 
   # check columns
   res <- list(

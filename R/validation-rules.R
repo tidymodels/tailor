@@ -1,5 +1,5 @@
-validate_oper_order <- function(ops, mode, call) {
-  oper_data <-
+validate_order <- function(ops, mode, call) {
+  orderings <-
     tibble::new_tibble(list(
       name = purrr::map_chr(ops, ~ class(.x)[1]),
       input = purrr::map_chr(ops, ~ .x$inputs),
@@ -10,16 +10,16 @@ validate_oper_order <- function(ops, mode, call) {
     ))
 
   if (length(ops) < 2) {
-    return(invisible(oper_data))
+    return(invisible(orderings))
   }
 
   if (mode == "classification") {
-    check_classification_order(oper_data, call)
+    check_classification_order(orderings, call)
   } else {
-    check_regression_order(oper_data, call)
+    check_regression_order(orderings, call)
   }
 
-  invisible(oper_data)
+  invisible(orderings)
 }
 
 check_classification_order <- function(x, call) {
