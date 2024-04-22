@@ -3,7 +3,6 @@
 #' @param x A [container()].
 #' @param upper_limit,lower_limit A numeric value, NA (for no truncation) or
 #' [hardhat::tune()].
-
 #' @export
 adjust_numeric_range <- function(x, lower_limit = -Inf, upper_limit = Inf) {
 

@@ -58,9 +58,7 @@ new_container <- function(mode, type, operations, columns, ptype, call) {
   # validate operation order and check duplicates
   validate_oper_order(operations, mode, call)
 
-
   # check columns
-
   res <- list(mode = mode, type = type, operations = operations,
               columns = columns, ptype = ptype)
   class(res) <- "container"
@@ -82,13 +80,9 @@ print.container <- function(x, ...) {
   invisible(x)
 }
 
-
-# ------------------------------------------------------------------------------
-
 #' @export
 fit.container <- function(object, .data, outcome, estimate, probabilities = c(),
                           time = c(), ...) {
-
   # ------------------------------------------------------------------------------
   # set columns via tidyselect
 
@@ -114,15 +108,11 @@ fit.container <- function(object, .data, outcome, estimate, probabilities = c(),
   .data <- tibble::as_tibble(.data)
   ptype <- .data[0,]
 
-
-
   object <- set_container_type(object, .data[[dat$outcome]])
 
   object <- new_container(object$mode, object$type,
                           operations = object$operations,
                           columns = dat, ptype = ptype, call = current_env())
-
-  # ------------------------------------------------------------------------------
 
   num_oper <- length(object$operations)
   for (op in 1:num_oper) {
@@ -136,7 +126,6 @@ fit.container <- function(object, .data, outcome, estimate, probabilities = c(),
 
 #' @export
 predict.container <- function(object, new_data, ...) {
-
   # validate levels/classes
   num_oper <- length(object$operations)
   for (op in 1:num_oper) {
@@ -170,4 +159,3 @@ set_container_type <- function(object, y) {
 # todo tune_args
 # todo tidy
 # todo extract_parameter_set_dials
-

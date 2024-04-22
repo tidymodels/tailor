@@ -1,5 +1,4 @@
 validate_oper_order <- function(ops, mode, call) {
-
   oper_data <-
     tibble::tibble(
       name = purrr::map_chr(ops, ~ class(.x)[1]),
