@@ -12,7 +12,7 @@ new_operation <- function(cls, inputs, outputs, arguments, results = list(traine
   outputs <- arg_match0(outputs, output_vals)
 
   if (!any(names(results) == "trained")) {
-    cli::cli_abort("The {.arg results} slot requires a logical variable called \\
+    cli_abort("The {.arg results} slot requires a logical variable called \\
                    {.val trained}")
   } else {
     check_logical(results$trained)

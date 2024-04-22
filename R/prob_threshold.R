@@ -52,10 +52,10 @@ print.probability_threshold <- function(x, ...) {
   # check for tune() first
 
   if (is_tune(x$arguments$threshold)) {
-    cli::cli_inform("Adjust probability threshold to optimized value.")
+    cli_inform("Adjust probability threshold to optimized value.")
   } else {
     trn <- ifelse(x$results$trained, " [trained]", "")
-    cli::cli_inform(c("Adjust probability threshold to  \\
+    cli_inform(c("Adjust probability threshold to  \\
                     {signif(x$arguments$threshold, digits = 3)}{trn}"))
   }
   invisible(x)

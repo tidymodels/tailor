@@ -7,7 +7,7 @@
 adjust_numeric_calibration <- function(x, calibrator) {
 
   if (!inherits(calibrator, "cal_regression")) {
-    cli::cli_abort("The {.arg calibrator} argument should be an object of //
+    cli_abort("The {.arg calibrator} argument should be an object of //
                    class {.val 'cal_regression'}.")
   }
 
@@ -33,7 +33,7 @@ adjust_numeric_calibration <- function(x, calibrator) {
 #' @export
 print.numeric_calibration <- function(x, ...) {
   trn <- ifelse(x$results$trained, " [trained]", "")
-  cli::cli_inform(c("Re-calibrate numeric predictions{trn}"))
+  cli_inform(c("Re-calibrate numeric predictions{trn}"))
   invisible(x)
 }
 

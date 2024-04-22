@@ -8,7 +8,7 @@ adjust_probability_calibration <- function(x, calibrator) {
 
   cls <- c("cal_binary", "cal_multinomial")
   if (!inherits(calibrator, cls)) {
-    cli::cli_abort("The {.arg calibrator} argument should be an object of //
+    cli_abort("The {.arg calibrator} argument should be an object of //
                    class {.val cls}.")
   }
 
@@ -34,7 +34,7 @@ adjust_probability_calibration <- function(x, calibrator) {
 #' @export
 print.probability_calibration <- function(x, ...) {
   trn <- ifelse(x$results$trained, " [trained]", "")
-  cli::cli_inform(c("Re-calibrate classification probabilities{trn}"))
+  cli_inform(c("Re-calibrate classification probabilities{trn}"))
   invisible(x)
 }
 

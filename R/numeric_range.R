@@ -53,7 +53,7 @@ print.numeric_range <- function(x, ...) {
 
   }
 
-  cli::cli_inform("Constrain numeric predictions to be {rng_txt}.")
+  cli_inform("Constrain numeric predictions to be {rng_txt}.")
   invisible(x)
 }
 

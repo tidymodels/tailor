@@ -45,13 +45,13 @@ new_container <- function(mode, type, operations, columns, ptype, call) {
   type <- arg_match0(type, c("unknown", "regression", "binary", "multiclass"))
 
   if (!is.list(operations)) {
-    cli::cli_abort("The {.arg operations} argument should be a list.", call = call)
+    cli_abort("The {.arg operations} argument should be a list.", call = call)
   }
 
   is_oper <- purrr::map_lgl(operations, ~ inherits(.x, "operation"))
   if (length(is_oper) > 0 & !any(is_oper)) {
     bad_oper <- names(is_oper)[!is_oper]
-    cli::cli_abort("The following {.arg operations} do not have the class \\
+    cli_abort("The following {.arg operations} do not have the class \\
                    {.val operation}: {bad_oper}.", call = call)
   }
 
@@ -72,7 +72,7 @@ print.container <- function(x, ...) {
   # todo emulate Emil's recipe printing
 
   num_op <- length(x$operations)
-  cli::cli_inform("{x$type} post-processing object with {num_op} operation{?s}")
+  cli_inform("{x$type} post-processing object with {num_op} operation{?s}")
 
   if (num_op > 0) {
     cat("\n")
@@ -159,7 +159,7 @@ set_container_type <- function(object, y) {
   } else if (is.numeric(y)) {
     object$type <- "regression"
   } else {
-    cli::cli_abort("Only factor and numeric outcomes are currently supported.")
+    cli_abort("Only factor and numeric outcomes are currently supported.")
   }
   object
 }

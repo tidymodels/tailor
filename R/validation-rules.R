@@ -32,7 +32,7 @@ check_classification_order <- function(x, call) {
   # does probability steps come after steps that change the hard classes?
   if (length(prob_ind) > 0) {
     if (any(class_ind < prob_ind)) {
-      cli::cli_abort("Operations that change the hard class predictions \\
+      cli_abort("Operations that change the hard class predictions \\
                      must come after operations that update the class \\
                      probability estimates.", call = call)
     }
@@ -43,7 +43,7 @@ check_classification_order <- function(x, call) {
   # do any steps come before Eq zones
   if (length(eq_ind) > 0) {
     if (any(eq_ind < class_ind) | any(eq_ind < prob_ind)) {
-      cli::cli_abort("Equivocal zone addition should come after operations \\
+      cli_abort("Equivocal zone addition should come after operations \\
                      that update the class probability estimates or hard \\
                      class predictions.", call = call)
     }
@@ -63,7 +63,7 @@ check_regression_order <- function(x, call) {
   # currently excluding mutates form this check
   if (length(cal_ind) > 0) {
     if (any(num_ind < cal_ind)) {
-      cli::cli_abort("Calibration should come before other operations.",
+      cli_abort("Calibration should come before other operations.",
                      call = call)
     }
   }
@@ -78,7 +78,7 @@ check_duplicates <- function(x, call) {
   non_mutates <- table(x$name[x$name != "predictions_custom"])
   if (any(non_mutates > 1)) {
     bad_oper <- names(non_mutates[non_mutates > 1])
-    cli::cli_abort("Operations cannot be duplicated: {.val {bad_oper}}", call = call)
+    cli_abort("Operations cannot be duplicated: {.val {bad_oper}}", call = call)
   }
   invisible(x)
 }
