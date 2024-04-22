@@ -5,7 +5,6 @@
 #' [hardhat::tune()].
 #' @export
 adjust_numeric_range <- function(x, lower_limit = -Inf, upper_limit = Inf) {
-
   # input checks are done via probably::bound_prediction
   op <-
     new_operation(
@@ -28,20 +27,19 @@ adjust_numeric_range <- function(x, lower_limit = -Inf, upper_limit = Inf) {
 
 #' @export
 print.numeric_range <- function(x, ...) {
-
   # todo could be na
   if (!is_tune(x$arguments$lower_limit)) {
     if (!is_tune(x$arguments$upper_limit)) {
       rng_txt <-
         paste0(
-          "between [" ,
+          "between [",
           signif(x$arguments$lower_limit, 3),
           ", ",
           signif(x$arguments$upper_limit, 3),
           "]"
         )
     } else {
-      rng_txt <- paste0("between [" , signif(x$arguments$lower_limit, 3), ", ?]")
+      rng_txt <- paste0("between [", signif(x$arguments$lower_limit, 3), ", ?]")
     }
   } else {
     if (!is_tune(x$arguments$upper_limit)) {
@@ -49,7 +47,6 @@ print.numeric_range <- function(x, ...) {
     } else {
       rng_txt <- "between [?, ?]"
     }
-
   }
 
   cli_inform("Constrain numeric predictions to be {rng_txt}.")
@@ -88,8 +85,10 @@ required_pkgs.numeric_range <- function(x, ...) {
 tunable.numeric_range <- function(x, ...) {
   tibble::new_tibble(list(
     name = c("lower_limit", "upper_limit"),
-    call_info = list(list(pkg = "dials", fun = "lower_limit"), # todo make these dials functions
-                     list(pkg = "dials", fun = "upper_limit")),
+    call_info = list(
+      list(pkg = "dials", fun = "lower_limit"), # todo make these dials functions
+      list(pkg = "dials", fun = "upper_limit")
+    ),
     source = "container",
     component = "numeric_range",
     component_id = "numeric_range"

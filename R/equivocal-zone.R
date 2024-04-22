@@ -24,7 +24,6 @@
 #' predict(post_res, two_class_example)
 #' @export
 adjust_equivocal_zone <- function(x, value = 0.1, threshold = 1 / 2) {
-
   if (!is_tune(value)) {
     check_number_decimal(value, min = 0, max = 1 / 2)
   }
@@ -82,9 +81,12 @@ predict.equivocal_zone <- function(object, new_data, parent, ...) {
   prob_nm <- parent$columns$probabilities[1]
   lvls <- levels(new_data[[est_nm]])
   col_syms <- syms(prob_nm[1])
-  cls_pred <- probably::make_two_class_pred(new_data[[prob_nm]], levels = lvls,
-                                            buffer = object$arguments$value,
-                                            threshold = object$arguments$threshold)
+  cls_pred <- probably::make_two_class_pred(
+    new_data[[prob_nm]],
+    levels = lvls,
+    buffer = object$arguments$value,
+    threshold = object$arguments$threshold
+  )
   new_data[[est_nm]] <- cls_pred # todo convert to factor?
   new_data
 }

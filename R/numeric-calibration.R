@@ -5,7 +5,6 @@
 #' package, such as [probably::cal_estimate_linear()].
 #' @export
 adjust_numeric_calibration <- function(x, calibrator) {
-
   if (!inherits(calibrator, "cal_regression")) {
     cli_abort("The {.arg calibrator} argument should be an object of //
                    class {.val 'cal_regression'}.")
@@ -60,7 +59,7 @@ required_pkgs.numeric_calibration <- function(x, ...) {
 }
 
 #' @export
-tunable.numeric_calibration <- function (x, ...) {
+tunable.numeric_calibration <- function(x, ...) {
   no_param
 }
 

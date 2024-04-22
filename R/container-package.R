@@ -8,5 +8,3 @@
 utils::globalVariables("data")
 ## usethis namespace: end
 NULL
-
-

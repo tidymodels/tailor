@@ -4,9 +4,9 @@ validate_oper_order <- function(ops, mode, call) {
       name = purrr::map_chr(ops, ~ class(.x)[1]),
       input = purrr::map_chr(ops, ~ .x$inputs),
       output_numeric = purrr::map_lgl(ops, ~ grepl("numeric", .x$outputs)),
-      output_prob    = purrr::map_lgl(ops, ~ grepl("probability", .x$outputs)),
-      output_class   = purrr::map_lgl(ops, ~ grepl("class", .x$outputs)),
-      output_all     = purrr::map_lgl(ops, ~ grepl("everything", .x$outputs))
+      output_prob = purrr::map_lgl(ops, ~ grepl("probability", .x$outputs)),
+      output_class = purrr::map_lgl(ops, ~ grepl("class", .x$outputs)),
+      output_all = purrr::map_lgl(ops, ~ grepl("everything", .x$outputs))
     ))
 
   if (length(ops) < 2) {
@@ -62,8 +62,10 @@ check_regression_order <- function(x, call) {
   # currently excluding mutates form this check
   if (length(cal_ind) > 0) {
     if (any(num_ind < cal_ind)) {
-      cli_abort("Calibration should come before other operations.",
-                     call = call)
+      cli_abort(
+        "Calibration should come before other operations.",
+        call = call
+      )
     }
   }
 

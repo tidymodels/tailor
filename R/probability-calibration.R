@@ -60,7 +60,7 @@ required_pkgs.probability_calibration <- function(x, ...) {
 }
 
 #' @export
-tunable.probability_calibration <- function (x, ...) {
+tunable.probability_calibration <- function(x, ...) {
   no_param
 }
 

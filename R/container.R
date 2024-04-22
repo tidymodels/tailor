@@ -25,6 +25,7 @@ container <- function(mode = "unknown", type = "unknown", outcome = character(0)
       probabilities = probabilities,
       time = time
     )
+
   new_container(
     mode,
     type,
@@ -59,8 +60,10 @@ new_container <- function(mode, type, operations, columns, ptype, call) {
   validate_oper_order(operations, mode, call)
 
   # check columns
-  res <- list(mode = mode, type = type, operations = operations,
-              columns = columns, ptype = ptype)
+  res <- list(
+    mode = mode, type = type, operations = operations,
+    columns = columns, ptype = ptype
+  )
   class(res) <- "container"
   res
 }
@@ -100,21 +103,26 @@ fit.container <- function(object, .data, outcome, estimate, probabilities = c(),
   time <- tidyselect::eval_select(enquo(time), .data)
   if (length(time) > 0) {
     dat$time <- names(time)
-  }    else {
+  } else {
     dat$time <- character(0)
   }
 
   .data <- .data[, names(.data) %in% unlist(dat)]
   if (!tibble::is_tibble(.data)) {
-    .data  <- tibble::as_tibble(.data)
+    .data <- tibble::as_tibble(.data)
   }
-  ptype <- .data[0,]
+  ptype <- .data[0, ]
 
   object <- set_container_type(object, .data[[dat$outcome]])
 
-  object <- new_container(object$mode, object$type,
-                          operations = object$operations,
-                          columns = dat, ptype = ptype, call = current_env())
+  object <- new_container(
+    object$mode,
+    object$type,
+    operations = object$operations,
+    columns = dat,
+    ptype = ptype,
+    call = current_env()
+  )
 
   num_oper <- length(object$operations)
   for (op in 1:num_oper) {
