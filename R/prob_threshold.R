@@ -24,7 +24,7 @@
 #' @export
 adjust_probability_threshold <- function(x, threshold = 0.5) {
 
-  if ( !is_tune(threshold) ) {
+  if (!is_tune(threshold)) {
     check_number_decimal(threshold, min = 10^-10, max = 1 - 10^-10)
   }
 
@@ -51,7 +51,7 @@ adjust_probability_threshold <- function(x, threshold = 0.5) {
 print.probability_threshold <- function(x, ...) {
   # check for tune() first
 
-  if ( is_tune(x$arguments$threshold) ) {
+  if (is_tune(x$arguments$threshold)) {
     cli::cli_inform("Adjust probability threshold to optimized value.")
   } else {
     trn <- ifelse(x$results$trained, " [trained]", "")

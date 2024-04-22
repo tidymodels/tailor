@@ -31,8 +31,8 @@ adjust_numeric_range <- function(x, lower_limit = -Inf, upper_limit = Inf) {
 print.numeric_range <- function(x, ...) {
 
   # todo could be na
-  if ( !is_tune(x$arguments$lower_limit) ) {
-    if ( !is_tune(x$arguments$upper_limit) ) {
+  if (!is_tune(x$arguments$lower_limit)) {
+    if (!is_tune(x$arguments$upper_limit)) {
       rng_txt <-
         paste0(
           "between [" ,
@@ -45,7 +45,7 @@ print.numeric_range <- function(x, ...) {
       rng_txt <- paste0("between [" , signif(x$arguments$lower_limit, 3), ", ?]")
     }
   } else {
-    if ( !is_tune(x$arguments$upper_limit) ) {
+    if (!is_tune(x$arguments$upper_limit)) {
       rng_txt <- paste0("between [?, ", signif(x$arguments$upper_limit, 3), "]")
     } else {
       rng_txt <- "between [?, ?]"

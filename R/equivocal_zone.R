@@ -25,10 +25,10 @@
 #' @export
 adjust_equivocal_zone <- function(x, value = 0.1, threshold = 1 / 2) {
 
-  if ( !is_tune(value) ) {
+  if (!is_tune(value)) {
     check_number_decimal(value, min = 0, max = 1 / 2)
   }
-  if ( !is_tune(threshold) ) {
+  if (!is_tune(threshold)) {
     check_number_decimal(threshold, min = 10^-10, max = 1 - 10^-10)
   }
 
@@ -55,7 +55,7 @@ adjust_equivocal_zone <- function(x, value = 0.1, threshold = 1 / 2) {
 print.equivocal_zone <- function(x, ...) {
   # check for tune() first
 
-  if ( is_tune(x$arguments$value) ) {
+  if (is_tune(x$arguments$value)) {
     cli::cli_inform("Add equivocal zone to optimized value.")
   } else {
     trn <- ifelse(x$results$trained, " [trained]", "")

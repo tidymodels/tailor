@@ -39,18 +39,18 @@ container <- function(mode = "unknown", type = "unknown", outcome = character(0)
 new_container <- function(mode, type, operations, columns, ptype, call) {
   mode <- rlang::arg_match0(mode, c("unknown", "regression", "classification", "censored regression"))
 
-  if ( mode == "regression" ) {
+  if (mode == "regression") {
     type <- "regression"
   }
 
   type <- rlang::arg_match0(type, c("unknown", "regression", "binary", "multiclass"))
 
-  if ( !is.list(operations) ) {
+  if (!is.list(operations)) {
     cli::cli_abort("The {.arg operations} argument should be a list.", call = call)
   }
 
   is_oper <- purrr::map_lgl(operations, ~ inherits(.x, "operation"))
-  if ( length(is_oper) > 0 & !any(is_oper) ) {
+  if (length(is_oper) > 0 & !any(is_oper)) {
     bad_oper <- names(is_oper)[!is_oper]
     cli::cli_abort("The following {.arg operations} do not have the class \\
                    {.val operation}: {bad_oper}.", call = call)

@@ -6,7 +6,7 @@
 #' @export
 adjust_numeric_calibration <- function(x, calibrator) {
 
-  if ( !inherits(calibrator, "cal_regression") ) {
+  if (!inherits(calibrator, "cal_regression")) {
     cli::cli_abort("The {.arg calibrator} argument should be an object of //
                    class {.val 'cal_regression'}.")
   }
