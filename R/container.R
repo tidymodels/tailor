@@ -70,14 +70,17 @@ new_container <- function(mode, type, operations, columns, ptype, call) {
 
 #' @export
 print.container <- function(x, ...) {
-  # todo emulate Emil's recipe printing
+  cli::cli_h1("Container")
 
   num_op <- length(x$operations)
-  cli_inform("{x$type} post-processing object with {num_op} operation{?s}")
+  cli::cli_text(
+    "A {ifelse(x$type == 'unknown', '', x$type)} postprocessor \\
+     with {num_op} operation{?s}{cli::qty(num_op+1)}{?./:}"
+  )
 
   if (num_op > 0) {
-    cat("\n")
-    res <- purrr::map(x$operations, ~ print(.x))
+    cli::cli_text("\n")
+    res <- purrr::map(x$operations, print)
   }
 
   invisible(x)

@@ -51,7 +51,7 @@ print.numeric_range <- function(x, ...) {
     }
   }
 
-  cli_inform("Constrain numeric predictions to be {rng_txt}.")
+  cli::cli_bullets(c("*" = "Constrain numeric predictions to be {rng_txt}."))
   invisible(x)
 }
 

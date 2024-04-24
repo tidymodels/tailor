@@ -1,3 +1,14 @@
+# adjustment printing
+
+    Code
+      container() %>% adjust_numeric_calibration(dummy_reg_cal)
+    Message
+      
+      -- Container -------------------------------------------------------------------
+      A postprocessor with 1 operation:
+      
+      * Re-calibrate numeric predictions.
+
 # errors informatively with bad input
 
     Code

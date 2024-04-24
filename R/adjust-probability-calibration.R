@@ -38,7 +38,7 @@ adjust_probability_calibration <- function(x, calibrator) {
 #' @export
 print.probability_calibration <- function(x, ...) {
   trn <- ifelse(x$results$trained, " [trained]", "")
-  cli_inform(c("Re-calibrate classification probabilities{trn}"))
+  cli::cli_bullets(c("*" = "Re-calibrate classification probabilities.{trn}"))
   invisible(x)
 }
 

@@ -56,11 +56,13 @@ print.equivocal_zone <- function(x, ...) {
   # check for tune() first
 
   if (is_tune(x$arguments$value)) {
-    cli_inform("Add equivocal zone to optimized value.")
+    cli::cli_bullets(c("*" = "Add equivocal zone of optimized size."))
   } else {
     trn <- ifelse(x$results$trained, " [trained]", "")
-    cli_inform(c("Add equivocal zone of size   \\
-                    {signif(x$arguments$value, digits = 3)}{trn}"))
+    cli::cli_bullets(c(
+      "*" = "Add equivocal zone of size
+             {signif(x$arguments$value, digits = 3)}.{trn}"
+    ))
   }
   invisible(x)
 }

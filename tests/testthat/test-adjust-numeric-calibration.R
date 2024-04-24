@@ -1,3 +1,8 @@
+test_that("adjustment printing", {
+  dummy_reg_cal <- structure(list(), class = "cal_regression")
+  expect_snapshot(container() %>% adjust_numeric_calibration(dummy_reg_cal))
+})
+
 test_that("errors informatively with bad input", {
   # check for `adjust_numeric_calibration(container)` is in `utils.R` tests
 

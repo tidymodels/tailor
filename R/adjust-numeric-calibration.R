@@ -37,7 +37,7 @@ adjust_numeric_calibration <- function(x, calibrator) {
 #' @export
 print.numeric_calibration <- function(x, ...) {
   trn <- ifelse(x$results$trained, " [trained]", "")
-  cli_inform(c("Re-calibrate numeric predictions{trn}"))
+  cli::cli_bullets(c("*" = "Re-calibrate numeric predictions.{trn}"))
   invisible(x)
 }
 
