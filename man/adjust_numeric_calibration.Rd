@@ -15,3 +15,27 @@ package, such as \code{\link[probably:cal_estimate_linear]{probably::cal_estimat
 \description{
 Re-calibrate numeric predictions
 }
+\examples{
+library(modeldata)
+library(probably)
+library(tibble)
+
+# create example data
+set.seed(1)
+dat <- tibble(y = rnorm(100), y_pred = y/2 + rnorm(100))
+
+dat
+
+# calibrate numeric predictions
+reg_cal <- cal_estimate_linear(dat, truth = y, estimate = y_pred)
+
+# specify calibration
+reg_ctr <-
+  container(mode = "regression") \%>\%
+  adjust_numeric_calibration(reg_cal)
+
+# "train" container
+reg_ctr_trained <- fit(reg_ctr, dat, outcome = y, estimate = y_pred)
+
+predict(reg_ctr, dat)
+}
