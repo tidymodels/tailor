@@ -50,7 +50,7 @@ new_container <- function(mode, type, operations, columns, ptype, call) {
   }
 
   is_oper <- purrr::map_lgl(operations, ~ inherits(.x, "operation"))
-  if (length(is_oper) > 0 & !any(is_oper)) {
+  if (length(is_oper) > 0 && !any(is_oper)) {
     bad_oper <- names(is_oper)[!is_oper]
     cli_abort("The following {.arg operations} do not have the class \\
                    {.val operation}: {bad_oper}.", call = call)
@@ -125,7 +125,7 @@ fit.container <- function(object, .data, outcome, estimate, probabilities = c(),
   )
 
   num_oper <- length(object$operations)
-  for (op in 1:num_oper) {
+  for (op in seq_len(num_oper)) {
     object$operations[[op]] <- fit(object$operations[[op]], data, object)
     .data <- predict(object$operations[[op]], .data, object)
   }
@@ -138,7 +138,7 @@ fit.container <- function(object, .data, outcome, estimate, probabilities = c(),
 predict.container <- function(object, new_data, ...) {
   # validate levels/classes
   num_oper <- length(object$operations)
-  for (op in 1:num_oper) {
+  for (op in seq_len(num_oper)) {
     new_data <- predict(object$operations[[op]], new_data, object)
   }
   if (!tibble::is_tibble(new_data)) {
