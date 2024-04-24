@@ -6,9 +6,13 @@
 #' @export
 adjust_numeric_calibration <- function(x, calibrator) {
   check_container(x)
+  check_required(calibrator)
   if (!inherits(calibrator, "cal_regression")) {
-    cli_abort("The {.arg calibrator} argument should be an object of //
-                   class {.val 'cal_regression'}.")
+    cli_abort(
+      "{.arg calibrator} should be a \\
+       {.help [<cal_regression> object](probably::cal_estimate_linear)}, \\
+       not {.obj_type_friendly {calibrator}}."
+    )
   }
 
   op <-

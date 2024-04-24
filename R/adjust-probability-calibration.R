@@ -7,9 +7,13 @@
 adjust_probability_calibration <- function(x, calibrator) {
   check_container(x)
   cls <- c("cal_binary", "cal_multinomial")
-  if (!inherits(calibrator, cls)) {
-    cli_abort("The {.arg calibrator} argument should be an object of //
-                   class {.val cls}.")
+  check_required(calibrator)
+  if (!inherits_any(calibrator, cls)) {
+    cli_abort(
+      "{.arg calibrator} should be a \\
+       {.help [<cal_binary> or <cal_multinomial> object](probably::cal_estimate_logistic)}, \\
+       not {.obj_type_friendly {calibrator}}."
+    )
   }
 
   op <-
