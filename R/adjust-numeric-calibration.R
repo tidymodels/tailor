@@ -5,6 +5,7 @@
 #' package, such as [probably::cal_estimate_linear()].
 #' @export
 adjust_numeric_calibration <- function(x, calibrator) {
+  check_container(x)
   if (!inherits(calibrator, "cal_regression")) {
     cli_abort("The {.arg calibrator} argument should be an object of //
                    class {.val 'cal_regression'}.")

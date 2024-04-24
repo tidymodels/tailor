@@ -5,7 +5,9 @@
 #' [hardhat::tune()].
 #' @export
 adjust_numeric_range <- function(x, lower_limit = -Inf, upper_limit = Inf) {
-  # input checks are done via probably::bound_prediction
+  # remaining input checks are done via probably::bound_prediction
+  check_container(x)
+
   op <-
     new_operation(
       "numeric_range",

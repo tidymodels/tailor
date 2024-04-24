@@ -23,6 +23,7 @@
 #' predict(post_res, two_class_example) %>% count(predicted)
 #' @export
 adjust_probability_threshold <- function(x, threshold = 0.5) {
+  check_container(x)
   if (!is_tune(threshold)) {
     check_number_decimal(threshold, min = 10^-10, max = 1 - 10^-10)
   }

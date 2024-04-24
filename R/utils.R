@@ -45,3 +45,21 @@ new_operation <- function(cls, inputs, outputs, arguments, results = list(traine
   class(res) <- c(cls, "operation")
   res
 }
+
+# predicates -------------------------------------------------------------------
+is_container <- function(x) {
+  inherits(x, "container")
+}
+
+# ad-hoc checking --------------------------------------------------------------
+check_container <- function(x, call = caller_env(), arg = caller_arg(x)) {
+  if (!is_container(x)) {
+    cli::cli_abort(
+      "{.arg {arg}} should be a {.help [{.cls container}](container::container)}, \\
+       not {.obj_type_friendly {x}}.",
+      call = call
+    )
+  }
+
+  invisible()
+}

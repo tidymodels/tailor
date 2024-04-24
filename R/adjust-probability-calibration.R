@@ -5,6 +5,7 @@
 #' package, such as [probably::cal_estimate_logistic()].
 #' @export
 adjust_probability_calibration <- function(x, calibrator) {
+  check_container(x)
   cls <- c("cal_binary", "cal_multinomial")
   if (!inherits(calibrator, cls)) {
     cli_abort("The {.arg calibrator} argument should be an object of //

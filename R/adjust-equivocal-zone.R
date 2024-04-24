@@ -24,6 +24,7 @@
 #' predict(post_res, two_class_example)
 #' @export
 adjust_equivocal_zone <- function(x, value = 0.1, threshold = 1 / 2) {
+  check_container(x)
   if (!is_tune(value)) {
     check_number_decimal(value, min = 0, max = 1 / 2)
   }

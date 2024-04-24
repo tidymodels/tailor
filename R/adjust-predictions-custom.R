@@ -25,6 +25,7 @@
 #' predict(post_res, two_class_example)
 #' @export
 adjust_predictions_custom <- function(x, ..., .pkgs = character(0)) {
+  check_container(x)
   cmds <- enquos(...)
 
   op <-
