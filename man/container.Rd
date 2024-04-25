@@ -22,7 +22,9 @@ container(
 
 \item{outcome}{The name of the outcome variable.}
 
-\item{estimate}{The name of the point estimate (e.g. predicted class)}
+\item{estimate}{The name of the point estimate (e.g. predicted class). In
+tidymodels, this corresponds to column names \code{.pred}, \code{.pred_class}, or
+\code{.pred_time}.}
 
 \item{probabilities}{The names of class probability estimates (if any). For
 classification, these should be given in the order of the factor levels of

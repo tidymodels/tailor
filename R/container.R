@@ -5,7 +5,9 @@
 #' @param type The model sub-type. Possible values are `"unknown"`, `"regression"`,
 #' `"binary"`, or `"multiclass"`.
 #' @param outcome The name of the outcome variable.
-#' @param estimate The name of the point estimate (e.g. predicted class)
+#' @param estimate The name of the point estimate (e.g. predicted class). In
+#' tidymodels, this corresponds to column names `.pred`, `.pred_class`, or
+#' `.pred_time`.
 #' @param probabilities The names of class probability estimates (if any). For
 #' classification, these should be given in the order of the factor levels of
 #' the `estimate`.
