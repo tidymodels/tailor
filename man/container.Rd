@@ -7,10 +7,10 @@
 container(
   mode,
   type = "unknown",
-  outcome = character(0),
-  estimate = character(0),
-  probabilities = character(0),
-  time = character(0)
+  outcome = NULL,
+  estimate = NULL,
+  probabilities = NULL,
+  time = NULL
 )
 }
 \arguments{

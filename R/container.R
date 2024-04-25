@@ -16,9 +16,8 @@
 #'
 #' container(mode = "regression")
 #' @export
-container <- function(mode, type = "unknown", outcome = character(0),
-                      estimate = character(0), probabilities = character(0),
-                      time = character(0)) {
+container <- function(mode, type = "unknown", outcome = NULL, estimate = NULL,
+                      probabilities = NULL, time = NULL) {
   columns <-
     list(
       outcome = outcome,
