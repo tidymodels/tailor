@@ -56,7 +56,7 @@ print.numeric_range <- function(x, ...) {
 }
 
 #' @export
-fit.numeric_range <- function(object, data, parent = NULL, ...) {
+fit.numeric_range <- function(object, data, container = NULL, ...) {
   new_operation(
     class(object),
     inputs = object$inputs,
@@ -67,8 +67,8 @@ fit.numeric_range <- function(object, data, parent = NULL, ...) {
 }
 
 #' @export
-predict.numeric_range <- function(object, new_data, parent, ...) {
-  est_nm <- parent$columns$estimate
+predict.numeric_range <- function(object, new_data, container, ...) {
+  est_nm <- container$columns$estimate
   lo <- object$arguments$lower_limit
   hi <- object$arguments$upper_limit
 

@@ -55,7 +55,7 @@ print.predictions_custom <- function(x, ...) {
 }
 
 #' @export
-fit.predictions_custom <- function(object, data, parent = NULL, ...) {
+fit.predictions_custom <- function(object, data, container = NULL, ...) {
   new_operation(
     class(object),
     inputs = object$inputs,
@@ -66,7 +66,7 @@ fit.predictions_custom <- function(object, data, parent = NULL, ...) {
 }
 
 #' @export
-predict.predictions_custom <- function(object, new_data, parent, ...) {
+predict.predictions_custom <- function(object, new_data, container, ...) {
   dplyr::mutate(new_data, !!!object$arguments$commands)
 }
 

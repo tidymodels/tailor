@@ -64,7 +64,7 @@ print.probability_threshold <- function(x, ...) {
 }
 
 #' @export
-fit.probability_threshold <- function(object, data, parent = NULL, ...) {
+fit.probability_threshold <- function(object, data, container = NULL, ...) {
   new_operation(
     class(object),
     inputs = object$inputs,
@@ -75,9 +75,9 @@ fit.probability_threshold <- function(object, data, parent = NULL, ...) {
 }
 
 #' @export
-predict.probability_threshold <- function(object, new_data, parent, ...) {
-  est_nm <- parent$columns$estimate
-  prob_nm <- parent$columns$probabilities[1]
+predict.probability_threshold <- function(object, new_data, container, ...) {
+  est_nm <- container$columns$estimate
+  prob_nm <- container$columns$probabilities[1]
   lvls <- levels(new_data[[est_nm]])
 
   new_data[[est_nm]] <-

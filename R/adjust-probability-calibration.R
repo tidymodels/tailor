@@ -43,7 +43,7 @@ print.probability_calibration <- function(x, ...) {
 }
 
 #' @export
-fit.probability_calibration <- function(object, data, parent = NULL, ...) {
+fit.probability_calibration <- function(object, data, container = NULL, ...) {
   new_operation(
     class(object),
     inputs = object$inputs,
@@ -54,7 +54,7 @@ fit.probability_calibration <- function(object, data, parent = NULL, ...) {
 }
 
 #' @export
-predict.probability_calibration <- function(object, new_data, parent, ...) {
+predict.probability_calibration <- function(object, new_data, container, ...) {
   probably::cal_apply(new_data, object$argument$calibrator)
 }
 

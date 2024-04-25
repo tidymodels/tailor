@@ -68,7 +68,7 @@ print.equivocal_zone <- function(x, ...) {
 }
 
 #' @export
-fit.equivocal_zone <- function(object, data, parent = NULL, ...) {
+fit.equivocal_zone <- function(object, data, container = NULL, ...) {
   new_operation(
     class(object),
     inputs = object$inputs,
@@ -79,9 +79,9 @@ fit.equivocal_zone <- function(object, data, parent = NULL, ...) {
 }
 
 #' @export
-predict.equivocal_zone <- function(object, new_data, parent, ...) {
-  est_nm <- parent$columns$estimate
-  prob_nm <- parent$columns$probabilities[1]
+predict.equivocal_zone <- function(object, new_data, container, ...) {
+  est_nm <- container$columns$estimate
+  prob_nm <- container$columns$probabilities[1]
   lvls <- levels(new_data[[est_nm]])
   col_syms <- syms(prob_nm[1])
   cls_pred <- probably::make_two_class_pred(

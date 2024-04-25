@@ -65,7 +65,7 @@ print.numeric_calibration <- function(x, ...) {
 }
 
 #' @export
-fit.numeric_calibration <- function(object, data, parent = NULL, ...) {
+fit.numeric_calibration <- function(object, data, container = NULL, ...) {
   new_operation(
     class(object),
     inputs = object$inputs,
@@ -76,7 +76,7 @@ fit.numeric_calibration <- function(object, data, parent = NULL, ...) {
 }
 
 #' @export
-predict.numeric_calibration <- function(object, new_data, parent, ...) {
+predict.numeric_calibration <- function(object, new_data, container, ...) {
   probably::cal_apply(new_data, object$argument$calibrator)
 }
 
