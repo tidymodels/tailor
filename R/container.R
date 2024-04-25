@@ -17,7 +17,7 @@
 container <- function(mode = "unknown", type = "unknown", outcome = character(0),
                       estimate = character(0), probabilities = character(0),
                       time = character(0)) {
-  dat <-
+  columns <-
     list(
       outcome = outcome,
       type = type,
@@ -30,7 +30,7 @@ container <- function(mode = "unknown", type = "unknown", outcome = character(0)
     mode,
     type,
     operations = list(),
-    columns = dat,
+    columns = columns,
     ptype = tibble::new_tibble(list()),
     call = current_env()
   )
@@ -92,37 +92,37 @@ fit.container <- function(object, .data, outcome, estimate, probabilities = c(),
   # ------------------------------------------------------------------------------
   # set columns via tidyselect
 
-  dat <- list()
-  dat$outcome <- names(tidyselect::eval_select(enquo(outcome), .data))
-  dat$estimate <- names(tidyselect::eval_select(enquo(estimate), .data))
+  columns <- list()
+  columns$outcome <- names(tidyselect::eval_select(enquo(outcome), .data))
+  columns$estimate <- names(tidyselect::eval_select(enquo(estimate), .data))
 
   probabilities <- tidyselect::eval_select(enquo(probabilities), .data)
   if (length(probabilities) > 0) {
-    dat$probabilities <- names(probabilities)
+    columns$probabilities <- names(probabilities)
   } else {
-    dat$probabilities <- character(0)
+    columns$probabilities <- character(0)
   }
 
   time <- tidyselect::eval_select(enquo(time), .data)
   if (length(time) > 0) {
-    dat$time <- names(time)
+    columns$time <- names(time)
   } else {
-    dat$time <- character(0)
+    columns$time <- character(0)
   }
 
-  .data <- .data[, names(.data) %in% unlist(dat)]
+  .data <- .data[, names(.data) %in% unlist(columns)]
   if (!tibble::is_tibble(.data)) {
     .data <- tibble::as_tibble(.data)
   }
   ptype <- .data[0, ]
 
-  object <- set_container_type(object, .data[[dat$outcome]])
+  object <- set_container_type(object, .data[[columns$outcome]])
 
   object <- new_container(
     object$mode,
     object$type,
     operations = object$operations,
-    columns = dat,
+    columns = columns,
     ptype = ptype,
     call = current_env()
   )
