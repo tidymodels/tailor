@@ -38,7 +38,8 @@ adjust_equivocal_zone <- function(x, value = 0.1, threshold = 1 / 2) {
       inputs = "probability",
       outputs = "class",
       arguments = list(value = value, threshold = threshold),
-      results = list(trained = FALSE)
+      results = list(),
+      trained = FALSE
     )
 
   new_container(
@@ -58,7 +59,7 @@ print.equivocal_zone <- function(x, ...) {
   if (is_tune(x$arguments$value)) {
     cli::cli_bullets(c("*" = "Add equivocal zone of optimized size."))
   } else {
-    trn <- ifelse(x$results$trained, " [trained]", "")
+    trn <- ifelse(x$trained, " [trained]", "")
     cli::cli_bullets(c(
       "*" = "Add equivocal zone of size
              {signif(x$arguments$value, digits = 3)}.{trn}"
@@ -74,7 +75,8 @@ fit.equivocal_zone <- function(object, data, container = NULL, ...) {
     inputs = object$inputs,
     outputs = object$outputs,
     arguments = object$arguments,
-    results = list(trained = TRUE)
+    results = list(),
+    trained = TRUE
   )
 }
 

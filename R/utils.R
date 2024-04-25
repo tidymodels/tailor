@@ -24,23 +24,20 @@ no_param <-
 input_vals <- c("numeric", "probability", "class", "everything")
 output_vals <- c("numeric", "probability_class", "class", "everything")
 
-new_operation <- function(cls, inputs, outputs, arguments, results = list(trained = FALSE), ...) {
+new_operation <- function(cls, inputs, outputs, arguments, results = list(),
+                          trained, ...) {
   inputs <- arg_match0(inputs, input_vals)
   outputs <- arg_match0(outputs, output_vals)
 
-  if (!any(names(results) == "trained")) {
-    cli_abort("The {.arg results} slot requires a logical variable called \\
-                   {.val trained}")
-  } else {
-    check_logical(results$trained)
-  }
+  check_logical(trained)
 
   res <-
     list(
       inputs = inputs,
       outputs = outputs,
       arguments = arguments,
-      results = results
+      results = results,
+      trained = trained
     )
   class(res) <- c(cls, "operation")
   res

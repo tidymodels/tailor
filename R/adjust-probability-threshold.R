@@ -34,7 +34,8 @@ adjust_probability_threshold <- function(x, threshold = 0.5) {
       inputs = "probability",
       outputs = "class",
       arguments = list(threshold = threshold),
-      results = list(trained = FALSE)
+      results = list(),
+      trained = FALSE
     )
 
   new_container(
@@ -54,7 +55,7 @@ print.probability_threshold <- function(x, ...) {
   if (is_tune(x$arguments$threshold)) {
     cli::cli_bullets(c("*" = "Adjust probability threshold to optimized value."))
   } else {
-    trn <- ifelse(x$results$trained, " [trained]", "")
+    trn <- ifelse(x$trained, " [trained]", "")
     cli::cli_bullets(c(
       "*" = "Adjust probability threshold to \\
              {signif(x$arguments$threshold, digits = 3)}.{trn}"
@@ -70,7 +71,8 @@ fit.probability_threshold <- function(object, data, container = NULL, ...) {
     inputs = object$inputs,
     outputs = object$outputs,
     arguments = object$arguments,
-    results = list(trained = TRUE)
+    results = list(),
+    trained = TRUE
   )
 }
 

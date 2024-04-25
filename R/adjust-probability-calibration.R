@@ -22,7 +22,8 @@ adjust_probability_calibration <- function(x, calibrator) {
       inputs = "probability",
       outputs = "probability_class",
       arguments = list(calibrator = calibrator),
-      results = list(trained = FALSE)
+      results = list(),
+      trained = FALSE
     )
 
   new_container(
@@ -37,7 +38,7 @@ adjust_probability_calibration <- function(x, calibrator) {
 
 #' @export
 print.probability_calibration <- function(x, ...) {
-  trn <- ifelse(x$results$trained, " [trained]", "")
+  trn <- ifelse(x$trained, " [trained]", "")
   cli::cli_bullets(c("*" = "Re-calibrate classification probabilities.{trn}"))
   invisible(x)
 }
@@ -49,7 +50,8 @@ fit.probability_calibration <- function(object, data, container = NULL, ...) {
     inputs = object$inputs,
     outputs = object$outputs,
     arguments = object$arguments,
-    results = list(trained = TRUE)
+    results = list(),
+    trained = TRUE
   )
 }
 

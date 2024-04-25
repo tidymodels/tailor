@@ -34,7 +34,8 @@ adjust_predictions_custom <- function(x, ..., .pkgs = character(0)) {
       inputs = "everything",
       outputs = "everything",
       arguments = list(commands = cmds, pkgs = .pkgs),
-      results = list(trained = FALSE)
+      results = list(),
+      trained = FALSE
     )
 
   new_container(
@@ -49,7 +50,7 @@ adjust_predictions_custom <- function(x, ..., .pkgs = character(0)) {
 
 #' @export
 print.predictions_custom <- function(x, ...) {
-  trn <- ifelse(x$results$trained, " [trained]", "")
+  trn <- ifelse(x$trained, " [trained]", "")
   cli::cli_bullets(c("*" = "Adjust predictions using custom code.{trn}"))
   invisible(x)
 }
@@ -61,7 +62,8 @@ fit.predictions_custom <- function(object, data, container = NULL, ...) {
     inputs = object$inputs,
     outputs = object$outputs,
     arguments = object$arguments,
-    results = list(trained = TRUE)
+    results = list(),
+    trained = TRUE
   )
 }
 

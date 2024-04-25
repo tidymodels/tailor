@@ -14,7 +14,8 @@ adjust_numeric_range <- function(x, lower_limit = -Inf, upper_limit = Inf) {
       inputs = "numeric",
       outputs = "numeric",
       arguments = list(lower_limit = lower_limit, upper_limit = upper_limit),
-      results = list(trained = FALSE)
+      results = list(),
+      trained = FALSE
     )
 
   new_container(
@@ -29,6 +30,7 @@ adjust_numeric_range <- function(x, lower_limit = -Inf, upper_limit = Inf) {
 
 #' @export
 print.numeric_range <- function(x, ...) {
+  trn <- ifelse(x$trained, " [trained]", "")
   # todo could be na
   if (!is_tune(x$arguments$lower_limit)) {
     if (!is_tune(x$arguments$upper_limit)) {
@@ -51,7 +53,7 @@ print.numeric_range <- function(x, ...) {
     }
   }
 
-  cli::cli_bullets(c("*" = "Constrain numeric predictions to be {rng_txt}."))
+  cli::cli_bullets(c("*" = "Constrain numeric predictions to be {rng_txt}{trn}."))
   invisible(x)
 }
 
@@ -62,7 +64,8 @@ fit.numeric_range <- function(object, data, container = NULL, ...) {
     inputs = object$inputs,
     outputs = object$outputs,
     arguments = object$arguments,
-    results = list(trained = TRUE)
+    results = list(),
+    trained = TRUE
   )
 }
 
