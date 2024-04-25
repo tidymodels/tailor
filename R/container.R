@@ -1,7 +1,7 @@
 #' Declare post-processing for model predictions
 #'
-#' @param mode The model's mode, one of `"unknown"`, `"classification"`, or
-#' `"regression"`. Modes of `"censored regression"` are not currently supported.
+#' @param mode The model's mode, one of `"classification"`, or `"regression"`.
+#' Modes of `"censored regression"` are not currently supported.
 #' @param type The model sub-type. Possible values are `"unknown"`, `"regression"`,
 #' `"binary"`, or `"multiclass"`.
 #' @param outcome The name of the outcome variable.
@@ -14,9 +14,9 @@
 #' @param time The name of the predicted event time. (not yet supported)
 #' @examples
 #'
-#' container()
+#' container(mode = "regression")
 #' @export
-container <- function(mode = "unknown", type = "unknown", outcome = character(0),
+container <- function(mode, type = "unknown", outcome = character(0),
                       estimate = character(0), probabilities = character(0),
                       time = character(0)) {
   columns <-
@@ -39,7 +39,7 @@ container <- function(mode = "unknown", type = "unknown", outcome = character(0)
 }
 
 new_container <- function(mode, type, operations, columns, ptype, call) {
-  mode <- arg_match0(mode, c("unknown", "regression", "classification", "censored regression"))
+  mode <- arg_match0(mode, c("regression", "classification"))
 
   if (mode == "regression") {
     type <- "regression"

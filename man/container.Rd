@@ -5,7 +5,7 @@
 \title{Declare post-processing for model predictions}
 \usage{
 container(
-  mode = "unknown",
+  mode,
   type = "unknown",
   outcome = character(0),
   estimate = character(0),
@@ -14,8 +14,8 @@ container(
 )
 }
 \arguments{
-\item{mode}{The model's mode, one of \code{"unknown"}, \code{"classification"}, or
-\code{"regression"}. Modes of \code{"censored regression"} are not currently supported.}
+\item{mode}{The model's mode, one of \code{"classification"}, or \code{"regression"}.
+Modes of \code{"censored regression"} are not currently supported.}
 
 \item{type}{The model sub-type. Possible values are \code{"unknown"}, \code{"regression"},
 \code{"binary"}, or \code{"multiclass"}.}
@@ -37,5 +37,5 @@ Declare post-processing for model predictions
 }
 \examples{
 
-container()
+container(mode = "regression")
 }

@@ -1,7 +1,7 @@
 # adjustment printing
 
     Code
-      container() %>% adjust_equivocal_zone()
+      ctr_cls %>% adjust_equivocal_zone()
     Message
       
       -- Container -------------------------------------------------------------------
@@ -12,7 +12,7 @@
 ---
 
     Code
-      container() %>% adjust_equivocal_zone(hardhat::tune())
+      ctr_cls %>% adjust_equivocal_zone(hardhat::tune())
     Message
       
       -- Container -------------------------------------------------------------------

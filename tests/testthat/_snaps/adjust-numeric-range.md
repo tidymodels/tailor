@@ -1,7 +1,7 @@
 # adjustment printing
 
     Code
-      container() %>% adjust_numeric_range()
+      ctr_reg %>% adjust_numeric_range()
     Message
       
       -- Container -------------------------------------------------------------------
@@ -12,7 +12,7 @@
 ---
 
     Code
-      container() %>% adjust_numeric_range(hardhat::tune())
+      ctr_reg %>% adjust_numeric_range(hardhat::tune())
     Message
       
       -- Container -------------------------------------------------------------------
@@ -23,7 +23,7 @@
 ---
 
     Code
-      container() %>% adjust_numeric_range(-1, hardhat::tune())
+      ctr_reg %>% adjust_numeric_range(-1, hardhat::tune())
     Message
       
       -- Container -------------------------------------------------------------------
@@ -34,7 +34,7 @@
 ---
 
     Code
-      container() %>% adjust_numeric_range(hardhat::tune(), 1)
+      ctr_reg %>% adjust_numeric_range(hardhat::tune(), 1)
     Message
       
       -- Container -------------------------------------------------------------------

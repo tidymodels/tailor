@@ -1,7 +1,7 @@
 # adjustment printing
 
     Code
-      container() %>% adjust_numeric_calibration(dummy_reg_cal)
+      ctr_reg %>% adjust_numeric_calibration(dummy_reg_cal)
     Message
       
       -- Container -------------------------------------------------------------------
@@ -12,7 +12,7 @@
 # errors informatively with bad input
 
     Code
-      adjust_numeric_calibration(container())
+      adjust_numeric_calibration(ctr_reg)
     Condition
       Error in `adjust_numeric_calibration()`:
       ! `calibrator` is absent but must be supplied.
@@ -20,7 +20,7 @@
 ---
 
     Code
-      adjust_numeric_calibration(container(), "boop")
+      adjust_numeric_calibration(ctr_reg, "boop")
     Condition
       Error in `adjust_numeric_calibration()`:
       ! `calibrator` should be a <cal_regression> object (`?probably::cal_estimate_linear()`), not a string.
@@ -28,7 +28,7 @@
 ---
 
     Code
-      adjust_numeric_calibration(container(), dummy_cls_cal)
+      adjust_numeric_calibration(ctr_cls, dummy_cls_cal)
     Condition
       Error in `adjust_numeric_calibration()`:
       ! `calibrator` should be a <cal_regression> object (`?probably::cal_estimate_linear()`), not a <cal_binary> object.

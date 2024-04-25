@@ -1,7 +1,7 @@
 # adjustment printing
 
     Code
-      container() %>% adjust_predictions_custom()
+      ctr_cls %>% adjust_predictions_custom()
     Message
       
       -- Container -------------------------------------------------------------------

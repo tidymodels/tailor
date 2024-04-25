@@ -1,7 +1,7 @@
 # container printing
 
     Code
-      container()
+      ctr_cls
     Message
       
       -- Container -------------------------------------------------------------------
@@ -10,7 +10,7 @@
 ---
 
     Code
-      container(type = "binary")
+      container(mode = "classification", type = "binary")
     Message
       
       -- Container -------------------------------------------------------------------
@@ -19,7 +19,8 @@
 ---
 
     Code
-      container(type = "binary") %>% adjust_probability_threshold(0.2)
+      container(mode = "classification", type = "binary") %>%
+        adjust_probability_threshold(0.2)
     Message
       
       -- Container -------------------------------------------------------------------
@@ -30,8 +31,8 @@
 ---
 
     Code
-      container(type = "binary") %>% adjust_probability_threshold(0.2) %>%
-        adjust_equivocal_zone()
+      container(mode = "classification", type = "binary") %>%
+        adjust_probability_threshold(0.2) %>% adjust_equivocal_zone()
     Message
       
       -- Container -------------------------------------------------------------------
