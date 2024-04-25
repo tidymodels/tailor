@@ -14,6 +14,10 @@ status](https://www.r-pkg.org/badges/version/container)](https://CRAN.R-project.
 
 The goal of container is to provide a container for postprocessing.
 
+This is going to undergo massive changes (especially the name), so
+please treat it as experimental and don’t depend on the syntax staying
+the same.
+
 ## Installation
 
 You can install the development version of container like so:
