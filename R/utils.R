@@ -60,3 +60,52 @@ check_container <- function(x, call = caller_env(), arg = caller_arg(x)) {
 
   invisible()
 }
+
+types_regression <- c("linear", "isotonic", "isotonic_boot")
+types_binary <- c("logistic", "beta", "isotonic", "isotonic_boot")
+types_multiclass <- c("multinomial", "beta", "isotonic", "isotonic_boot")
+check_type <- function(adjust_type,
+                       container_type,
+                       arg = caller_arg(adjust_type),
+                       call = caller_env()) {
+  # to-do: handle unknown container type (#11 ish)
+  if (is.null(adjust_type)) {
+    switch(
+      container_type,
+      regression = return("linear"),
+      binary = return("logistic"),
+      multiclass = return("multinomial")
+    )
+  }
+
+  switch(
+    container_type,
+    regression = arg_match0(
+      adjust_type,
+      types_regression,
+      arg_nm = arg,
+      error_call = call
+    ),
+    binary = arg_match0(
+      adjust_type,
+      types_binary,
+      arg_nm = arg,
+      error_call = call
+    ),
+    multiclass = arg_match0(
+      adjust_type,
+      types_multiclass,
+      arg_nm = arg,
+      error_call = call
+    ),
+    arg_match0(
+      adjust_type,
+      unique(c(types_regression, types_binary, types_multiclass)),
+      arg_nm = arg,
+      error_call = call
+    )
+  )
+
+  adjust_type
+}
+

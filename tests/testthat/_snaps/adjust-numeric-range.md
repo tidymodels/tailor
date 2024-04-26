@@ -5,7 +5,7 @@
     Message
       
       -- Container -------------------------------------------------------------------
-      A postprocessor with 1 operation:
+      A regression postprocessor with 1 operation:
       
       * Constrain numeric predictions to be between [-Inf, Inf].
 
@@ -16,7 +16,7 @@
     Message
       
       -- Container -------------------------------------------------------------------
-      A postprocessor with 1 operation:
+      A regression postprocessor with 1 operation:
       
       * Constrain numeric predictions to be between [?, Inf].
 
@@ -27,7 +27,7 @@
     Message
       
       -- Container -------------------------------------------------------------------
-      A postprocessor with 1 operation:
+      A regression postprocessor with 1 operation:
       
       * Constrain numeric predictions to be between [-1, ?].
 
@@ -38,7 +38,7 @@
     Message
       
       -- Container -------------------------------------------------------------------
-      A postprocessor with 1 operation:
+      A regression postprocessor with 1 operation:
       
       * Constrain numeric predictions to be between [?, 1].
 

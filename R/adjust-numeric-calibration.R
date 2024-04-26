@@ -1,8 +1,11 @@
 #' Re-calibrate numeric predictions
 #'
 #' @param x A [container()].
-#' @param calibrator A pre-trained calibration method from the \pkg{probably}
-#' package, such as [probably::cal_estimate_linear()].
+#' @param type Character. One of `"linear"`, `"isotonic"`, or
+#' `"isotonic_boot"`, corresponding to the function from the \pkg{probably}
+#' package [probably::cal_estimate_linear()],
+#' [probably::cal_estimate_isotonic()], or
+#' [probably::cal_estimate_isotonic_boot()], respectively.
 #' @examples
 #' library(modeldata)
 #' library(probably)
@@ -14,36 +17,27 @@
 #'
 #' dat
 #'
-#' # calibrate numeric predictions
-#' reg_cal <- cal_estimate_linear(dat, truth = y, estimate = y_pred)
-#'
 #' # specify calibration
 #' reg_ctr <-
 #'   container(mode = "regression") %>%
-#'   adjust_numeric_calibration(reg_cal)
+#'   adjust_numeric_calibration(type = "linear")
 #'
-#' # "train" container
+#' # train container
 #' reg_ctr_trained <- fit(reg_ctr, dat, outcome = y, estimate = y_pred)
 #'
-#' predict(reg_ctr, dat)
+#' predict(reg_ctr_trained, dat)
 #' @export
-adjust_numeric_calibration <- function(x, calibrator) {
+adjust_numeric_calibration <- function(x, type = NULL) {
+  # to-do: add argument specifying `prop` in initial_split
   check_container(x)
-  check_required(calibrator)
-  if (!inherits(calibrator, "cal_regression")) {
-    cli_abort(
-      "{.arg calibrator} should be a \\
-       {.help [<cal_regression> object](probably::cal_estimate_linear)}, \\
-       not {.obj_type_friendly {calibrator}}."
-    )
-  }
+  type <- check_type(type, x$type)
 
   op <-
     new_operation(
       "numeric_calibration",
       inputs = "numeric",
       outputs = "numeric",
-      arguments = list(calibrator = calibrator),
+      arguments = list(type = type),
       results = list(),
       trained = FALSE
     )
@@ -67,19 +61,32 @@ print.numeric_calibration <- function(x, ...) {
 
 #' @export
 fit.numeric_calibration <- function(object, data, container = NULL, ...) {
+  # todo: adjust_numeric_calibration() should take arguments to pass to
+  # cal_estimate_* via dots
+  fit <-
+    eval_bare(
+      call2(
+        paste0("cal_estimate_", object$arguments$type),
+        .data = data,
+        truth = container$columns$outcome,
+        estimate = container$columns$estimate,
+        .ns = "probably"
+      )
+    )
+
   new_operation(
     class(object),
     inputs = object$inputs,
     outputs = object$outputs,
     arguments = object$arguments,
-    results = list(),
+    results = list(fit = fit),
     trained = TRUE
   )
 }
 
 #' @export
 predict.numeric_calibration <- function(object, new_data, container, ...) {
-  probably::cal_apply(new_data, object$argument$calibrator)
+  probably::cal_apply(new_data, object$results$fit)
 }
 
 # todo probably needs required_pkgs methods for cal objects
