@@ -8,8 +8,14 @@
 #' @export
 adjust_probability_calibration <- function(x, type = NULL) {
   # to-do: add argument specifying `prop` in initial_split
-  check_container(x)
-  type <- check_type(type, x$type)
+  check_container(x, calibration_type = "probability")
+  # wait to `check_type()` until `fit()` time
+  if (!is.null(type)) {
+    arg_match(
+      type,
+      c("logistic", "multinomial", "beta", "isotonic", "isotonic_boot")
+    )
+  }
 
   op <-
     new_operation(
@@ -40,13 +46,14 @@ print.probability_calibration <- function(x, ...) {
 
 #' @export
 fit.probability_calibration <- function(object, data, container = NULL, ...) {
+  type <- check_type(object$type, container$type)
   # todo: adjust_probability_calibration() should take arguments to pass to
   # cal_estimate_* via dots
   # to-do: add argument specifying `prop` in initial_split
   fit <-
     eval_bare(
       call2(
-        paste0("cal_estimate_", object$type),
+        paste0("cal_estimate_", type),
         .data = data,
         # todo: make getters for the entries in `columns`
         truth = container$columns$outcome,

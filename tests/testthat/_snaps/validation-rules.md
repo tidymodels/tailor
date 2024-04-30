@@ -14,7 +14,7 @@
         adjust_probability_calibration()
     Condition
       Error in `adjust_probability_calibration()`:
-      ! `type` must be a string or character vector.
+      ! Operations that change the hard class predictions must come after operations that update the class probability estimates.
 
 ---
 
@@ -24,7 +24,7 @@
         adjust_probability_calibration()
     Condition
       Error in `adjust_probability_calibration()`:
-      ! `type` must be a string or character vector.
+      ! Operations that change the hard class predictions must come after operations that update the class probability estimates.
 
 ---
 

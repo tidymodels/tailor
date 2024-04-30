@@ -23,5 +23,14 @@
       container("classification", "binary") %>% adjust_numeric_calibration("linear")
     Condition
       Error in `adjust_numeric_calibration()`:
-      ! `type` must be one of "logistic", "beta", "isotonic", or "isotonic_boot", not "linear".
+      ! A binary container is incompatible with the operation `adjust_numeric_calibration()`.
+
+---
+
+    Code
+      container("regression", "regression") %>% adjust_numeric_calibration("binary")
+    Condition
+      Error in `adjust_numeric_calibration()`:
+      ! `type` must be one of "linear", "isotonic", or "isotonic_boot", not "binary".
+      i Did you mean "linear"?
 

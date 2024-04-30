@@ -49,26 +49,58 @@ is_container <- function(x) {
 }
 
 # ad-hoc checking --------------------------------------------------------------
-check_container <- function(x, call = caller_env(), arg = caller_arg(x)) {
+check_container <- function(x, calibration_type = NULL, call = caller_env(), arg = caller_arg(x)) {
   if (!is_container(x)) {
-    cli::cli_abort(
+    cli_abort(
       "{.arg {arg}} should be a {.help [{.cls container}](container::container)}, \\
        not {.obj_type_friendly {x}}.",
       call = call
     )
   }
 
+  # check that the type of calibration ("numeric" or "probability") is
+  # compatible with the container type
+  if (!is.null(calibration_type)) {
+    container_type <- x$type
+    switch(
+      container_type,
+      regression =
+        check_calibration_type(calibration_type, "numeric", container_type, call = call),
+      binary = , multinomial =
+        check_calibration_type(calibration_type, "probability", container_type, call = call)
+    )
+  }
+
   invisible()
+}
+
+check_calibration_type <- function(calibration_type, calibration_type_expected,
+                                   container_type, call) {
+  if (!identical(calibration_type, calibration_type_expected)) {
+    cli_abort(
+      "A {.field {container_type}} container is incompatible with the operation \\
+       {.fun {paste0('adjust_', calibration_type, '_calibration')}}.",
+      call = call
+    )
+  }
 }
 
 types_regression <- c("linear", "isotonic", "isotonic_boot")
 types_binary <- c("logistic", "beta", "isotonic", "isotonic_boot")
 types_multiclass <- c("multinomial", "beta", "isotonic", "isotonic_boot")
+# a check function to be called when a container is being `fit()`ted.
+# by the time a container is fitted, we have:
+# * `adjust_type`, the `type` argument passed to an `adjust_*` function
+#     * this argument has already been checked to agree with the kind of
+#       `adjust_*()` function via `arg_match0()`.
+# * `container_type`, the `type` argument either specified in `container()`
+#   or inferred in `fit.container()`.
 check_type <- function(adjust_type,
                        container_type,
                        arg = caller_arg(adjust_type),
                        call = caller_env()) {
-  # to-do: handle unknown container type (#11 ish)
+  # if no `adjust_type` was supplied, infer a reasonable one based on the
+  # `container_type`
   if (is.null(adjust_type)) {
     switch(
       container_type,

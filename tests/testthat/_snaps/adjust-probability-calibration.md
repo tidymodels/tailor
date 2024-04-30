@@ -15,7 +15,7 @@
       adjust_probability_calibration(ctr_cls, "boop")
     Condition
       Error in `adjust_probability_calibration()`:
-      ! `type` must be one of "linear", "isotonic", "isotonic_boot", "logistic", "beta", or "multinomial", not "boop".
+      ! `type` must be one of "logistic", "multinomial", "beta", "isotonic", or "isotonic_boot", not "boop".
 
 ---
 
@@ -24,6 +24,14 @@
         "binary")
     Condition
       Error in `adjust_probability_calibration()`:
-      ! `type` must be one of "linear", "isotonic", or "isotonic_boot", not "binary".
-      i Did you mean "linear"?
+      ! A regression container is incompatible with the operation `adjust_probability_calibration()`.
+
+---
+
+    Code
+      container("classification", "binary") %>% adjust_probability_calibration(
+        "linear")
+    Condition
+      Error in `adjust_probability_calibration()`:
+      ! `type` must be one of "logistic", "multinomial", "beta", "isotonic", or "isotonic_boot", not "linear".
 
