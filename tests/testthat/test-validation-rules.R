@@ -105,3 +105,14 @@ test_that("validation of operations (classification)", {
       adjust_probability_threshold(threshold = .4)
   )
 })
+
+test_that("validation of operations (ambiguous type)", {
+  expect_no_condition(
+    ambiguous_ctr <-
+      container() %>%
+      adjust_predictions_custom(squared = .pred^2) %>%
+      adjust_predictions_custom(boop = boop)
+  )
+
+  expect_equal(ambiguous_ctr$type, "unknown")
+})

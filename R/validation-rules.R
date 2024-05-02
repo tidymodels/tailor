@@ -90,6 +90,10 @@ check_duplicates <- function(x, call) {
 }
 
 infer_type <- function(orderings) {
+  if (all(orderings$output_all)) {
+    return("unknown")
+  }
+
   if (all(orderings$output_numeric | orderings$output_all)) {
     return("regression")
   }
