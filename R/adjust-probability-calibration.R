@@ -28,7 +28,6 @@ adjust_probability_calibration <- function(x, type = NULL) {
     )
 
   new_container(
-    mode = x$mode,
     type = x$type,
     operations = c(x$operations, list(op)),
     columns = x$dat,

@@ -101,7 +101,7 @@ We could manually use `cal_apply()` to adjust predictions, but instead, we'll ad
 #| label: post-1
 
 post_obj <-
-  container(mode = "regression") %>%
+  container() %>%
   adjust_numeric_calibration(bst_cal) 
 post_obj
 ```

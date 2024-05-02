@@ -1,7 +1,5 @@
 #' Declare post-processing for model predictions
 #'
-#' @param mode The model's mode, one of `"classification"`, or `"regression"`.
-#' Modes of `"censored regression"` are not currently supported.
 #' @param type The model sub-type. Possible values are `"unknown"`, `"regression"`,
 #' `"binary"`, or `"multiclass"`.
 #' @param outcome The name of the outcome variable.
@@ -14,9 +12,9 @@
 #' @param time The name of the predicted event time. (not yet supported)
 #' @examples
 #'
-#' container(mode = "regression")
+#' container()
 #' @export
-container <- function(mode, type = "unknown", outcome = NULL, estimate = NULL,
+container <- function(type = "unknown", outcome = NULL, estimate = NULL,
                       probabilities = NULL, time = NULL) {
   columns <-
     list(
@@ -28,7 +26,6 @@ container <- function(mode, type = "unknown", outcome = NULL, estimate = NULL,
     )
 
   new_container(
-    mode,
     type,
     operations = list(),
     columns = columns,
@@ -37,13 +34,7 @@ container <- function(mode, type = "unknown", outcome = NULL, estimate = NULL,
   )
 }
 
-new_container <- function(mode, type, operations, columns, ptype, call) {
-  mode <- arg_match0(mode, c("regression", "classification"))
-
-  if (mode == "regression") {
-    type <- "regression"
-  }
-
+new_container <- function(type, operations, columns, ptype, call) {
   type <- arg_match0(type, c("unknown", "regression", "binary", "multiclass"))
 
   if (!is.list(operations)) {
@@ -58,11 +49,11 @@ new_container <- function(mode, type, operations, columns, ptype, call) {
   }
 
   # validate operation order and check duplicates
-  validate_order(operations, mode, call)
+  validate_order(operations, type, call)
 
   # check columns
   res <- list(
-    mode = mode, type = type, operations = operations,
+    type = type, operations = operations,
     columns = columns, ptype = ptype
   )
   class(res) <- "container"
@@ -120,7 +111,6 @@ fit.container <- function(object, .data, outcome, estimate, probabilities = c(),
   object <- set_container_type(object, .data[[columns$outcome]])
 
   object <- new_container(
-    object$mode,
     object$type,
     operations = object$operations,
     columns = columns,

@@ -7,7 +7,7 @@
 #' library(modeldata)
 #'
 #' post_obj <-
-#'   container(mode = "classification") %>%
+#'   container() %>%
 #'   adjust_probability_threshold(threshold = .1)
 #'
 #' two_class_example %>% count(predicted)
@@ -39,7 +39,6 @@ adjust_probability_threshold <- function(x, threshold = 0.5) {
     )
 
   new_container(
-    mode = x$mode,
     type = x$type,
     operations = c(x$operations, list(op)),
     columns = x$dat,

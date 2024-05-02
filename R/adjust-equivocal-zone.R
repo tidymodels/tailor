@@ -9,7 +9,7 @@
 #' library(modeldata)
 #'
 #' post_obj <-
-#'   container(mode = "classification") %>%
+#'   container() %>%
 #'   adjust_equivocal_zone(value = 1 / 4)
 #'
 #'
@@ -43,7 +43,6 @@ adjust_equivocal_zone <- function(x, value = 0.1, threshold = 1 / 2) {
     )
 
   new_container(
-    mode = x$mode,
     type = x$type,
     operations = c(x$operations, list(op)),
     columns = x$dat,

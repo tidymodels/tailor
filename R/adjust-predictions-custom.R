@@ -9,7 +9,7 @@
 #' library(modeldata)
 #'
 #' post_obj <-
-#'   container(mode = "classification") %>%
+#'   container() %>%
 #'   adjust_equivocal_zone() %>%
 #'   adjust_predictions_custom(linear_predictor = binomial()$linkfun(Class2))
 #'
@@ -39,7 +39,6 @@ adjust_predictions_custom <- function(x, ..., .pkgs = character(0)) {
     )
 
   new_container(
-    mode = x$mode,
     type = x$type,
     operations = c(x$operations, list(op)),
     columns = x$dat,

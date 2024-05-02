@@ -31,7 +31,7 @@ dat
 
 # specify calibration
 reg_ctr <-
-  container(mode = "regression") \%>\%
+  container() \%>\%
   adjust_numeric_calibration(type = "linear")
 
 # train container

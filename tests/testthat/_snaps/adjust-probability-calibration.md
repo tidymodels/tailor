@@ -1,7 +1,7 @@
 # adjustment printing
 
     Code
-      ctr_cls %>% adjust_probability_calibration("logistic")
+      container() %>% adjust_probability_calibration("logistic")
     Message
       
       -- Container -------------------------------------------------------------------
@@ -12,7 +12,7 @@
 # errors informatively with bad input
 
     Code
-      adjust_probability_calibration(ctr_cls, "boop")
+      adjust_probability_calibration(container(), "boop")
     Condition
       Error in `adjust_probability_calibration()`:
       ! `type` must be one of "logistic", "multinomial", "beta", "isotonic", or "isotonic_boot", not "boop".
@@ -20,8 +20,7 @@
 ---
 
     Code
-      container("regression", "regression") %>% adjust_probability_calibration(
-        "binary")
+      container("regression") %>% adjust_probability_calibration("binary")
     Condition
       Error in `adjust_probability_calibration()`:
       ! A regression container is incompatible with the operation `adjust_probability_calibration()`.
@@ -29,8 +28,7 @@
 ---
 
     Code
-      container("classification", "binary") %>% adjust_probability_calibration(
-        "linear")
+      container("binary") %>% adjust_probability_calibration("linear")
     Condition
       Error in `adjust_probability_calibration()`:
       ! `type` must be one of "logistic", "multinomial", "beta", "isotonic", or "isotonic_boot", not "linear".

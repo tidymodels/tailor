@@ -1,4 +1,4 @@
-validate_order <- function(ops, mode, call) {
+validate_order <- function(ops, type, call = caller_env()) {
   orderings <-
     tibble::new_tibble(list(
       name = purrr::map_chr(ops, ~ class(.x)[1]),
@@ -13,11 +13,16 @@ validate_order <- function(ops, mode, call) {
     return(invisible(orderings))
   }
 
-  if (mode == "classification") {
-    check_classification_order(orderings, call)
-  } else {
-    check_regression_order(orderings, call)
+  if (type == "unknown") {
+    type <- infer_type(orderings)
   }
+
+  switch(
+    type,
+    regression = check_regression_order(orderings, call),
+    binary = , multiclass = check_classification_order(orderings, call),
+    invisible()
+  )
 
   invisible(orderings)
 }
@@ -82,4 +87,16 @@ check_duplicates <- function(x, call) {
     cli_abort("Operations cannot be duplicated: {.val {bad_oper}}", call = call)
   }
   invisible(x)
+}
+
+infer_type <- function(orderings) {
+  if (all(orderings$output_numeric | orderings$output_all)) {
+    return("regression")
+  }
+
+  if (all(orderings$output_prob | orderings$output_class | orderings$output_all)) {
+    return("binary")
+  }
+
+  "unknown"
 }

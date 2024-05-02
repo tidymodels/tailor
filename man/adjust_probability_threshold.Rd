@@ -19,7 +19,7 @@ library(dplyr)
 library(modeldata)
 
 post_obj <-
-  container(mode = "classification") \%>\%
+  container() \%>\%
   adjust_probability_threshold(threshold = .1)
 
 two_class_example \%>\% count(predicted)

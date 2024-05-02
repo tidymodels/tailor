@@ -19,7 +19,7 @@
 #'
 #' # specify calibration
 #' reg_ctr <-
-#'   container(mode = "regression") %>%
+#'   container() %>%
 #'   adjust_numeric_calibration(type = "linear")
 #'
 #' # train container
@@ -49,7 +49,6 @@ adjust_numeric_calibration <- function(x, type = NULL) {
     )
 
   new_container(
-    mode = x$mode,
     type = x$type,
     operations = c(x$operations, list(op)),
     columns = x$dat,
