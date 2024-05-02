@@ -1,6 +1,6 @@
 Package: container
 Title: Sandbox for a postprocessor object
-Version: 0.0.0.9000
+Version: 0.0.0.9001
 Authors@R: c(
     person("Simon", "Couch", , "simon.couch@posit.co", role = "aut"),
     person("Hannah", "Frick", , "hannah@posit.co", role = "aut"),
