@@ -4,13 +4,15 @@
 \alias{adjust_probability_calibration}
 \title{Re-calibrate classification probability predictions}
 \usage{
-adjust_probability_calibration(x, calibrator)
+adjust_probability_calibration(x, type = NULL)
 }
 \arguments{
 \item{x}{A \code{\link[=container]{container()}}.}
 
-\item{calibrator}{A pre-trained calibration method from the \pkg{probably}
-package, such as \code{\link[probably:cal_estimate_logistic]{probably::cal_estimate_logistic()}}.}
+\item{type}{Character. One of \code{"logistic"}, \code{"multinomial"},
+\code{"beta"}, \code{"isotonic"}, or \code{"isotonic_boot"}, corresponding to the
+function from the \pkg{probably} package \code{\link[probably:cal_estimate_logistic]{probably::cal_estimate_logistic()}},
+\code{\link[probably:cal_estimate_multinomial]{probably::cal_estimate_multinomial()}}, etc., respectively.}
 }
 \description{
 Re-calibrate classification probability predictions

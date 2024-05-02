@@ -130,7 +130,7 @@ fit.container <- function(object, .data, outcome, estimate, probabilities = c(),
 
   num_oper <- length(object$operations)
   for (op in seq_len(num_oper)) {
-    object$operations[[op]] <- fit(object$operations[[op]], data, object)
+    object$operations[[op]] <- fit(object$operations[[op]], .data, object)
     .data <- predict(object$operations[[op]], .data, object)
   }
 

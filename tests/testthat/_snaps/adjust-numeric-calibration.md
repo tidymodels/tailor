@@ -1,35 +1,36 @@
 # adjustment printing
 
     Code
-      ctr_reg %>% adjust_numeric_calibration(dummy_reg_cal)
+      ctr_reg %>% adjust_numeric_calibration()
     Message
       
       -- Container -------------------------------------------------------------------
-      A postprocessor with 1 operation:
+      A regression postprocessor with 1 operation:
       
       * Re-calibrate numeric predictions.
 
 # errors informatively with bad input
 
     Code
-      adjust_numeric_calibration(ctr_reg)
-    Condition
-      Error in `adjust_numeric_calibration()`:
-      ! `calibrator` is absent but must be supplied.
-
----
-
-    Code
       adjust_numeric_calibration(ctr_reg, "boop")
     Condition
       Error in `adjust_numeric_calibration()`:
-      ! `calibrator` should be a <cal_regression> object (`?probably::cal_estimate_linear()`), not a string.
+      ! `type` must be one of "linear", "isotonic", or "isotonic_boot", not "boop".
 
 ---
 
     Code
-      adjust_numeric_calibration(ctr_cls, dummy_cls_cal)
+      container("classification", "binary") %>% adjust_numeric_calibration("linear")
     Condition
       Error in `adjust_numeric_calibration()`:
-      ! `calibrator` should be a <cal_regression> object (`?probably::cal_estimate_linear()`), not a <cal_binary> object.
+      ! A binary container is incompatible with the operation `adjust_numeric_calibration()`.
+
+---
+
+    Code
+      container("regression", "regression") %>% adjust_numeric_calibration("binary")
+    Condition
+      Error in `adjust_numeric_calibration()`:
+      ! `type` must be one of "linear", "isotonic", or "isotonic_boot", not "binary".
+      i Did you mean "linear"?
 

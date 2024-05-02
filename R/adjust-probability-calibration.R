@@ -1,18 +1,19 @@
 #' Re-calibrate classification probability predictions
 #'
 #' @param x A [container()].
-#' @param calibrator A pre-trained calibration method from the \pkg{probably}
-#' package, such as [probably::cal_estimate_logistic()].
+#' @param type Character. One of `"logistic"`, `"multinomial"`,
+#' `"beta"`, `"isotonic"`, or `"isotonic_boot"`, corresponding to the
+#' function from the \pkg{probably} package [probably::cal_estimate_logistic()],
+#' [probably::cal_estimate_multinomial()], etc., respectively.
 #' @export
-adjust_probability_calibration <- function(x, calibrator) {
-  check_container(x)
-  cls <- c("cal_binary", "cal_multinomial")
-  check_required(calibrator)
-  if (!inherits_any(calibrator, cls)) {
-    cli_abort(
-      "{.arg calibrator} should be a \\
-       {.help [<cal_binary> or <cal_multinomial> object](probably::cal_estimate_logistic)}, \\
-       not {.obj_type_friendly {calibrator}}."
+adjust_probability_calibration <- function(x, type = NULL) {
+  # to-do: add argument specifying `prop` in initial_split
+  check_container(x, calibration_type = "probability")
+  # wait to `check_type()` until `fit()` time
+  if (!is.null(type)) {
+    arg_match(
+      type,
+      c("logistic", "multinomial", "beta", "isotonic", "isotonic_boot")
     )
   }
 
@@ -21,7 +22,7 @@ adjust_probability_calibration <- function(x, calibrator) {
       "probability_calibration",
       inputs = "probability",
       outputs = "probability_class",
-      arguments = list(calibrator = calibrator),
+      arguments = list(type = type),
       results = list(),
       trained = FALSE
     )
@@ -45,19 +46,35 @@ print.probability_calibration <- function(x, ...) {
 
 #' @export
 fit.probability_calibration <- function(object, data, container = NULL, ...) {
+  type <- check_type(object$type, container$type)
+  # todo: adjust_probability_calibration() should take arguments to pass to
+  # cal_estimate_* via dots
+  # to-do: add argument specifying `prop` in initial_split
+  fit <-
+    eval_bare(
+      call2(
+        paste0("cal_estimate_", type),
+        .data = data,
+        # todo: make getters for the entries in `columns`
+        truth = container$columns$outcome,
+        estimate = container$columns$estimate,
+        .ns = "probably"
+      )
+    )
+
   new_operation(
     class(object),
     inputs = object$inputs,
     outputs = object$outputs,
     arguments = object$arguments,
-    results = list(),
+    results = list(fit = fit),
     trained = TRUE
   )
 }
 
 #' @export
 predict.probability_calibration <- function(object, new_data, container, ...) {
-  probably::cal_apply(new_data, object$argument$calibrator)
+  probably::cal_apply(new_data, object$results$fit)
 }
 
 # todo probably needs required_pkgs methods for cal objects

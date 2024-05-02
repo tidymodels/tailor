@@ -1,7 +1,7 @@
 # adjustment printing
 
     Code
-      ctr_cls %>% adjust_probability_calibration(dummy_cls_cal)
+      ctr_cls %>% adjust_probability_calibration("logistic")
     Message
       
       -- Container -------------------------------------------------------------------
@@ -12,24 +12,26 @@
 # errors informatively with bad input
 
     Code
-      adjust_probability_calibration(ctr_cls)
-    Condition
-      Error in `adjust_probability_calibration()`:
-      ! `calibrator` is absent but must be supplied.
-
----
-
-    Code
       adjust_probability_calibration(ctr_cls, "boop")
     Condition
       Error in `adjust_probability_calibration()`:
-      ! `calibrator` should be a <cal_binary> or <cal_multinomial> object (`?probably::cal_estimate_logistic()`), not a string.
+      ! `type` must be one of "logistic", "multinomial", "beta", "isotonic", or "isotonic_boot", not "boop".
 
 ---
 
     Code
-      adjust_probability_calibration(ctr_cls, dummy_reg_cal)
+      container("regression", "regression") %>% adjust_probability_calibration(
+        "binary")
     Condition
       Error in `adjust_probability_calibration()`:
-      ! `calibrator` should be a <cal_binary> or <cal_multinomial> object (`?probably::cal_estimate_logistic()`), not a <cal_regression> object.
+      ! A regression container is incompatible with the operation `adjust_probability_calibration()`.
+
+---
+
+    Code
+      container("classification", "binary") %>% adjust_probability_calibration(
+        "linear")
+    Condition
+      Error in `adjust_probability_calibration()`:
+      ! `type` must be one of "logistic", "multinomial", "beta", "isotonic", or "isotonic_boot", not "linear".
 

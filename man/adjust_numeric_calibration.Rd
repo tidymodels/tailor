@@ -4,13 +4,16 @@
 \alias{adjust_numeric_calibration}
 \title{Re-calibrate numeric predictions}
 \usage{
-adjust_numeric_calibration(x, calibrator)
+adjust_numeric_calibration(x, type = NULL)
 }
 \arguments{
 \item{x}{A \code{\link[=container]{container()}}.}
 
-\item{calibrator}{A pre-trained calibration method from the \pkg{probably}
-package, such as \code{\link[probably:cal_estimate_linear]{probably::cal_estimate_linear()}}.}
+\item{type}{Character. One of \code{"linear"}, \code{"isotonic"}, or
+\code{"isotonic_boot"}, corresponding to the function from the \pkg{probably}
+package \code{\link[probably:cal_estimate_linear]{probably::cal_estimate_linear()}},
+\code{\link[probably:cal_estimate_isotonic]{probably::cal_estimate_isotonic()}}, or
+\code{\link[probably:cal_estimate_isotonic_boot]{probably::cal_estimate_isotonic_boot()}}, respectively.}
 }
 \description{
 Re-calibrate numeric predictions
@@ -26,16 +29,13 @@ dat <- tibble(y = rnorm(100), y_pred = y/2 + rnorm(100))
 
 dat
 
-# calibrate numeric predictions
-reg_cal <- cal_estimate_linear(dat, truth = y, estimate = y_pred)
-
 # specify calibration
 reg_ctr <-
   container(mode = "regression") \%>\%
-  adjust_numeric_calibration(reg_cal)
+  adjust_numeric_calibration(type = "linear")
 
-# "train" container
+# train container
 reg_ctr_trained <- fit(reg_ctr, dat, outcome = y, estimate = y_pred)
 
-predict(reg_ctr, dat)
+predict(reg_ctr_trained, dat)
 }
