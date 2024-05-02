@@ -15,7 +15,7 @@
       adjust_numeric_calibration(container(), "boop")
     Condition
       Error in `adjust_numeric_calibration()`:
-      ! `type` must be one of "linear", "isotonic", or "isotonic_boot", not "boop".
+      ! `method` must be one of "linear", "isotonic", or "isotonic_boot", not "boop".
 
 ---
 
@@ -31,6 +31,6 @@
       container("regression") %>% adjust_numeric_calibration("binary")
     Condition
       Error in `adjust_numeric_calibration()`:
-      ! `type` must be one of "linear", "isotonic", or "isotonic_boot", not "binary".
+      ! `method` must be one of "linear", "isotonic", or "isotonic_boot", not "binary".
       i Did you mean "linear"?
 

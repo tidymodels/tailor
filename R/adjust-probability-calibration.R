@@ -1,18 +1,18 @@
 #' Re-calibrate classification probability predictions
 #'
 #' @param x A [container()].
-#' @param type Character. One of `"logistic"`, `"multinomial"`,
+#' @param method Character. One of `"logistic"`, `"multinomial"`,
 #' `"beta"`, `"isotonic"`, or `"isotonic_boot"`, corresponding to the
 #' function from the \pkg{probably} package [probably::cal_estimate_logistic()],
 #' [probably::cal_estimate_multinomial()], etc., respectively.
 #' @export
-adjust_probability_calibration <- function(x, type = NULL) {
+adjust_probability_calibration <- function(x, method = NULL) {
   # to-do: add argument specifying `prop` in initial_split
   check_container(x, calibration_type = "probability")
-  # wait to `check_type()` until `fit()` time
-  if (!is.null(type)) {
+  # wait to `check_method()` until `fit()` time
+  if (!is.null(method)) {
     arg_match(
-      type,
+      method,
       c("logistic", "multinomial", "beta", "isotonic", "isotonic_boot")
     )
   }
@@ -22,7 +22,7 @@ adjust_probability_calibration <- function(x, type = NULL) {
       "probability_calibration",
       inputs = "probability",
       outputs = "probability_class",
-      arguments = list(type = type),
+      arguments = list(method = method),
       results = list(),
       trained = FALSE
     )
@@ -45,14 +45,14 @@ print.probability_calibration <- function(x, ...) {
 
 #' @export
 fit.probability_calibration <- function(object, data, container = NULL, ...) {
-  type <- check_type(object$type, container$type)
+  method <- check_method(object$method, container$type)
   # todo: adjust_probability_calibration() should take arguments to pass to
   # cal_estimate_* via dots
   # to-do: add argument specifying `prop` in initial_split
   fit <-
     eval_bare(
       call2(
-        paste0("cal_estimate_", type),
+        paste0("cal_estimate_", method),
         .data = data,
         # todo: make getters for the entries in `columns`
         truth = container$columns$outcome,

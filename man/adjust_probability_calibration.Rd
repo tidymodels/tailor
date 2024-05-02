@@ -4,12 +4,12 @@
 \alias{adjust_probability_calibration}
 \title{Re-calibrate classification probability predictions}
 \usage{
-adjust_probability_calibration(x, type = NULL)
+adjust_probability_calibration(x, method = NULL)
 }
 \arguments{
 \item{x}{A \code{\link[=container]{container()}}.}
 
-\item{type}{Character. One of \code{"logistic"}, \code{"multinomial"},
+\item{method}{Character. One of \code{"logistic"}, \code{"multinomial"},
 \code{"beta"}, \code{"isotonic"}, or \code{"isotonic_boot"}, corresponding to the
 function from the \pkg{probably} package \code{\link[probably:cal_estimate_logistic]{probably::cal_estimate_logistic()}},
 \code{\link[probably:cal_estimate_multinomial]{probably::cal_estimate_multinomial()}}, etc., respectively.}

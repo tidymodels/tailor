@@ -61,13 +61,13 @@ check_container <- function(x, calibration_type = NULL, call = caller_env(), arg
   # check that the type of calibration ("numeric" or "probability") is
   # compatible with the container type
   if (!is.null(calibration_type)) {
-    container_type <- x$type
+    type <- x$type
     switch(
-      container_type,
+      type,
       regression =
-        check_calibration_type(calibration_type, "numeric", container_type, call = call),
-      binary = , multinomial =
-        check_calibration_type(calibration_type, "probability", container_type, call = call)
+        check_calibration_type(calibration_type, "numeric", type, call = call),
+      binary = , multiclass =
+        check_calibration_type(calibration_type, "probability", type, call = call)
     )
   }
 
@@ -90,20 +90,19 @@ types_binary <- c("logistic", "beta", "isotonic", "isotonic_boot")
 types_multiclass <- c("multinomial", "beta", "isotonic", "isotonic_boot")
 # a check function to be called when a container is being `fit()`ted.
 # by the time a container is fitted, we have:
-# * `adjust_type`, the `type` argument passed to an `adjust_*` function
+# * `method`, the `method` argument passed to an `adjust_*` function
 #     * this argument has already been checked to agree with the kind of
 #       `adjust_*()` function via `arg_match0()`.
 # * `container_type`, the `type` argument either specified in `container()`
 #   or inferred in `fit.container()`.
-check_type <- function(adjust_type,
-                       container_type,
-                       arg = caller_arg(adjust_type),
+check_method <- function(method,
+                       type,
+                       arg = caller_arg(method),
                        call = caller_env()) {
-  # if no `adjust_type` was supplied, infer a reasonable one based on the
-  # `container_type`
-  if (is.null(adjust_type)) {
+  # if no `method` was supplied, infer a reasonable one based on the `type`
+  if (is.null(method)) {
     switch(
-      container_type,
+      type,
       regression = return("linear"),
       binary = return("logistic"),
       multiclass = return("multinomial")
@@ -111,33 +110,33 @@ check_type <- function(adjust_type,
   }
 
   switch(
-    container_type,
+    type,
     regression = arg_match0(
-      adjust_type,
+      method,
       types_regression,
       arg_nm = arg,
       error_call = call
     ),
     binary = arg_match0(
-      adjust_type,
+      method,
       types_binary,
       arg_nm = arg,
       error_call = call
     ),
     multiclass = arg_match0(
-      adjust_type,
+      method,
       types_multiclass,
       arg_nm = arg,
       error_call = call
     ),
     arg_match0(
-      adjust_type,
+      method,
       unique(c(types_regression, types_binary, types_multiclass)),
       arg_nm = arg,
       error_call = call
     )
   )
 
-  adjust_type
+  method
 }
 

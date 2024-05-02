@@ -15,7 +15,7 @@
       adjust_probability_calibration(container(), "boop")
     Condition
       Error in `adjust_probability_calibration()`:
-      ! `type` must be one of "logistic", "multinomial", "beta", "isotonic", or "isotonic_boot", not "boop".
+      ! `method` must be one of "logistic", "multinomial", "beta", "isotonic", or "isotonic_boot", not "boop".
 
 ---
 
@@ -31,5 +31,5 @@
       container("binary") %>% adjust_probability_calibration("linear")
     Condition
       Error in `adjust_probability_calibration()`:
-      ! `type` must be one of "logistic", "multinomial", "beta", "isotonic", or "isotonic_boot", not "linear".
+      ! `method` must be one of "logistic", "multinomial", "beta", "isotonic", or "isotonic_boot", not "linear".
 

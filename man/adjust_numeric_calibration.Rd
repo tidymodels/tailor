@@ -4,12 +4,12 @@
 \alias{adjust_numeric_calibration}
 \title{Re-calibrate numeric predictions}
 \usage{
-adjust_numeric_calibration(x, type = NULL)
+adjust_numeric_calibration(x, method = NULL)
 }
 \arguments{
 \item{x}{A \code{\link[=container]{container()}}.}
 
-\item{type}{Character. One of \code{"linear"}, \code{"isotonic"}, or
+\item{method}{Character. One of \code{"linear"}, \code{"isotonic"}, or
 \code{"isotonic_boot"}, corresponding to the function from the \pkg{probably}
 package \code{\link[probably:cal_estimate_linear]{probably::cal_estimate_linear()}},
 \code{\link[probably:cal_estimate_isotonic]{probably::cal_estimate_isotonic()}}, or
@@ -32,7 +32,7 @@ dat
 # specify calibration
 reg_ctr <-
   container() \%>\%
-  adjust_numeric_calibration(type = "linear")
+  adjust_numeric_calibration(method = "linear")
 
 # train container
 reg_ctr_trained <- fit(reg_ctr, dat, outcome = y, estimate = y_pred)
