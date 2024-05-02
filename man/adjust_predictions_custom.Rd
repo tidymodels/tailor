@@ -22,7 +22,7 @@ library(dplyr)
 library(modeldata)
 
 post_obj <-
-  container(mode = "classification") \%>\%
+  container() \%>\%
   adjust_equivocal_zone() \%>\%
   adjust_predictions_custom(linear_predictor = binomial()$linkfun(Class2))
 

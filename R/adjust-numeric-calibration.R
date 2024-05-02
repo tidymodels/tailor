@@ -1,7 +1,7 @@
 #' Re-calibrate numeric predictions
 #'
 #' @param x A [container()].
-#' @param type Character. One of `"linear"`, `"isotonic"`, or
+#' @param method Character. One of `"linear"`, `"isotonic"`, or
 #' `"isotonic_boot"`, corresponding to the function from the \pkg{probably}
 #' package [probably::cal_estimate_linear()],
 #' [probably::cal_estimate_isotonic()], or
@@ -19,21 +19,21 @@
 #'
 #' # specify calibration
 #' reg_ctr <-
-#'   container(mode = "regression") %>%
-#'   adjust_numeric_calibration(type = "linear")
+#'   container() %>%
+#'   adjust_numeric_calibration(method = "linear")
 #'
 #' # train container
 #' reg_ctr_trained <- fit(reg_ctr, dat, outcome = y, estimate = y_pred)
 #'
 #' predict(reg_ctr_trained, dat)
 #' @export
-adjust_numeric_calibration <- function(x, type = NULL) {
+adjust_numeric_calibration <- function(x, method = NULL) {
   # to-do: add argument specifying `prop` in initial_split
   check_container(x, calibration_type = "numeric")
-  # wait to `check_type()` until `fit()` time
-  if (!is.null(type)) {
+  # wait to `check_method()` until `fit()` time
+  if (!is.null(method)) {
     arg_match0(
-      type,
+      method,
       c("linear", "isotonic", "isotonic_boot")
     )
   }
@@ -43,13 +43,12 @@ adjust_numeric_calibration <- function(x, type = NULL) {
       "numeric_calibration",
       inputs = "numeric",
       outputs = "numeric",
-      arguments = list(type = type),
+      arguments = list(method = method),
       results = list(),
       trained = FALSE
     )
 
   new_container(
-    mode = x$mode,
     type = x$type,
     operations = c(x$operations, list(op)),
     columns = x$dat,
@@ -67,13 +66,13 @@ print.numeric_calibration <- function(x, ...) {
 
 #' @export
 fit.numeric_calibration <- function(object, data, container = NULL, ...) {
-  type <- check_type(object$type, container$type)
+  method <- check_method(object$method, container$type)
   # todo: adjust_numeric_calibration() should take arguments to pass to
   # cal_estimate_* via dots
   fit <-
     eval_bare(
       call2(
-        paste0("cal_estimate_", type),
+        paste0("cal_estimate_", method),
         .data = data,
         truth = container$columns$outcome,
         estimate = container$columns$estimate,

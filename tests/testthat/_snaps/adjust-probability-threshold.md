@@ -1,7 +1,7 @@
 # adjustment printing
 
     Code
-      ctr_cls %>% adjust_probability_threshold()
+      container() %>% adjust_probability_threshold()
     Message
       
       -- Container -------------------------------------------------------------------
@@ -12,7 +12,7 @@
 ---
 
     Code
-      ctr_cls %>% adjust_probability_threshold(hardhat::tune())
+      container() %>% adjust_probability_threshold(hardhat::tune())
     Message
       
       -- Container -------------------------------------------------------------------

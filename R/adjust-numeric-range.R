@@ -19,7 +19,6 @@ adjust_numeric_range <- function(x, lower_limit = -Inf, upper_limit = Inf) {
     )
 
   new_container(
-    mode = x$mode,
     type = x$type,
     operations = c(x$operations, list(op)),
     columns = x$dat,
