@@ -1,10 +1,10 @@
 # adjustment printing
 
     Code
-      container() %>% adjust_numeric_calibration()
+      tailor() %>% adjust_numeric_calibration()
     Message
       
-      -- Container -------------------------------------------------------------------
+      -- tailor ----------------------------------------------------------------------
       A postprocessor with 1 operation:
       
       * Re-calibrate numeric predictions.
@@ -12,7 +12,7 @@
 # errors informatively with bad input
 
     Code
-      adjust_numeric_calibration(container(), "boop")
+      adjust_numeric_calibration(tailor(), "boop")
     Condition
       Error in `adjust_numeric_calibration()`:
       ! `method` must be one of "linear", "isotonic", or "isotonic_boot", not "boop".
@@ -20,15 +20,15 @@
 ---
 
     Code
-      container("binary") %>% adjust_numeric_calibration("linear")
+      tailor("binary") %>% adjust_numeric_calibration("linear")
     Condition
       Error in `adjust_numeric_calibration()`:
-      ! A binary container is incompatible with the operation `adjust_numeric_calibration()`.
+      ! A binary tailor is incompatible with the operation `adjust_numeric_calibration()`.
 
 ---
 
     Code
-      container("regression") %>% adjust_numeric_calibration("binary")
+      tailor("regression") %>% adjust_numeric_calibration("binary")
     Condition
       Error in `adjust_numeric_calibration()`:
       ! `method` must be one of "linear", "isotonic", or "isotonic_boot", not "binary".

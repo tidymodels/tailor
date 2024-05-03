@@ -7,6 +7,6 @@
 # * https://testthat.r-lib.org/articles/special-files.html
 
 library(testthat)
-library(container)
+library(tailor)
 
-test_check("container")
+test_check("tailor")

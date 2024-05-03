@@ -1,6 +1,6 @@
 #' Re-calibrate classification probability predictions
 #'
-#' @param x A [container()].
+#' @param x A [tailor()].
 #' @param method Character. One of `"logistic"`, `"multinomial"`,
 #' `"beta"`, `"isotonic"`, or `"isotonic_boot"`, corresponding to the
 #' function from the \pkg{probably} package [probably::cal_estimate_logistic()],
@@ -8,7 +8,7 @@
 #' @export
 adjust_probability_calibration <- function(x, method = NULL) {
   # to-do: add argument specifying `prop` in initial_split
-  check_container(x, calibration_type = "probability")
+  check_tailor(x, calibration_type = "probability")
   # wait to `check_method()` until `fit()` time
   if (!is.null(method)) {
     arg_match(
@@ -27,7 +27,7 @@ adjust_probability_calibration <- function(x, method = NULL) {
       trained = FALSE
     )
 
-  new_container(
+  new_tailor(
     type = x$type,
     operations = c(x$operations, list(op)),
     columns = x$dat,
@@ -44,8 +44,8 @@ print.probability_calibration <- function(x, ...) {
 }
 
 #' @export
-fit.probability_calibration <- function(object, data, container = NULL, ...) {
-  method <- check_method(object$method, container$type)
+fit.probability_calibration <- function(object, data, tailor = NULL, ...) {
+  method <- check_method(object$method, tailor$type)
   # todo: adjust_probability_calibration() should take arguments to pass to
   # cal_estimate_* via dots
   # to-do: add argument specifying `prop` in initial_split
@@ -55,8 +55,8 @@ fit.probability_calibration <- function(object, data, container = NULL, ...) {
         paste0("cal_estimate_", method),
         .data = data,
         # todo: make getters for the entries in `columns`
-        truth = container$columns$outcome,
-        estimate = container$columns$estimate,
+        truth = tailor$columns$outcome,
+        estimate = tailor$columns$estimate,
         .ns = "probably"
       )
     )
@@ -72,14 +72,14 @@ fit.probability_calibration <- function(object, data, container = NULL, ...) {
 }
 
 #' @export
-predict.probability_calibration <- function(object, new_data, container, ...) {
+predict.probability_calibration <- function(object, new_data, tailor, ...) {
   probably::cal_apply(new_data, object$results$fit)
 }
 
 # todo probably needs required_pkgs methods for cal objects
 #' @export
 required_pkgs.probability_calibration <- function(x, ...) {
-  c("container", "probably")
+  c("tailor", "probably")
 }
 
 #' @export

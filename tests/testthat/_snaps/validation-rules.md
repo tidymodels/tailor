@@ -1,7 +1,7 @@
 # validation of operations (regression)
 
     Code
-      container(type = "regression") %>% adjust_numeric_range(lower_limit = 2) %>%
+      tailor(type = "regression") %>% adjust_numeric_range(lower_limit = 2) %>%
         adjust_numeric_calibration() %>% adjust_predictions_custom(squared = .pred^2)
     Condition
       Error in `adjust_numeric_calibration()`:
@@ -10,7 +10,7 @@
 # validation of operations (classification)
 
     Code
-      container(type = "binary") %>% adjust_probability_threshold(threshold = 0.4) %>%
+      tailor(type = "binary") %>% adjust_probability_threshold(threshold = 0.4) %>%
         adjust_probability_calibration()
     Condition
       Error in `adjust_probability_calibration()`:
@@ -19,7 +19,7 @@
 ---
 
     Code
-      container() %>% adjust_probability_threshold(threshold = 0.4) %>%
+      tailor() %>% adjust_probability_threshold(threshold = 0.4) %>%
         adjust_probability_calibration()
     Condition
       Error in `adjust_probability_calibration()`:
@@ -28,7 +28,7 @@
 ---
 
     Code
-      container(type = "binary") %>% adjust_predictions_custom(veg = "potato") %>%
+      tailor(type = "binary") %>% adjust_predictions_custom(veg = "potato") %>%
         adjust_probability_threshold(threshold = 0.4) %>%
         adjust_probability_calibration()
     Condition
@@ -38,7 +38,7 @@
 ---
 
     Code
-      container() %>% adjust_predictions_custom(veg = "potato") %>%
+      tailor() %>% adjust_predictions_custom(veg = "potato") %>%
         adjust_probability_threshold(threshold = 0.4) %>%
         adjust_probability_calibration()
     Condition
@@ -48,18 +48,7 @@
 ---
 
     Code
-      container(type = "binary") %>% adjust_predictions_custom(veg = "potato") %>%
-        adjust_probability_threshold(threshold = 0.4) %>%
-        adjust_probability_threshold(threshold = 0.5) %>%
-        adjust_probability_calibration()
-    Condition
-      Error in `adjust_probability_threshold()`:
-      ! Operations cannot be duplicated: "probability_threshold"
-
----
-
-    Code
-      container() %>% adjust_predictions_custom(veg = "potato") %>%
+      tailor(type = "binary") %>% adjust_predictions_custom(veg = "potato") %>%
         adjust_probability_threshold(threshold = 0.4) %>%
         adjust_probability_threshold(threshold = 0.5) %>%
         adjust_probability_calibration()
@@ -70,7 +59,18 @@
 ---
 
     Code
-      container(type = "binary") %>% adjust_equivocal_zone(value = 0.2) %>%
+      tailor() %>% adjust_predictions_custom(veg = "potato") %>%
+        adjust_probability_threshold(threshold = 0.4) %>%
+        adjust_probability_threshold(threshold = 0.5) %>%
+        adjust_probability_calibration()
+    Condition
+      Error in `adjust_probability_threshold()`:
+      ! Operations cannot be duplicated: "probability_threshold"
+
+---
+
+    Code
+      tailor(type = "binary") %>% adjust_equivocal_zone(value = 0.2) %>%
         adjust_probability_threshold(threshold = 0.4)
     Condition
       Error in `adjust_probability_threshold()`:
@@ -79,7 +79,7 @@
 ---
 
     Code
-      container() %>% adjust_equivocal_zone(value = 0.2) %>%
+      tailor() %>% adjust_equivocal_zone(value = 0.2) %>%
         adjust_probability_threshold(threshold = 0.4)
     Condition
       Error in `adjust_probability_threshold()`:

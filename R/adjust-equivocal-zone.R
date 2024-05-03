@@ -1,6 +1,6 @@
 #' Apply an equivocal zone to a binary classification model.
 #'
-#' @param x A [container()].
+#' @param x A [tailor()].
 #' @param value A numeric value (between zero and 1/2) or [hardhat::tune()]. The
 #' value is the size of the buffer around the threshold.
 #' @param threshold A numeric value (between zero and one) or [hardhat::tune()].
@@ -9,7 +9,7 @@
 #' library(modeldata)
 #'
 #' post_obj <-
-#'   container() %>%
+#'   tailor() %>%
 #'   adjust_equivocal_zone(value = 1 / 4)
 #'
 #'
@@ -24,7 +24,7 @@
 #' predict(post_res, two_class_example)
 #' @export
 adjust_equivocal_zone <- function(x, value = 0.1, threshold = 1 / 2) {
-  check_container(x)
+  check_tailor(x)
   if (!is_tune(value)) {
     check_number_decimal(value, min = 0, max = 1 / 2)
   }
@@ -42,7 +42,7 @@ adjust_equivocal_zone <- function(x, value = 0.1, threshold = 1 / 2) {
       trained = FALSE
     )
 
-  new_container(
+  new_tailor(
     type = x$type,
     operations = c(x$operations, list(op)),
     columns = x$dat,
@@ -68,7 +68,7 @@ print.equivocal_zone <- function(x, ...) {
 }
 
 #' @export
-fit.equivocal_zone <- function(object, data, container = NULL, ...) {
+fit.equivocal_zone <- function(object, data, tailor = NULL, ...) {
   new_operation(
     class(object),
     inputs = object$inputs,
@@ -80,9 +80,9 @@ fit.equivocal_zone <- function(object, data, container = NULL, ...) {
 }
 
 #' @export
-predict.equivocal_zone <- function(object, new_data, container, ...) {
-  est_nm <- container$columns$estimate
-  prob_nm <- container$columns$probabilities[1]
+predict.equivocal_zone <- function(object, new_data, tailor, ...) {
+  est_nm <- tailor$columns$estimate
+  prob_nm <- tailor$columns$probabilities[1]
   lvls <- levels(new_data[[est_nm]])
   col_syms <- syms(prob_nm[1])
   cls_pred <- probably::make_two_class_pred(
@@ -97,7 +97,7 @@ predict.equivocal_zone <- function(object, new_data, container, ...) {
 
 #' @export
 required_pkgs.equivocal_zone <- function(x, ...) {
-  c("container", "probably")
+  c("tailor", "probably")
 }
 
 #' @export
@@ -105,7 +105,7 @@ tunable.equivocal_zone <- function(x, ...) {
   tibble::new_tibble(list(
     name = "buffer",
     call_info = list(list(pkg = "dials", fun = "buffer")),
-    source = "container",
+    source = "tailor",
     component = "equivocal_zone",
     component_id = "equivocal_zone"
   ))

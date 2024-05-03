@@ -1,12 +1,12 @@
 #' Truncate the range of numeric predictions
 #'
-#' @param x A [container()].
+#' @param x A [tailor()].
 #' @param upper_limit,lower_limit A numeric value, NA (for no truncation) or
 #' [hardhat::tune()].
 #' @export
 adjust_numeric_range <- function(x, lower_limit = -Inf, upper_limit = Inf) {
   # remaining input checks are done via probably::bound_prediction
-  check_container(x)
+  check_tailor(x)
 
   op <-
     new_operation(
@@ -18,7 +18,7 @@ adjust_numeric_range <- function(x, lower_limit = -Inf, upper_limit = Inf) {
       trained = FALSE
     )
 
-  new_container(
+  new_tailor(
     type = x$type,
     operations = c(x$operations, list(op)),
     columns = x$dat,
@@ -57,7 +57,7 @@ print.numeric_range <- function(x, ...) {
 }
 
 #' @export
-fit.numeric_range <- function(object, data, container = NULL, ...) {
+fit.numeric_range <- function(object, data, tailor = NULL, ...) {
   new_operation(
     class(object),
     inputs = object$inputs,
@@ -69,8 +69,8 @@ fit.numeric_range <- function(object, data, container = NULL, ...) {
 }
 
 #' @export
-predict.numeric_range <- function(object, new_data, container, ...) {
-  est_nm <- container$columns$estimate
+predict.numeric_range <- function(object, new_data, tailor, ...) {
+  est_nm <- tailor$columns$estimate
   lo <- object$arguments$lower_limit
   hi <- object$arguments$upper_limit
 
@@ -82,7 +82,7 @@ predict.numeric_range <- function(object, new_data, container, ...) {
 
 #' @export
 required_pkgs.numeric_range <- function(x, ...) {
-  c("container", "probably")
+  c("tailor", "probably")
 }
 
 #' @export
@@ -93,7 +93,7 @@ tunable.numeric_range <- function(x, ...) {
       list(pkg = "dials", fun = "lower_limit"), # todo make these dials functions
       list(pkg = "dials", fun = "upper_limit")
     ),
-    source = "container",
+    source = "tailor",
     component = "numeric_range",
     component_id = "numeric_range"
   ))

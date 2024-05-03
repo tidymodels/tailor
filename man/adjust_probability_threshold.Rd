@@ -7,7 +7,7 @@
 adjust_probability_threshold(x, threshold = 0.5)
 }
 \arguments{
-\item{x}{A \code{\link[=container]{container()}}.}
+\item{x}{A \code{\link[=tailor]{tailor()}}.}
 
 \item{threshold}{A numeric value (between zero and one) or \code{\link[hardhat:tune]{hardhat::tune()}}.}
 }
@@ -19,7 +19,7 @@ library(dplyr)
 library(modeldata)
 
 post_obj <-
-  container() \%>\%
+  tailor() \%>\%
   adjust_probability_threshold(threshold = .1)
 
 two_class_example \%>\% count(predicted)

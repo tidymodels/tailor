@@ -1,8 +1,8 @@
 ---
-title: "container regression example"
+title: "tailor regression example"
 ---
 
-This is an example regression analysis to show how the container package might work. 
+This is an example regression analysis to show how the tailor package might work. 
 
 We'll use the [food delivery data](https://aml4td.org/chapters/whole-game.html) and start with a three-way split:
 
@@ -12,7 +12,7 @@ We'll use the [food delivery data](https://aml4td.org/chapters/whole-game.html) 
 
 library(tidymodels)
 library(bonsai) 
-library(container)
+library(tailor)
 library(probably)
 library(patchwork)
 ```
@@ -20,7 +20,7 @@ library(patchwork)
 #| label: startup
 library(tidymodels)
 library(bonsai) # also requires lightgbm package
-library(container) # pak::pak(c("tidymodels/container@max"), ask = FALSE)
+library(tailor) # pak::pak(c("tidymodels/tailor@max"), ask = FALSE)
 library(probably)
 library(patchwork)
 
@@ -101,7 +101,7 @@ We could manually use `cal_apply()` to adjust predictions, but instead, we'll ad
 #| label: post-1
 
 post_obj <-
-  container() %>%
+  tailor() %>%
   adjust_numeric_calibration(bst_cal) 
 post_obj
 ```

@@ -1,6 +1,6 @@
 #' Re-calibrate numeric predictions
 #'
-#' @param x A [container()].
+#' @param x A [tailor()].
 #' @param method Character. One of `"linear"`, `"isotonic"`, or
 #' `"isotonic_boot"`, corresponding to the function from the \pkg{probably}
 #' package [probably::cal_estimate_linear()],
@@ -18,18 +18,18 @@
 #' dat
 #'
 #' # specify calibration
-#' reg_ctr <-
-#'   container() %>%
+#' reg_tailor <-
+#'   tailor() %>%
 #'   adjust_numeric_calibration(method = "linear")
 #'
-#' # train container
-#' reg_ctr_trained <- fit(reg_ctr, dat, outcome = y, estimate = y_pred)
+#' # train tailor
+#' reg_tailor_trained <- fit(reg_tailor, dat, outcome = y, estimate = y_pred)
 #'
-#' predict(reg_ctr_trained, dat)
+#' predict(reg_tailor_trained, dat)
 #' @export
 adjust_numeric_calibration <- function(x, method = NULL) {
   # to-do: add argument specifying `prop` in initial_split
-  check_container(x, calibration_type = "numeric")
+  check_tailor(x, calibration_type = "numeric")
   # wait to `check_method()` until `fit()` time
   if (!is.null(method)) {
     arg_match0(
@@ -48,7 +48,7 @@ adjust_numeric_calibration <- function(x, method = NULL) {
       trained = FALSE
     )
 
-  new_container(
+  new_tailor(
     type = x$type,
     operations = c(x$operations, list(op)),
     columns = x$dat,
@@ -65,8 +65,8 @@ print.numeric_calibration <- function(x, ...) {
 }
 
 #' @export
-fit.numeric_calibration <- function(object, data, container = NULL, ...) {
-  method <- check_method(object$method, container$type)
+fit.numeric_calibration <- function(object, data, tailor = NULL, ...) {
+  method <- check_method(object$method, tailor$type)
   # todo: adjust_numeric_calibration() should take arguments to pass to
   # cal_estimate_* via dots
   fit <-
@@ -74,8 +74,8 @@ fit.numeric_calibration <- function(object, data, container = NULL, ...) {
       call2(
         paste0("cal_estimate_", method),
         .data = data,
-        truth = container$columns$outcome,
-        estimate = container$columns$estimate,
+        truth = tailor$columns$outcome,
+        estimate = tailor$columns$estimate,
         .ns = "probably"
       )
     )
@@ -91,14 +91,14 @@ fit.numeric_calibration <- function(object, data, container = NULL, ...) {
 }
 
 #' @export
-predict.numeric_calibration <- function(object, new_data, container, ...) {
+predict.numeric_calibration <- function(object, new_data, tailor, ...) {
   probably::cal_apply(new_data, object$results$fit)
 }
 
 # todo probably needs required_pkgs methods for cal objects
 #' @export
 required_pkgs.numeric_calibration <- function(x, ...) {
-  c("container", "probably")
+  c("tailor", "probably")
 }
 
 #' @export

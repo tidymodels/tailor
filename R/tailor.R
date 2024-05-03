@@ -12,9 +12,9 @@
 #' @param time The name of the predicted event time. (not yet supported)
 #' @examples
 #'
-#' container()
+#' tailor()
 #' @export
-container <- function(type = "unknown", outcome = NULL, estimate = NULL,
+tailor <- function(type = "unknown", outcome = NULL, estimate = NULL,
                       probabilities = NULL, time = NULL) {
   columns <-
     list(
@@ -25,7 +25,7 @@ container <- function(type = "unknown", outcome = NULL, estimate = NULL,
       time = time
     )
 
-  new_container(
+  new_tailor(
     type,
     operations = list(),
     columns = columns,
@@ -34,7 +34,7 @@ container <- function(type = "unknown", outcome = NULL, estimate = NULL,
   )
 }
 
-new_container <- function(type, operations, columns, ptype, call) {
+new_tailor <- function(type, operations, columns, ptype, call) {
   type <- arg_match0(type, c("unknown", "regression", "binary", "multiclass"))
 
   if (!is.list(operations)) {
@@ -56,13 +56,13 @@ new_container <- function(type, operations, columns, ptype, call) {
     type = type, operations = operations,
     columns = columns, ptype = ptype
   )
-  class(res) <- "container"
+  class(res) <- "tailor"
   res
 }
 
 #' @export
-print.container <- function(x, ...) {
-  cli::cli_h1("Container")
+print.tailor <- function(x, ...) {
+  cli::cli_h1("tailor")
 
   num_op <- length(x$operations)
   cli::cli_text(
@@ -79,7 +79,7 @@ print.container <- function(x, ...) {
 }
 
 #' @export
-fit.container <- function(object, .data, outcome, estimate, probabilities = c(),
+fit.tailor <- function(object, .data, outcome, estimate, probabilities = c(),
                           time = c(), ...) {
   # ------------------------------------------------------------------------------
   # set columns via tidyselect
@@ -108,9 +108,9 @@ fit.container <- function(object, .data, outcome, estimate, probabilities = c(),
   }
   ptype <- .data[0, ]
 
-  object <- set_container_type(object, .data[[columns$outcome]])
+  object <- set_tailor_type(object, .data[[columns$outcome]])
 
-  object <- new_container(
+  object <- new_tailor(
     object$type,
     operations = object$operations,
     columns = columns,
@@ -124,12 +124,12 @@ fit.container <- function(object, .data, outcome, estimate, probabilities = c(),
     .data <- predict(object$operations[[op]], .data, object)
   }
 
-  # todo Add a fitted container class?
+  # todo Add a fitted tailor class?
   object
 }
 
 #' @export
-predict.container <- function(object, new_data, ...) {
+predict.tailor <- function(object, new_data, ...) {
   # validate levels/classes
   num_oper <- length(object$operations)
   for (op in seq_len(num_oper)) {
@@ -141,7 +141,7 @@ predict.container <- function(object, new_data, ...) {
   new_data
 }
 
-set_container_type <- function(object, y) {
+set_tailor_type <- function(object, y) {
   if (object$type != "unknown") {
     return(object)
   }

@@ -7,7 +7,7 @@
 adjust_numeric_range(x, lower_limit = -Inf, upper_limit = Inf)
 }
 \arguments{
-\item{x}{A \code{\link[=container]{container()}}.}
+\item{x}{A \code{\link[=tailor]{tailor()}}.}
 
 \item{upper_limit, lower_limit}{A numeric value, NA (for no truncation) or
 \code{\link[hardhat:tune]{hardhat::tune()}}.}

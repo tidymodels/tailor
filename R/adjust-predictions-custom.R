@@ -1,6 +1,6 @@
 #' Change or add variables
 #'
-#' @param x A [container()].
+#' @param x A [tailor()].
 #' @param .pkgs A character string of extra packages that are needed to execute
 #' the commands.
 #' @param ... Name-value pairs of expressions. See [dplyr::mutate()].
@@ -9,7 +9,7 @@
 #' library(modeldata)
 #'
 #' post_obj <-
-#'   container() %>%
+#'   tailor() %>%
 #'   adjust_equivocal_zone() %>%
 #'   adjust_predictions_custom(linear_predictor = binomial()$linkfun(Class2))
 #'
@@ -25,7 +25,7 @@
 #' predict(post_res, two_class_example)
 #' @export
 adjust_predictions_custom <- function(x, ..., .pkgs = character(0)) {
-  check_container(x)
+  check_tailor(x)
   cmds <- enquos(...)
 
   op <-
@@ -38,7 +38,7 @@ adjust_predictions_custom <- function(x, ..., .pkgs = character(0)) {
       trained = FALSE
     )
 
-  new_container(
+  new_tailor(
     type = x$type,
     operations = c(x$operations, list(op)),
     columns = x$dat,
@@ -55,7 +55,7 @@ print.predictions_custom <- function(x, ...) {
 }
 
 #' @export
-fit.predictions_custom <- function(object, data, container = NULL, ...) {
+fit.predictions_custom <- function(object, data, tailor = NULL, ...) {
   new_operation(
     class(object),
     inputs = object$inputs,
@@ -67,13 +67,13 @@ fit.predictions_custom <- function(object, data, container = NULL, ...) {
 }
 
 #' @export
-predict.predictions_custom <- function(object, new_data, container, ...) {
+predict.predictions_custom <- function(object, new_data, tailor, ...) {
   dplyr::mutate(new_data, !!!object$arguments$commands)
 }
 
 #' @export
 required_pkgs.predictions_custom <- function(x, ...) {
-  unique(c("container", x$arguments$pkgs))
+  unique(c("tailor", x$arguments$pkgs))
 }
 
 #' @export

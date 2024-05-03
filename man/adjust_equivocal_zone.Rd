@@ -7,7 +7,7 @@
 adjust_equivocal_zone(x, value = 0.1, threshold = 1/2)
 }
 \arguments{
-\item{x}{A \code{\link[=container]{container()}}.}
+\item{x}{A \code{\link[=tailor]{tailor()}}.}
 
 \item{value}{A numeric value (between zero and 1/2) or \code{\link[hardhat:tune]{hardhat::tune()}}. The
 value is the size of the buffer around the threshold.}
@@ -22,7 +22,7 @@ library(dplyr)
 library(modeldata)
 
 post_obj <-
-  container() \%>\%
+  tailor() \%>\%
   adjust_equivocal_zone(value = 1 / 4)
 
 
