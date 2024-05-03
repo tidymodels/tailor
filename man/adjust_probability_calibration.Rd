@@ -7,7 +7,7 @@
 adjust_probability_calibration(x, method = NULL)
 }
 \arguments{
-\item{x}{A \code{\link[=container]{container()}}.}
+\item{x}{A \code{\link[=tailor]{tailor()}}.}
 
 \item{method}{Character. One of \code{"logistic"}, \code{"multinomial"},
 \code{"beta"}, \code{"isotonic"}, or \code{"isotonic_boot"}, corresponding to the

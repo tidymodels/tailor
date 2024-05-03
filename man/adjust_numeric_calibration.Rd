@@ -7,7 +7,7 @@
 adjust_numeric_calibration(x, method = NULL)
 }
 \arguments{
-\item{x}{A \code{\link[=container]{container()}}.}
+\item{x}{A \code{\link[=tailor]{tailor()}}.}
 
 \item{method}{Character. One of \code{"linear"}, \code{"isotonic"}, or
 \code{"isotonic_boot"}, corresponding to the function from the \pkg{probably}
@@ -30,12 +30,12 @@ dat <- tibble(y = rnorm(100), y_pred = y/2 + rnorm(100))
 dat
 
 # specify calibration
-reg_ctr <-
-  container() \%>\%
+reg_tailor <-
+  tailor() \%>\%
   adjust_numeric_calibration(method = "linear")
 
-# train container
-reg_ctr_trained <- fit(reg_ctr, dat, outcome = y, estimate = y_pred)
+# train tailor
+reg_tailor_trained <- fit(reg_tailor, dat, outcome = y, estimate = y_pred)
 
-predict(reg_ctr_trained, dat)
+predict(reg_tailor_trained, dat)
 }

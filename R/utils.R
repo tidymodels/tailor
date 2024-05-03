@@ -44,22 +44,22 @@ new_operation <- function(cls, inputs, outputs, arguments, results = list(),
 }
 
 # predicates -------------------------------------------------------------------
-is_container <- function(x) {
-  inherits(x, "container")
+is_tailor <- function(x) {
+  inherits(x, "tailor")
 }
 
 # ad-hoc checking --------------------------------------------------------------
-check_container <- function(x, calibration_type = NULL, call = caller_env(), arg = caller_arg(x)) {
-  if (!is_container(x)) {
+check_tailor <- function(x, calibration_type = NULL, call = caller_env(), arg = caller_arg(x)) {
+  if (!is_tailor(x)) {
     cli_abort(
-      "{.arg {arg}} should be a {.help [{.cls container}](container::container)}, \\
+      "{.arg {arg}} should be a {.help [{.cls tailor}](tailor::tailor)}, \\
        not {.obj_type_friendly {x}}.",
       call = call
     )
   }
 
   # check that the type of calibration ("numeric" or "probability") is
-  # compatible with the container type
+  # compatible with the tailor type
   if (!is.null(calibration_type)) {
     type <- x$type
     switch(
@@ -75,10 +75,10 @@ check_container <- function(x, calibration_type = NULL, call = caller_env(), arg
 }
 
 check_calibration_type <- function(calibration_type, calibration_type_expected,
-                                   container_type, call) {
+                                   tailor_type, call) {
   if (!identical(calibration_type, calibration_type_expected)) {
     cli_abort(
-      "A {.field {container_type}} container is incompatible with the operation \\
+      "A {.field {tailor_type}} tailor is incompatible with the operation \\
        {.fun {paste0('adjust_', calibration_type, '_calibration')}}.",
       call = call
     )
@@ -88,13 +88,13 @@ check_calibration_type <- function(calibration_type, calibration_type_expected,
 types_regression <- c("linear", "isotonic", "isotonic_boot")
 types_binary <- c("logistic", "beta", "isotonic", "isotonic_boot")
 types_multiclass <- c("multinomial", "beta", "isotonic", "isotonic_boot")
-# a check function to be called when a container is being `fit()`ted.
-# by the time a container is fitted, we have:
+# a check function to be called when a tailor is being `fit()`ted.
+# by the time a tailor is fitted, we have:
 # * `method`, the `method` argument passed to an `adjust_*` function
 #     * this argument has already been checked to agree with the kind of
 #       `adjust_*()` function via `arg_match0()`.
-# * `container_type`, the `type` argument either specified in `container()`
-#   or inferred in `fit.container()`.
+# * `tailor_type`, the `type` argument either specified in `tailor()`
+#   or inferred in `fit.tailor()`.
 check_method <- function(method,
                        type,
                        arg = caller_arg(method),

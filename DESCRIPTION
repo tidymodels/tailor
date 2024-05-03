@@ -1,4 +1,4 @@
-Package: container
+Package: tailor
 Title: Sandbox for a postprocessor object
 Version: 0.0.0.9001
 Authors@R: c(
@@ -10,8 +10,8 @@ Authors@R: c(
   )
 Description: Sandbox for a postprocessor object.
 License: MIT + file LICENSE
-URL: https://github.com/tidymodels/container
-BugReports: https://github.com/tidymodels/container/issues
+URL: https://github.com/tidymodels/tailor
+BugReports: https://github.com/tidymodels/tailor/issues
 Imports: 
     cli,
     dplyr,

@@ -1,13 +1,13 @@
 #' Change the event threshold
 #'
-#' @param x A [container()].
+#' @param x A [tailor()].
 #' @param threshold A numeric value (between zero and one) or [hardhat::tune()].
 #' @examples
 #' library(dplyr)
 #' library(modeldata)
 #'
 #' post_obj <-
-#'   container() %>%
+#'   tailor() %>%
 #'   adjust_probability_threshold(threshold = .1)
 #'
 #' two_class_example %>% count(predicted)
@@ -23,7 +23,7 @@
 #' predict(post_res, two_class_example) %>% count(predicted)
 #' @export
 adjust_probability_threshold <- function(x, threshold = 0.5) {
-  check_container(x)
+  check_tailor(x)
   if (!is_tune(threshold)) {
     check_number_decimal(threshold, min = 10^-10, max = 1 - 10^-10)
   }
@@ -38,7 +38,7 @@ adjust_probability_threshold <- function(x, threshold = 0.5) {
       trained = FALSE
     )
 
-  new_container(
+  new_tailor(
     type = x$type,
     operations = c(x$operations, list(op)),
     columns = x$dat,
@@ -64,7 +64,7 @@ print.probability_threshold <- function(x, ...) {
 }
 
 #' @export
-fit.probability_threshold <- function(object, data, container = NULL, ...) {
+fit.probability_threshold <- function(object, data, tailor = NULL, ...) {
   new_operation(
     class(object),
     inputs = object$inputs,
@@ -76,9 +76,9 @@ fit.probability_threshold <- function(object, data, container = NULL, ...) {
 }
 
 #' @export
-predict.probability_threshold <- function(object, new_data, container, ...) {
-  est_nm <- container$columns$estimate
-  prob_nm <- container$columns$probabilities[1]
+predict.probability_threshold <- function(object, new_data, tailor, ...) {
+  est_nm <- tailor$columns$estimate
+  prob_nm <- tailor$columns$probabilities[1]
   lvls <- levels(new_data[[est_nm]])
 
   new_data[[est_nm]] <-
@@ -89,7 +89,7 @@ predict.probability_threshold <- function(object, new_data, container, ...) {
 
 #' @export
 required_pkgs.probability_threshold <- function(x, ...) {
-  c("container")
+  c("tailor")
 }
 
 #' @export
@@ -97,7 +97,7 @@ tunable.probability_threshold <- function(x, ...) {
   tibble::new_tibble(list(
     name = "threshold",
     call_info = list(list(pkg = "dials", fun = "threshold")),
-    source = "container",
+    source = "tailor",
     component = "probability_threshold",
     component_id = "probability_threshold"
   ))

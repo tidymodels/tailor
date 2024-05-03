@@ -7,7 +7,7 @@
 adjust_predictions_custom(x, ..., .pkgs = character(0))
 }
 \arguments{
-\item{x}{A \code{\link[=container]{container()}}.}
+\item{x}{A \code{\link[=tailor]{tailor()}}.}
 
 \item{...}{Name-value pairs of expressions. See \code{\link[dplyr:mutate]{dplyr::mutate()}}.}
 
@@ -22,7 +22,7 @@ library(dplyr)
 library(modeldata)
 
 post_obj <-
-  container() \%>\%
+  tailor() \%>\%
   adjust_equivocal_zone() \%>\%
   adjust_predictions_custom(linear_predictor = binomial()$linkfun(Class2))
 
