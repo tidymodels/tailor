@@ -1,3 +1,12 @@
+#' Internal tailor functions
+#'
+#' Utilities for use in downstream packages.
+#'
+#' @keywords internal
+#' @name tailor-internals
+NULL
+
+
 is_tune <- function(x) {
   if (!is.call(x)) {
     return(FALSE)
@@ -46,6 +55,21 @@ new_operation <- function(cls, inputs, outputs, arguments, results = list(),
 # predicates -------------------------------------------------------------------
 is_tailor <- function(x) {
   inherits(x, "tailor")
+}
+
+#' @export
+#' @keywords internal
+#' @rdname tailor-internals
+tailor_fully_trained <- function(x) {
+  if (length(x$operations) == 0L) {
+    return(FALSE)
+  }
+
+  all(purrr::map_lgl(x$operations, tailor_operation_trained))
+}
+
+tailor_operation_trained <- function(x) {
+  isTRUE(x$trained)
 }
 
 # ad-hoc checking --------------------------------------------------------------
