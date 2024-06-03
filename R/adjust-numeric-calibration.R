@@ -45,7 +45,7 @@ adjust_numeric_calibration <- function(x, method = NULL) {
       outputs = "numeric",
       arguments = list(method = method),
       results = list(),
-      trained = TRUE,
+      trained = FALSE,
       requires_fit = TRUE
     )
 
