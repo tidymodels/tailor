@@ -15,7 +15,8 @@ adjust_numeric_range <- function(x, lower_limit = -Inf, upper_limit = Inf) {
       outputs = "numeric",
       arguments = list(lower_limit = lower_limit, upper_limit = upper_limit),
       results = list(),
-      trained = FALSE
+      trained = FALSE,
+      requires_fit = FALSE
     )
 
   new_tailor(
@@ -64,7 +65,8 @@ fit.numeric_range <- function(object, data, tailor = NULL, ...) {
     outputs = object$outputs,
     arguments = object$arguments,
     results = list(),
-    trained = TRUE
+    trained = TRUE,
+    requires_fit = object$requires_fit
   )
 }
 

@@ -24,7 +24,8 @@ adjust_probability_calibration <- function(x, method = NULL) {
       outputs = "probability_class",
       arguments = list(method = method),
       results = list(),
-      trained = FALSE
+      trained = FALSE,
+      requires_fit = TRUE
     )
 
   new_tailor(
@@ -67,7 +68,8 @@ fit.probability_calibration <- function(object, data, tailor = NULL, ...) {
     outputs = object$outputs,
     arguments = object$arguments,
     results = list(fit = fit),
-    trained = TRUE
+    trained = TRUE,
+    requires_fit = object$requires_fit
   )
 }
 

@@ -35,7 +35,8 @@ adjust_probability_threshold <- function(x, threshold = 0.5) {
       outputs = "class",
       arguments = list(threshold = threshold),
       results = list(),
-      trained = FALSE
+      trained = FALSE,
+      requires_fit = FALSE
     )
 
   new_tailor(
@@ -71,7 +72,8 @@ fit.probability_threshold <- function(object, data, tailor = NULL, ...) {
     outputs = object$outputs,
     arguments = object$arguments,
     results = list(),
-    trained = TRUE
+    trained = TRUE,
+    requires_fit = object$requires_fit
   )
 }
 

@@ -3,9 +3,12 @@
 \name{tailor-internals}
 \alias{tailor-internals}
 \alias{tailor_fully_trained}
+\alias{tailor_requires_fit}
 \title{Internal tailor functions}
 \usage{
 tailor_fully_trained(x)
+
+tailor_requires_fit(x)
 }
 \description{
 Utilities for use in downstream packages.

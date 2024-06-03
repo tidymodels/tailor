@@ -39,7 +39,8 @@ adjust_equivocal_zone <- function(x, value = 0.1, threshold = 1 / 2) {
       outputs = "class",
       arguments = list(value = value, threshold = threshold),
       results = list(),
-      trained = FALSE
+      trained = FALSE,
+      requires_fit = FALSE
     )
 
   new_tailor(
@@ -75,7 +76,8 @@ fit.equivocal_zone <- function(object, data, tailor = NULL, ...) {
     outputs = object$outputs,
     arguments = object$arguments,
     results = list(),
-    trained = TRUE
+    trained = TRUE,
+    requires_fit = object$requires_fit
   )
 }
 

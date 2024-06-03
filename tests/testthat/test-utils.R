@@ -50,3 +50,24 @@ test_that("tailor_fully_trained works", {
     )
   )
 })
+
+
+test_that("tailor_requires_fit works", {
+  expect_false(tailor_requires_fit(tailor()))
+  expect_false(
+    tailor_requires_fit(tailor() %>% adjust_probability_threshold(.5))
+  )
+  expect_true(
+    tailor_requires_fit(
+      tailor() %>%
+        adjust_probability_calibration("logistic")
+    )
+  )
+  expect_true(
+    tailor_requires_fit(
+      tailor() %>%
+        adjust_probability_calibration("logistic") %>%
+        adjust_probability_threshold(.5)
+    )
+  )
+})

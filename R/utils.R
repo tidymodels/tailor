@@ -34,7 +34,7 @@ input_vals <- c("numeric", "probability", "class", "everything")
 output_vals <- c("numeric", "probability_class", "class", "everything")
 
 new_operation <- function(cls, inputs, outputs, arguments, results = list(),
-                          trained, ...) {
+                          trained, requires_fit, ...) {
   inputs <- arg_match0(inputs, input_vals)
   outputs <- arg_match0(outputs, output_vals)
 
@@ -46,7 +46,8 @@ new_operation <- function(cls, inputs, outputs, arguments, results = list(),
       outputs = outputs,
       arguments = arguments,
       results = results,
-      trained = trained
+      trained = trained,
+      requires_fit = requires_fit
     )
   class(res) <- c(cls, "operation")
   res
@@ -70,6 +71,17 @@ tailor_fully_trained <- function(x) {
 
 tailor_operation_trained <- function(x) {
   isTRUE(x$trained)
+}
+
+#' @export
+#' @keywords internal
+#' @rdname tailor-internals
+tailor_requires_fit <- function(x) {
+  any(purrr::map_lgl(x$operations, tailor_operation_requires_fit))
+}
+
+tailor_operation_requires_fit <- function(x) {
+  isTRUE(x$requires_fit)
 }
 
 # ad-hoc checking --------------------------------------------------------------

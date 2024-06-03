@@ -35,7 +35,10 @@ adjust_predictions_custom <- function(x, ..., .pkgs = character(0)) {
       outputs = "everything",
       arguments = list(commands = cmds, pkgs = .pkgs),
       results = list(),
-      trained = FALSE
+      trained = FALSE,
+      # todo: should there be a user interface to tell tailor whether this
+      # adjustment requires fit?
+      requires_fit = FALSE
     )
 
   new_tailor(
@@ -62,7 +65,8 @@ fit.predictions_custom <- function(object, data, tailor = NULL, ...) {
     outputs = object$outputs,
     arguments = object$arguments,
     results = list(),
-    trained = TRUE
+    trained = TRUE,
+    requires_fit = object$requires_fit
   )
 }
 
