@@ -7,7 +7,7 @@
       -- tailor ----------------------------------------------------------------------
       A postprocessor with 1 operation:
       
-      * Re-calibrate numeric predictions. [trained]
+      * Re-calibrate numeric predictions.
 
 # errors informatively with bad input
 
