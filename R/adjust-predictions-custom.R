@@ -28,8 +28,8 @@ adjust_predictions_custom <- function(x, ..., .pkgs = character(0)) {
   check_tailor(x)
   cmds <- enquos(...)
 
-  op <-
-    new_operation(
+  adj <-
+    new_adjustment(
       "predictions_custom",
       inputs = "everything",
       outputs = "everything",
@@ -43,7 +43,7 @@ adjust_predictions_custom <- function(x, ..., .pkgs = character(0)) {
 
   new_tailor(
     type = x$type,
-    operations = c(x$operations, list(op)),
+    adjustments = c(x$adjustments, list(adj)),
     columns = x$dat,
     ptype = x$ptype,
     call = current_env()
@@ -59,7 +59,7 @@ print.predictions_custom <- function(x, ...) {
 
 #' @export
 fit.predictions_custom <- function(object, data, tailor = NULL, ...) {
-  new_operation(
+  new_adjustment(
     class(object),
     inputs = object$inputs,
     outputs = object$outputs,

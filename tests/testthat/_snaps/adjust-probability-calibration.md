@@ -5,7 +5,7 @@
     Message
       
       -- tailor ----------------------------------------------------------------------
-      A postprocessor with 1 operation:
+      A postprocessor with 1 adjustment:
       
       * Re-calibrate classification probabilities.
 
@@ -23,7 +23,7 @@
       tailor("regression") %>% adjust_probability_calibration("binary")
     Condition
       Error in `adjust_probability_calibration()`:
-      ! A regression tailor is incompatible with the operation `adjust_probability_calibration()`.
+      ! A regression tailor is incompatible with the adjustment `adjust_probability_calibration()`.
 
 ---
 

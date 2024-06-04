@@ -1,4 +1,4 @@
-test_that("validation of operations (regression)", {
+test_that("validation of adjustments (regression)", {
   expect_no_condition(
     reg_tailor <-
       tailor(type = "regression") %>%
@@ -26,7 +26,7 @@ test_that("validation of operations (regression)", {
   )
 })
 
-test_that("validation of operations (classification)", {
+test_that("validation of adjustments (classification)", {
   expect_no_condition(
     cls_tailor_1 <-
       tailor(type = "binary") %>%
@@ -106,7 +106,7 @@ test_that("validation of operations (classification)", {
   )
 })
 
-test_that("validation of operations (ambiguous type)", {
+test_that("validation of adjustments (ambiguous type)", {
   expect_no_condition(
     ambiguous_tailor <-
       tailor() %>%

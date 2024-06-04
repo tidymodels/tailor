@@ -5,7 +5,7 @@
     Message
       
       -- tailor ----------------------------------------------------------------------
-      A postprocessor with 1 operation:
+      A postprocessor with 1 adjustment:
       
       * Adjust predictions using custom code.
 

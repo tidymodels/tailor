@@ -27,33 +27,33 @@ tailor <- function(type = "unknown", outcome = NULL, estimate = NULL,
 
   new_tailor(
     type,
-    operations = list(),
+    adjustments = list(),
     columns = columns,
     ptype = tibble::new_tibble(list()),
     call = current_env()
   )
 }
 
-new_tailor <- function(type, operations, columns, ptype, call) {
+new_tailor <- function(type, adjustments, columns, ptype, call) {
   type <- arg_match0(type, c("unknown", "regression", "binary", "multiclass"))
 
-  if (!is.list(operations)) {
-    cli_abort("The {.arg operations} argument should be a list.", call = call)
+  if (!is.list(adjustments)) {
+    cli_abort("The {.arg adjustments} argument should be a list.", call = call)
   }
 
-  is_oper <- purrr::map_lgl(operations, ~ inherits(.x, "operation"))
-  if (length(is_oper) > 0 && !any(is_oper)) {
-    bad_oper <- names(is_oper)[!is_oper]
-    cli_abort("The following {.arg operations} do not have the class \\
-                   {.val operation}: {bad_oper}.", call = call)
+  is_adjustment <- purrr::map_lgl(adjustments, ~ inherits(.x, "adjustment"))
+  if (length(is_adjustment) > 0 && !any(is_adjustment)) {
+    bad_adjustment <- names(is_adjustment)[!is_adjustment]
+    cli_abort("The following {.arg adjustments} do not have the class \\
+                   {.val adjustment}: {bad_adjustment}.", call = call)
   }
 
-  # validate operation order and check duplicates
-  validate_order(operations, type, call)
+  # validate adjustment order and check duplicates
+  validate_order(adjustments, type, call)
 
   # check columns
   res <- list(
-    type = type, operations = operations,
+    type = type, adjustments = adjustments,
     columns = columns, ptype = ptype
   )
   class(res) <- "tailor"
@@ -64,15 +64,15 @@ new_tailor <- function(type, operations, columns, ptype, call) {
 print.tailor <- function(x, ...) {
   cli::cli_h1("tailor")
 
-  num_op <- length(x$operations)
+  num_adj <- length(x$adjustments)
   cli::cli_text(
     "A {ifelse(x$type == 'unknown', '', x$type)} postprocessor \\
-     with {num_op} operation{?s}{cli::qty(num_op+1)}{?./:}"
+     with {num_adj} adjustment{?s}{cli::qty(num_adj+1)}{?./:}"
   )
 
-  if (num_op > 0) {
+  if (num_adj > 0) {
     cli::cli_text("\n")
-    res <- purrr::map(x$operations, print)
+    res <- purrr::map(x$adjustments, print)
   }
 
   invisible(x)
@@ -112,16 +112,16 @@ fit.tailor <- function(object, .data, outcome, estimate, probabilities = c(),
 
   object <- new_tailor(
     object$type,
-    operations = object$operations,
+    adjustments = object$adjustments,
     columns = columns,
     ptype = ptype,
     call = current_env()
   )
 
-  num_oper <- length(object$operations)
-  for (op in seq_len(num_oper)) {
-    object$operations[[op]] <- fit(object$operations[[op]], .data, object)
-    .data <- predict(object$operations[[op]], .data, object)
+  num_adjustment <- length(object$adjustments)
+  for (adj in seq_len(num_adjustment)) {
+    object$adjustments[[adj]] <- fit(object$adjustments[[adj]], .data, object)
+    .data <- predict(object$adjustments[[adj]], .data, object)
   }
 
   # todo Add a fitted tailor class?
@@ -131,9 +131,9 @@ fit.tailor <- function(object, .data, outcome, estimate, probabilities = c(),
 #' @export
 predict.tailor <- function(object, new_data, ...) {
   # validate levels/classes
-  num_oper <- length(object$operations)
-  for (op in seq_len(num_oper)) {
-    new_data <- predict(object$operations[[op]], new_data, object)
+  num_adjustment <- length(object$adjustments)
+  for (adj in seq_len(num_adjustment)) {
+    new_data <- predict(object$adjustments[[adj]], new_data, object)
   }
   if (!tibble::is_tibble(new_data)) {
     new_data <- tibble::as_tibble(new_data)

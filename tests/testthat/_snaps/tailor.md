@@ -5,7 +5,7 @@
     Message
       
       -- tailor ----------------------------------------------------------------------
-      A postprocessor with 0 operations.
+      A postprocessor with 0 adjustments.
 
 ---
 
@@ -14,7 +14,7 @@
     Message
       
       -- tailor ----------------------------------------------------------------------
-      A binary postprocessor with 0 operations.
+      A binary postprocessor with 0 adjustments.
 
 ---
 
@@ -23,7 +23,7 @@
     Message
       
       -- tailor ----------------------------------------------------------------------
-      A binary postprocessor with 1 operation:
+      A binary postprocessor with 1 adjustment:
       
       * Adjust probability threshold to 0.2.
 
@@ -35,7 +35,7 @@
     Message
       
       -- tailor ----------------------------------------------------------------------
-      A binary postprocessor with 2 operations:
+      A binary postprocessor with 2 adjustments:
       
       * Adjust probability threshold to 0.2.
       * Add equivocal zone of size 0.1.

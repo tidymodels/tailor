@@ -5,7 +5,7 @@
     Message
       
       -- tailor ----------------------------------------------------------------------
-      A postprocessor with 1 operation:
+      A postprocessor with 1 adjustment:
       
       * Adjust probability threshold to 0.5.
 
@@ -16,7 +16,7 @@
     Message
       
       -- tailor ----------------------------------------------------------------------
-      A postprocessor with 1 operation:
+      A postprocessor with 1 adjustment:
       
       * Adjust probability threshold to optimized value.
 

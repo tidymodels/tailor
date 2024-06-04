@@ -32,8 +32,8 @@ adjust_equivocal_zone <- function(x, value = 0.1, threshold = 1 / 2) {
     check_number_decimal(threshold, min = 10^-10, max = 1 - 10^-10)
   }
 
-  op <-
-    new_operation(
+  adj <-
+    new_adjustment(
       "equivocal_zone",
       inputs = "probability",
       outputs = "class",
@@ -45,7 +45,7 @@ adjust_equivocal_zone <- function(x, value = 0.1, threshold = 1 / 2) {
 
   new_tailor(
     type = x$type,
-    operations = c(x$operations, list(op)),
+    adjustments = c(x$adjustments, list(adj)),
     columns = x$dat,
     ptype = x$ptype,
     call = current_env()
@@ -70,7 +70,7 @@ print.equivocal_zone <- function(x, ...) {
 
 #' @export
 fit.equivocal_zone <- function(object, data, tailor = NULL, ...) {
-  new_operation(
+  new_adjustment(
     class(object),
     inputs = object$inputs,
     outputs = object$outputs,

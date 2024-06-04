@@ -1,15 +1,15 @@
-validate_order <- function(ops, type, call = caller_env()) {
+validate_order <- function(adjustments, type, call = caller_env()) {
   orderings <-
     tibble::new_tibble(list(
-      name = purrr::map_chr(ops, ~ class(.x)[1]),
-      input = purrr::map_chr(ops, ~ .x$inputs),
-      output_numeric = purrr::map_lgl(ops, ~ grepl("numeric", .x$outputs)),
-      output_prob = purrr::map_lgl(ops, ~ grepl("probability", .x$outputs)),
-      output_class = purrr::map_lgl(ops, ~ grepl("class", .x$outputs)),
-      output_all = purrr::map_lgl(ops, ~ grepl("everything", .x$outputs))
+      name = purrr::map_chr(adjustments, ~ class(.x)[1]),
+      input = purrr::map_chr(adjustments, ~ .x$inputs),
+      output_numeric = purrr::map_lgl(adjustments, ~ grepl("numeric", .x$outputs)),
+      output_prob = purrr::map_lgl(adjustments, ~ grepl("probability", .x$outputs)),
+      output_class = purrr::map_lgl(adjustments, ~ grepl("class", .x$outputs)),
+      output_all = purrr::map_lgl(adjustments, ~ grepl("everything", .x$outputs))
     ))
 
-  if (length(ops) < 2) {
+  if (length(adjustments) < 2) {
     return(invisible(orderings))
   }
 
@@ -36,8 +36,8 @@ check_classification_order <- function(x, call) {
   # does probability steps come after steps that change the hard classes?
   if (length(prob_ind) > 0) {
     if (any(class_ind < prob_ind)) {
-      cli_abort("Operations that change the hard class predictions \\
-                     must come after operations that update the class \\
+      cli_abort("adjustments that change the hard class predictions \\
+                     must come after adjustments that update the class \\
                      probability estimates.", call = call)
     }
   }
@@ -47,7 +47,7 @@ check_classification_order <- function(x, call) {
   # do any steps come before Eq zones
   if (length(eq_ind) > 0) {
     if (any(eq_ind < class_ind) | any(eq_ind < prob_ind)) {
-      cli_abort("Equivocal zone addition should come after operations \\
+      cli_abort("Equivocal zone addition should come after adjustments \\
                      that update the class probability estimates or hard \\
                      class predictions.", call = call)
     }
@@ -68,7 +68,7 @@ check_regression_order <- function(x, call) {
   if (length(cal_ind) > 0) {
     if (any(num_ind < cal_ind)) {
       cli_abort(
-        "Calibration should come before other operations.",
+        "Calibration should come before other adjustments.",
         call = call
       )
     }
@@ -83,8 +83,8 @@ check_regression_order <- function(x, call) {
 check_duplicates <- function(x, call) {
   non_mutates <- table(x$name[x$name != "predictions_custom"])
   if (any(non_mutates > 1)) {
-    bad_oper <- names(non_mutates[non_mutates > 1])
-    cli_abort("Operations cannot be duplicated: {.val {bad_oper}}", call = call)
+    bad_adjustment <- names(non_mutates[non_mutates > 1])
+    cli_abort("adjustments cannot be duplicated: {.val {bad_adjustment}}", call = call)
   }
   invisible(x)
 }

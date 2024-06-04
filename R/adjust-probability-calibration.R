@@ -17,8 +17,8 @@ adjust_probability_calibration <- function(x, method = NULL) {
     )
   }
 
-  op <-
-    new_operation(
+  adj <-
+    new_adjustment(
       "probability_calibration",
       inputs = "probability",
       outputs = "probability_class",
@@ -30,7 +30,7 @@ adjust_probability_calibration <- function(x, method = NULL) {
 
   new_tailor(
     type = x$type,
-    operations = c(x$operations, list(op)),
+    adjustments = c(x$adjustments, list(adj)),
     columns = x$dat,
     ptype = x$ptype,
     call = current_env()
@@ -62,7 +62,7 @@ fit.probability_calibration <- function(object, data, tailor = NULL, ...) {
       )
     )
 
-  new_operation(
+  new_adjustment(
     class(object),
     inputs = object$inputs,
     outputs = object$outputs,

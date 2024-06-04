@@ -28,8 +28,8 @@ adjust_probability_threshold <- function(x, threshold = 0.5) {
     check_number_decimal(threshold, min = 10^-10, max = 1 - 10^-10)
   }
 
-  op <-
-    new_operation(
+  adj <-
+    new_adjustment(
       "probability_threshold",
       inputs = "probability",
       outputs = "class",
@@ -41,7 +41,7 @@ adjust_probability_threshold <- function(x, threshold = 0.5) {
 
   new_tailor(
     type = x$type,
-    operations = c(x$operations, list(op)),
+    adjustments = c(x$adjustments, list(adj)),
     columns = x$dat,
     ptype = x$ptype,
     call = current_env()
@@ -66,7 +66,7 @@ print.probability_threshold <- function(x, ...) {
 
 #' @export
 fit.probability_threshold <- function(object, data, tailor = NULL, ...) {
-  new_operation(
+  new_adjustment(
     class(object),
     inputs = object$inputs,
     outputs = object$outputs,

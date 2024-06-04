@@ -14,7 +14,7 @@ is_tune <- function(x) {
   isTRUE(identical(quote(tune), x[[1]]))
 }
 
-# for operations with no tunable parameters
+# for adjustments with no tunable parameters
 
 no_param <-
   tibble::tibble(
@@ -33,7 +33,7 @@ no_param <-
 input_vals <- c("numeric", "probability", "class", "everything")
 output_vals <- c("numeric", "probability_class", "class", "everything")
 
-new_operation <- function(cls, inputs, outputs, arguments, results = list(),
+new_adjustment <- function(cls, inputs, outputs, arguments, results = list(),
                           trained, requires_fit, ...) {
   inputs <- arg_match0(inputs, input_vals)
   outputs <- arg_match0(outputs, output_vals)
@@ -49,7 +49,7 @@ new_operation <- function(cls, inputs, outputs, arguments, results = list(),
       trained = trained,
       requires_fit = requires_fit
     )
-  class(res) <- c(cls, "operation")
+  class(res) <- c(cls, "adjustment")
   res
 }
 
@@ -62,14 +62,14 @@ is_tailor <- function(x) {
 #' @keywords internal
 #' @rdname tailor-internals
 tailor_fully_trained <- function(x) {
-  if (length(x$operations) == 0L) {
+  if (length(x$adjustments) == 0L) {
     return(FALSE)
   }
 
-  all(purrr::map_lgl(x$operations, tailor_operation_trained))
+  all(purrr::map_lgl(x$adjustments, tailor_adjustment_trained))
 }
 
-tailor_operation_trained <- function(x) {
+tailor_adjustment_trained <- function(x) {
   isTRUE(x$trained)
 }
 
@@ -77,10 +77,10 @@ tailor_operation_trained <- function(x) {
 #' @keywords internal
 #' @rdname tailor-internals
 tailor_requires_fit <- function(x) {
-  any(purrr::map_lgl(x$operations, tailor_operation_requires_fit))
+  any(purrr::map_lgl(x$adjustments, tailor_adjustment_requires_fit))
 }
 
-tailor_operation_requires_fit <- function(x) {
+tailor_adjustment_requires_fit <- function(x) {
   isTRUE(x$requires_fit)
 }
 
@@ -114,7 +114,7 @@ check_calibration_type <- function(calibration_type, calibration_type_expected,
                                    tailor_type, call) {
   if (!identical(calibration_type, calibration_type_expected)) {
     cli_abort(
-      "A {.field {tailor_type}} tailor is incompatible with the operation \\
+      "A {.field {tailor_type}} tailor is incompatible with the adjustment \\
        {.fun {paste0('adjust_', calibration_type, '_calibration')}}.",
       call = call
     )

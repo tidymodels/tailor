@@ -38,8 +38,8 @@ adjust_numeric_calibration <- function(x, method = NULL) {
     )
   }
 
-  op <-
-    new_operation(
+  adj <-
+    new_adjustment(
       "numeric_calibration",
       inputs = "numeric",
       outputs = "numeric",
@@ -51,7 +51,7 @@ adjust_numeric_calibration <- function(x, method = NULL) {
 
   new_tailor(
     type = x$type,
-    operations = c(x$operations, list(op)),
+    adjustments = c(x$adjustments, list(adj)),
     columns = x$dat,
     ptype = x$ptype,
     call = current_env()
@@ -81,7 +81,7 @@ fit.numeric_calibration <- function(object, data, tailor = NULL, ...) {
       )
     )
 
-  new_operation(
+  new_adjustment(
     class(object),
     inputs = object$inputs,
     outputs = object$outputs,

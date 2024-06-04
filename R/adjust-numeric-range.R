@@ -8,8 +8,8 @@ adjust_numeric_range <- function(x, lower_limit = -Inf, upper_limit = Inf) {
   # remaining input checks are done via probably::bound_prediction
   check_tailor(x)
 
-  op <-
-    new_operation(
+  adj <-
+    new_adjustment(
       "numeric_range",
       inputs = "numeric",
       outputs = "numeric",
@@ -21,7 +21,7 @@ adjust_numeric_range <- function(x, lower_limit = -Inf, upper_limit = Inf) {
 
   new_tailor(
     type = x$type,
-    operations = c(x$operations, list(op)),
+    adjustments = c(x$adjustments, list(adj)),
     columns = x$dat,
     ptype = x$ptype,
     call = current_env()
@@ -59,7 +59,7 @@ print.numeric_range <- function(x, ...) {
 
 #' @export
 fit.numeric_range <- function(object, data, tailor = NULL, ...) {
-  new_operation(
+  new_adjustment(
     class(object),
     inputs = object$inputs,
     outputs = object$outputs,

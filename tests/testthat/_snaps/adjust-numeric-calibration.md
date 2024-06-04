@@ -5,7 +5,7 @@
     Message
       
       -- tailor ----------------------------------------------------------------------
-      A postprocessor with 1 operation:
+      A postprocessor with 1 adjustment:
       
       * Re-calibrate numeric predictions.
 
@@ -23,7 +23,7 @@
       tailor("binary") %>% adjust_numeric_calibration("linear")
     Condition
       Error in `adjust_numeric_calibration()`:
-      ! A binary tailor is incompatible with the operation `adjust_numeric_calibration()`.
+      ! A binary tailor is incompatible with the adjustment `adjust_numeric_calibration()`.
 
 ---
 
