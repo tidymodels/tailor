@@ -28,7 +28,6 @@
 #' predict(reg_tailor_trained, dat)
 #' @export
 adjust_numeric_calibration <- function(x, method = NULL) {
-  # to-do: add argument specifying `prop` in initial_split
   check_tailor(x, calibration_type = "numeric")
   # wait to `check_method()` until `fit()` time
   if (!is.null(method)) {
