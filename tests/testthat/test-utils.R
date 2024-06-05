@@ -17,7 +17,8 @@ test_that("tailor_fully_trained works", {
         fit(
           two_class_example,
           outcome = "truth",
-          estimate = tidyselect::contains("Class")
+          estimate = tidyselect::contains("Class"),
+          probabilities = tidyselect::contains("Class")
         ) %>%
         adjust_probability_threshold(.5)
     )
