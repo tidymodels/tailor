@@ -4,13 +4,7 @@
 \alias{tailor}
 \title{Declare post-processing for model predictions}
 \usage{
-tailor(
-  type = "unknown",
-  outcome = NULL,
-  estimate = NULL,
-  probabilities = NULL,
-  time = NULL
-)
+tailor(type = "unknown", outcome = NULL, estimate = NULL, probabilities = NULL)
 }
 \arguments{
 \item{type}{The model sub-type. Possible values are \code{"unknown"}, \code{"regression"},
@@ -25,8 +19,6 @@ tidymodels, this corresponds to column names \code{.pred}, \code{.pred_class}, o
 \item{probabilities}{The names of class probability estimates (if any). For
 classification, these should be given in the order of the factor levels of
 the \code{estimate}.}
-
-\item{time}{The name of the predicted event time. (not yet supported)}
 }
 \description{
 Declare post-processing for model predictions

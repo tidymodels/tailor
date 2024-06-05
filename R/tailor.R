@@ -9,20 +9,18 @@
 #' @param probabilities The names of class probability estimates (if any). For
 #' classification, these should be given in the order of the factor levels of
 #' the `estimate`.
-#' @param time The name of the predicted event time. (not yet supported)
 #' @examples
 #'
 #' tailor()
 #' @export
 tailor <- function(type = "unknown", outcome = NULL, estimate = NULL,
-                      probabilities = NULL, time = NULL) {
+                      probabilities = NULL) {
   columns <-
     list(
       outcome = outcome,
       type = type,
       estimate = estimate,
-      probabilities = probabilities,
-      time = time
+      probabilities = probabilities
     )
 
   new_tailor(
@@ -80,7 +78,7 @@ print.tailor <- function(x, ...) {
 
 #' @export
 fit.tailor <- function(object, .data, outcome, estimate, probabilities = c(),
-                          time = c(), ...) {
+                       ...) {
   # ------------------------------------------------------------------------------
   # set columns via tidyselect
 
@@ -93,13 +91,6 @@ fit.tailor <- function(object, .data, outcome, estimate, probabilities = c(),
   if (any(c("probability", "everything") %in%
           purrr::map_chr(object$adjustments, purrr::pluck, "inputs"))) {
     check_selection(enquo(probabilities), columns$probabilities, "probabilities")
-  }
-
-  time <- tidyselect::eval_select(enquo(time), .data)
-  if (length(time) > 0) {
-    columns$time <- names(time)
-  } else {
-    columns$time <- character(0)
   }
 
   .data <- .data[, names(.data) %in% unlist(columns)]
