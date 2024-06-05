@@ -86,13 +86,13 @@ fit.tailor <- function(object, .data, outcome, estimate, probabilities = c(),
 
   columns <- list()
   columns$outcome <- names(tidyselect::eval_select(enquo(outcome), .data))
+  check_selection(enquo(outcome), columns$outcome, "outcome")
   columns$estimate <- names(tidyselect::eval_select(enquo(estimate), .data))
-
-  probabilities <- tidyselect::eval_select(enquo(probabilities), .data)
-  if (length(probabilities) > 0) {
-    columns$probabilities <- names(probabilities)
-  } else {
-    columns$probabilities <- character(0)
+  check_selection(enquo(estimate), columns$estimate, "estimate")
+  columns$probabilities <- names(tidyselect::eval_select(enquo(probabilities), .data))
+  if (any(c("probability", "everything") %in%
+          purrr::map_chr(object$adjustments, purrr::pluck, "inputs"))) {
+    check_selection(enquo(probabilities), columns$probabilities, "probabilities")
   }
 
   time <- tidyselect::eval_select(enquo(time), .data)
