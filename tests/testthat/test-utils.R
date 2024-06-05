@@ -34,7 +34,8 @@ test_that("tailor_fully_trained works", {
           # todo: this function requires a different format of `estimate`
           # and `probabilities` specification than the call below to
           # be able to fit properly.
-          estimate = tidyselect::contains("Class")
+          estimate = tidyselect::contains("Class"),
+          probabilities = tidyselect::contains("Class")
         )
     )
   )
