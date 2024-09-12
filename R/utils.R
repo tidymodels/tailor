@@ -62,6 +62,8 @@ is_tailor <- function(x) {
 #' @keywords internal
 #' @rdname tailor-internals
 tailor_fully_trained <- function(x) {
+  check_tailor(x)
+
   if (length(x$adjustments) == 0L) {
     return(FALSE)
   }
@@ -77,6 +79,8 @@ tailor_adjustment_trained <- function(x) {
 #' @keywords internal
 #' @rdname tailor-internals
 tailor_requires_fit <- function(x) {
+  check_tailor(x)
+
   any(purrr::map_lgl(x$adjustments, tailor_adjustment_requires_fit))
 }
 
