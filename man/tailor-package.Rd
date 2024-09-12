@@ -2,7 +2,6 @@
 % Please edit documentation in R/tailor-package.R
 \docType{package}
 \name{tailor-package}
-\alias{tailor}
 \alias{tailor-package}
 \title{tailor: Sandbox for a postprocessor object}
 \description{
