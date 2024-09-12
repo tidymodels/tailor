@@ -3,9 +3,9 @@
 \docType{package}
 \name{tailor-package}
 \alias{tailor-package}
-\title{tailor: Sandbox for a postprocessor object}
+\title{tailor: Iterative Steps for Postprocessing Model Predictions}
 \description{
-Sandbox for a postprocessor object.
+Postprocessors refine predictions outputted from machine learning models to improve predictive performance or better satisfy distributional limitations. This package introduces 'tailor' objects, which compose iterative adjustments to model predictions. A number of pre-written adjustments are provided with the package, like calibration and equivocal zones, as well as utilities to compose new ones. Tailors are tightly integrated with the 'tidymodels' framework.
 }
 \seealso{
 Useful links:
