@@ -10,7 +10,7 @@ Authors@R: c(
   )
 Description: Sandbox for a postprocessor object.
 License: MIT + file LICENSE
-URL: https://github.com/tidymodels/tailor
+URL: https://github.com/tidymodels/tailor, https://tailor.tidymodels.org
 BugReports: https://github.com/tidymodels/tailor/issues
 Imports: 
     cli,
@@ -31,3 +31,4 @@ Config/testthat/edition: 3
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.3.1
+Config/Needs/website: tidyverse/tidytemplate

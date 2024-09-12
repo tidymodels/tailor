@@ -2,6 +2,7 @@
 % Please edit documentation in R/tailor-package.R
 \docType{package}
 \name{tailor-package}
+\alias{tailor}
 \alias{tailor-package}
 \title{tailor: Sandbox for a postprocessor object}
 \description{
@@ -11,6 +12,7 @@ Sandbox for a postprocessor object.
 Useful links:
 \itemize{
   \item \url{https://github.com/tidymodels/tailor}
+  \item \url{https://tailor.tidymodels.org}
   \item Report bugs at \url{https://github.com/tidymodels/tailor/issues}
 }
 
