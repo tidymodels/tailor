@@ -4,7 +4,7 @@
 #' @param .pkgs A character string of extra packages that are needed to execute
 #' the commands.
 #' @param ... Name-value pairs of expressions. See [dplyr::mutate()].
-#' @examples
+#' @examplesIf rlang::is_installed("modeldata")
 #' library(dplyr)
 #' library(modeldata)
 #'

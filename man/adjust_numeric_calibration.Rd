@@ -19,6 +19,7 @@ package \code{\link[probably:cal_estimate_linear]{probably::cal_estimate_linear(
 Re-calibrate numeric predictions
 }
 \examples{
+\dontshow{if (rlang::is_installed("modeldata")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
 library(modeldata)
 library(probably)
 library(tibble)
@@ -38,4 +39,5 @@ reg_tailor <-
 reg_tailor_trained <- fit(reg_tailor, dat, outcome = y, estimate = y_pred)
 
 predict(reg_tailor_trained, dat)
+\dontshow{\}) # examplesIf}
 }

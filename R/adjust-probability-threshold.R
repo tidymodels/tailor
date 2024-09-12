@@ -2,7 +2,7 @@
 #'
 #' @param x A [tailor()].
 #' @param threshold A numeric value (between zero and one) or [hardhat::tune()].
-#' @examples
+#' @examplesIf rlang::is_installed("modeldata")
 #' library(dplyr)
 #' library(modeldata)
 #'

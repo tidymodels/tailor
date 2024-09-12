@@ -4,7 +4,7 @@
 #' @param value A numeric value (between zero and 1/2) or [hardhat::tune()]. The
 #' value is the size of the buffer around the threshold.
 #' @param threshold A numeric value (between zero and one) or [hardhat::tune()].
-#' @examples
+#' @examplesIf rlang::is_installed("modeldata")
 #' library(dplyr)
 #' library(modeldata)
 #'

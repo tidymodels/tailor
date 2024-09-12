@@ -15,6 +15,7 @@ adjust_probability_threshold(x, threshold = 0.5)
 Change the event threshold
 }
 \examples{
+\dontshow{if (rlang::is_installed("modeldata")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
 library(dplyr)
 library(modeldata)
 
@@ -33,4 +34,5 @@ post_res <- fit(
 )
 
 predict(post_res, two_class_example) \%>\% count(predicted)
+\dontshow{\}) # examplesIf}
 }

@@ -6,7 +6,7 @@
 #' package [probably::cal_estimate_linear()],
 #' [probably::cal_estimate_isotonic()], or
 #' [probably::cal_estimate_isotonic_boot()], respectively.
-#' @examples
+#' @examplesIf rlang::is_installed("modeldata")
 #' library(modeldata)
 #' library(probably)
 #' library(tibble)
