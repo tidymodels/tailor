@@ -28,7 +28,6 @@
 #' classification, these should be given in the order of the factor levels of
 #' the `estimate`.
 #' @examplesIf rlang::is_installed("modeldata")
-#' library(dplyr)
 #' library(modeldata)
 #'
 #' # `predicted` gives hard class predictions based on probabilities

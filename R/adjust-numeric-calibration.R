@@ -6,26 +6,29 @@
 #' package [probably::cal_estimate_linear()],
 #' [probably::cal_estimate_isotonic()], or
 #' [probably::cal_estimate_isotonic_boot()], respectively.
-#' @examplesIf rlang::is_installed("modeldata")
-#' library(modeldata)
-#' library(probably)
+#' @examples
 #' library(tibble)
 #'
 #' # create example data
 #' set.seed(1)
-#' dat <- tibble(y = rnorm(100), y_pred = y/2 + rnorm(100))
+#' d_potato <- tibble(y = rnorm(100), y_pred = y/2 + rnorm(100))
+#' d_test <- tibble(y = rnorm(100), y_pred = y/2 + rnorm(100))
 #'
-#' dat
+#' d_potato
 #'
 #' # specify calibration
-#' reg_tailor <-
+#' tlr <-
 #'   tailor() %>%
 #'   adjust_numeric_calibration(method = "linear")
 #'
-#' # train tailor
-#' reg_tailor_trained <- fit(reg_tailor, dat, outcome = y, estimate = y_pred)
+#' # train tailor on a subset of data. situate in a modeling workflow with
+#' # `workflows::add_tailor()` to avoid having to specify column names manually
+#' tlr_fit <- fit(tlr, d_potato, outcome = y, estimate = y_pred)
 #'
-#' predict(reg_tailor_trained, dat)
+#' # apply to predictions on another subset of data
+#' d_test
+#'
+#' predict(tlr_fit, d_test)
 #' @export
 adjust_numeric_calibration <- function(x, method = NULL) {
   check_tailor(x, calibration_type = "numeric")

@@ -19,23 +19,23 @@ Change or add variables
 }
 \examples{
 \dontshow{if (rlang::is_installed("modeldata")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
-library(dplyr)
 library(modeldata)
 
-post_obj <-
+head(two_class_example)
+
+tlr <-
   tailor() \%>\%
   adjust_equivocal_zone() \%>\%
   adjust_predictions_custom(linear_predictor = binomial()$linkfun(Class2))
 
-
-post_res <- fit(
-  post_obj,
+tlr_fit <- fit(
+  tlr,
   two_class_example,
   outcome = c(truth),
   estimate = c(predicted),
   probabilities = c(Class1, Class2)
 )
 
-predict(post_res, two_class_example)
+predict(tlr_fit, two_class_example) \%>\% head()
 \dontshow{\}) # examplesIf}
 }

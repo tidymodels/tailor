@@ -3,6 +3,26 @@
 #' @param x A [tailor()].
 #' @param upper_limit,lower_limit A numeric value, NA (for no truncation) or
 #' [hardhat::tune()].
+#'
+#' @examplesIf FALSE
+# # TODO: unskip -- fn currently requires estimate to be called `.pred` (#22)
+#' library(tibble)
+#'
+#' # create example data
+#' set.seed(1)
+#' d <- tibble(y = rnorm(100), y_pred = y/2 + rnorm(100))
+#' d
+#'
+#' # specify calibration
+#' tlr <-
+#'   tailor() %>%
+#'   adjust_numeric_range(lower_limit = 1)
+#'
+#' # train tailor by passing column names. situate in a modeling workflow with
+#' # `workflows::add_tailor()` to avoid having to specify column names manually
+#' tlr_fit <- fit(tlr, d, outcome = y, estimate = y_pred)
+#'
+#' predict(tlr_fit, d)
 #' @export
 adjust_numeric_range <- function(x, lower_limit = -Inf, upper_limit = Inf) {
   # remaining input checks are done via probably::bound_prediction

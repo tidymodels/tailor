@@ -3,24 +3,28 @@
 #' @param x A [tailor()].
 #' @param threshold A numeric value (between zero and one) or [hardhat::tune()].
 #' @examplesIf rlang::is_installed("modeldata")
-#' library(dplyr)
 #' library(modeldata)
 #'
-#' post_obj <-
+#' # `predicted` gives hard class predictions based on probability threshold .5
+#' head(two_class_example)
+#'
+#' # use a threshold of .1 instead:
+#' tlr <-
 #'   tailor() %>%
-#'   adjust_probability_threshold(threshold = .1)
+#'   adjust_probability_threshold(.1)
 #'
-#' two_class_example %>% count(predicted)
-#'
-#' post_res <- fit(
-#'   post_obj,
+#' # fit by supplying column names. situate in a modeling workflow
+#' # with `workflows::add_tailor()` to avoid having to do so manually
+#' tlr_fit <- fit(
+#'   tlr,
 #'   two_class_example,
 #'   outcome = c(truth),
 #'   estimate = c(predicted),
 #'   probabilities = c(Class1, Class2)
 #' )
 #'
-#' predict(post_res, two_class_example) %>% count(predicted)
+#' # adjust hard class predictions
+#' predict(tlr_fit, two_class_example) %>% head()
 #' @export
 adjust_probability_threshold <- function(x, threshold = 0.5) {
   check_tailor(x)

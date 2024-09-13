@@ -5,6 +5,40 @@
 #' `"beta"`, `"isotonic"`, or `"isotonic_boot"`, corresponding to the
 #' function from the \pkg{probably} package [probably::cal_estimate_logistic()],
 #' [probably::cal_estimate_multinomial()], etc., respectively.
+#'
+# TODO: see #36
+#' @examplesIf FALSE
+# @examplesIf rlang::is_installed("modeldata")
+#' library(modeldata)
+#'
+#' # split example data
+#' set.seed(1)
+#' in_rows <- sample(c(TRUE, FALSE), nrow(two_class_example), replace = TRUE)
+#' d_potato <- two_class_example[in_rows, ]
+#' d_test <- two_class_example[!in_rows, ]
+#'
+#' head(d_potato)
+#'
+#' # specify calibration
+#' tlr <-
+#'   tailor() %>%
+#'   adjust_probability_calibration(method = "logistic")
+#'
+#' # train tailor on a subset of data. situate in a modeling workflow with
+#' # `workflows::add_tailor()` to avoid having to specify column names manually
+#' tlr_fit <- fit(
+#'   tlr,
+#'   d_potato,
+#'   outcome = c(truth),
+#'   estimate = c(predicted),
+#'   probabilities = c(Class1, Class2)
+#' )
+#'
+#' # apply to predictions on another subset of data
+#' head(d_test)
+#'
+#' predict(tlr_fit, d_test)
+#'
 #' @export
 adjust_probability_calibration <- function(x, method = NULL) {
   check_tailor(x, calibration_type = "probability")

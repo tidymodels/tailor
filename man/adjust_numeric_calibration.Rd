@@ -19,25 +19,26 @@ package \code{\link[probably:cal_estimate_linear]{probably::cal_estimate_linear(
 Re-calibrate numeric predictions
 }
 \examples{
-\dontshow{if (rlang::is_installed("modeldata")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
-library(modeldata)
-library(probably)
 library(tibble)
 
 # create example data
 set.seed(1)
-dat <- tibble(y = rnorm(100), y_pred = y/2 + rnorm(100))
+d_potato <- tibble(y = rnorm(100), y_pred = y/2 + rnorm(100))
+d_test <- tibble(y = rnorm(100), y_pred = y/2 + rnorm(100))
 
-dat
+d_potato
 
 # specify calibration
-reg_tailor <-
+tlr <-
   tailor() \%>\%
   adjust_numeric_calibration(method = "linear")
 
-# train tailor
-reg_tailor_trained <- fit(reg_tailor, dat, outcome = y, estimate = y_pred)
+# train tailor on a subset of data. situate in a modeling workflow with
+# `workflows::add_tailor()` to avoid having to specify column names manually
+tlr_fit <- fit(tlr, d_potato, outcome = y, estimate = y_pred)
 
-predict(reg_tailor_trained, dat)
-\dontshow{\}) # examplesIf}
+# apply to predictions on another subset of data
+d_test
+
+predict(tlr_fit, d_test)
 }

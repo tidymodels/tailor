@@ -15,3 +15,24 @@ adjust_numeric_range(x, lower_limit = -Inf, upper_limit = Inf)
 \description{
 Truncate the range of numeric predictions
 }
+\examples{
+\dontshow{if (FALSE) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+library(tibble)
+
+# create example data
+set.seed(1)
+d <- tibble(y = rnorm(100), y_pred = y/2 + rnorm(100))
+d
+
+# specify calibration
+tlr <-
+  tailor() \%>\%
+  adjust_numeric_range(lower_limit = 1)
+
+# train tailor by passing column names. situate in a modeling workflow with
+# `workflows::add_tailor()` to avoid having to specify column names manually
+tlr_fit <- fit(tlr, d, outcome = y, estimate = y_pred)
+
+predict(tlr_fit, d)
+\dontshow{\}) # examplesIf}
+}

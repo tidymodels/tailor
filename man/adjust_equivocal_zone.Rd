@@ -19,22 +19,33 @@ Apply an equivocal zone to a binary classification model.
 }
 \examples{
 \dontshow{if (rlang::is_installed("modeldata")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
-library(dplyr)
 library(modeldata)
 
-post_obj <-
+head(two_class_example)
+
+# `predicted` gives hard class predictions based on probabilities
+two_class_example \%>\% count(predicted)
+
+# when probabilities are within (.25, .75), consider them equivocal
+tlr <-
   tailor() \%>\%
   adjust_equivocal_zone(value = 1 / 4)
 
+tlr
 
-post_res <- fit(
-  post_obj,
+# fit by supplying column names. situate in a modeling workflow
+# with `workflows::add_tailor()` to avoid having to do so manually
+tlr_fit <- fit(
+  tlr,
   two_class_example,
   outcome = c(truth),
   estimate = c(predicted),
   probabilities = c(Class1, Class2)
 )
 
-predict(post_res, two_class_example)
+tlr_fit
+
+# adjust hard class predictions
+predict(tlr_fit, two_class_example) \%>\% count(predicted)
 \dontshow{\}) # examplesIf}
 }

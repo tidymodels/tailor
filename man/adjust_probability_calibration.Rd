@@ -17,3 +17,36 @@ function from the \pkg{probably} package \code{\link[probably:cal_estimate_logis
 \description{
 Re-calibrate classification probability predictions
 }
+\examples{
+\dontshow{if (FALSE) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+library(modeldata)
+
+# split example data
+set.seed(1)
+in_rows <- sample(c(TRUE, FALSE), nrow(two_class_example), replace = TRUE)
+d_potato <- two_class_example[in_rows, ]
+d_test <- two_class_example[!in_rows, ]
+
+head(d_potato)
+
+# specify calibration
+tlr <-
+  tailor() \%>\%
+  adjust_probability_calibration(method = "logistic")
+
+# train tailor on a subset of data. situate in a modeling workflow with
+# `workflows::add_tailor()` to avoid having to specify column names manually
+tlr_fit <- fit(
+  tlr,
+  d_potato,
+  outcome = c(truth),
+  estimate = c(predicted),
+  probabilities = c(Class1, Class2)
+)
+
+# apply to predictions on another subset of data
+head(d_test)
+
+predict(tlr_fit, d_test)
+\dontshow{\}) # examplesIf}
+}
