@@ -1,11 +1,26 @@
 #' Re-calibrate numeric predictions
 #'
+#' @description
+#' Calibration for regression models involves adjusting the model's
+#' predictions to adjust for correlated errors, ensuring that predicted
+#' values align closely with actual observed values across the entire
+#' range of outputs.
+#'
 #' @param x A [tailor()].
 #' @param method Character. One of `"linear"`, `"isotonic"`, or
 #' `"isotonic_boot"`, corresponding to the function from the \pkg{probably}
 #' package [probably::cal_estimate_linear()],
 #' [probably::cal_estimate_isotonic()], or
 #' [probably::cal_estimate_isotonic_boot()], respectively.
+#'
+#' @section Data Usage:
+#' This adjustment requires estimation and, as such, different subsets of data
+#' should be used to train it and evaluate its predictions. See the section
+#' by the same name in [workflows::add_tailor()] for more information on
+#' preventing data leakage with postprocessors that require estimation. When
+#' situated in a workflow, tailors will automatically be estimated with
+#' appropriate subsets of data.
+#'
 #' @examples
 #' library(tibble)
 #'

@@ -7,6 +7,9 @@
 #' @param .pkgs A character string of extra packages that are needed to execute
 #' the commands.
 #' @param ... Name-value pairs of expressions. See [dplyr::mutate()].
+#'
+#' @inheritSection adjust_equivocal_zone Data Usage
+#'
 #' @examplesIf rlang::is_installed("modeldata")
 #' library(modeldata)
 #'

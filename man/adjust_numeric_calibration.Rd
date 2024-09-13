@@ -16,8 +16,21 @@ package \code{\link[probably:cal_estimate_linear]{probably::cal_estimate_linear(
 \code{\link[probably:cal_estimate_isotonic_boot]{probably::cal_estimate_isotonic_boot()}}, respectively.}
 }
 \description{
-Re-calibrate numeric predictions
+Calibration for regression models involves adjusting the model's
+predictions to adjust for correlated errors, ensuring that predicted
+values align closely with actual observed values across the entire
+range of outputs.
 }
+\section{Data Usage}{
+
+This adjustment requires estimation and, as such, different subsets of data
+should be used to train it and evaluate its predictions. See the section
+by the same name in \code{\link[workflows:add_tailor]{workflows::add_tailor()}} for more information on
+preventing data leakage with postprocessors that require estimation. When
+situated in a workflow, tailors will automatically be estimated with
+appropriate subsets of data.
+}
+
 \examples{
 library(tibble)
 

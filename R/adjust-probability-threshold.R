@@ -12,6 +12,9 @@
 #'
 #' @param x A [tailor()].
 #' @param threshold A numeric value (between zero and one) or [hardhat::tune()].
+#'
+#' @inheritSection adjust_equivocal_zone Data Usage
+#'
 #' @examplesIf rlang::is_installed("modeldata")
 #' library(modeldata)
 #'

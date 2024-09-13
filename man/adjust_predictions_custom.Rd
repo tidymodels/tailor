@@ -18,6 +18,14 @@ the commands.}
 This adjustment functions allows for arbitrary transformations of model
 predictions using \code{\link[dplyr:mutate]{dplyr::mutate()}} statements.
 }
+\section{Data Usage}{
+
+This adjustment doesn't require estimation and, as such, the same data that's
+used to train it with \code{fit()} can be predicted on with \code{predict()}; fitting
+this adjustment just collects metadata on the supplied column names and does
+not risk data leakage.
+}
+
 \examples{
 \dontshow{if (rlang::is_installed("modeldata")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
 library(modeldata)

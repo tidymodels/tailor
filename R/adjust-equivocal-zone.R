@@ -9,6 +9,13 @@
 #' @param value A numeric value (between zero and 1/2) or [hardhat::tune()]. The
 #' value is the size of the buffer around the threshold.
 #' @param threshold A numeric value (between zero and one) or [hardhat::tune()].
+#'
+#' @section Data Usage:
+#' This adjustment doesn't require estimation and, as such, the same data that's
+#' used to train it with `fit()` can be predicted on with `predict()`; fitting
+#' this adjustment just collects metadata on the supplied column names and does
+#' not risk data leakage.
+#'
 #' @examplesIf rlang::is_installed("modeldata")
 #' library(modeldata)
 #'

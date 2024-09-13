@@ -11,6 +11,8 @@
 #' @param upper_limit,lower_limit A numeric value, NA (for no truncation) or
 #' [hardhat::tune()].
 #'
+#' @inheritSection adjust_equivocal_zone Data Usage
+#'
 #' @examplesIf FALSE
 # # TODO: unskip -- fn currently requires estimate to be called `.pred` (#22)
 #' library(tibble)

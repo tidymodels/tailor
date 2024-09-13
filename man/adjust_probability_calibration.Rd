@@ -21,6 +21,16 @@ ensure that when a model predicts a certain probability for an outcome,
 that probability accurately reflects the true likelihood of that outcome
 occurring.
 }
+\section{Data Usage}{
+
+This adjustment requires estimation and, as such, different subsets of data
+should be used to train it and evaluate its predictions. See the section
+by the same name in \code{\link[workflows:add_tailor]{workflows::add_tailor()}} for more information on
+preventing data leakage with postprocessors that require estimation. When
+situated in a workflow, tailors will automatically be estimated with
+appropriate subsets of data.
+}
+
 \examples{
 \dontshow{if (FALSE) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
 library(modeldata)
