@@ -68,6 +68,17 @@ function from the <span class="pkg">probably</span> package <code><a href="https
 <code><a href="https://probably.tidymodels.org/reference/cal_estimate_multinomial.html" class="external-link">probably::cal_estimate_multinomial()</a></code>, etc., respectively.</p></dd>
 
 </dl></div>
+    <div class="section level2">
+    <h2 id="data-usage">Data Usage<a class="anchor" aria-label="anchor" href="#data-usage"></a></h2>
+
+
+<p>This adjustment requires estimation and, as such, different subsets of data
+should be used to train it and evaluate its predictions. See the section
+by the same name in <code>workflows::add_tailor()</code> for more information on
+preventing data leakage with postprocessors that require estimation. When
+situated in a workflow, tailors will automatically be estimated with
+appropriate subsets of data.</p>
+    </div>
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
