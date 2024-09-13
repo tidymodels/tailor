@@ -1,5 +1,8 @@
 #' Change or add variables
 #'
+#' This adjustment functions allows for arbitrary transformations of model
+#' predictions using [dplyr::mutate()] statements.
+#'
 #' @param x A [tailor()].
 #' @param .pkgs A character string of extra packages that are needed to execute
 #' the commands.

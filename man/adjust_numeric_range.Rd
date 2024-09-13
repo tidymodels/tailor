@@ -13,7 +13,11 @@ adjust_numeric_range(x, lower_limit = -Inf, upper_limit = Inf)
 \code{\link[hardhat:tune]{hardhat::tune()}}.}
 }
 \description{
-Truncate the range of numeric predictions
+Truncating ranges involves limiting the output of a model to a specific
+range of values, typically to avoid extreme or unrealistic predictions.
+This technique can help improve the practical applicability of a model's
+outputs by constraining them within reasonable bounds based on domain
+knowledge or physical limitations.
 }
 \examples{
 \dontshow{if (FALSE) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}

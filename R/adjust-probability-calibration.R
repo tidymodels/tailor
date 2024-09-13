@@ -1,5 +1,12 @@
 #' Re-calibrate classification probability predictions
 #'
+#' @description
+#' Calibration is the process of adjusting a model's outputted probabilities
+#' to match the observed frequencies of events. This technique aims to
+#' ensure that when a model predicts a certain probability for an outcome,
+#' that probability accurately reflects the true likelihood of that outcome
+#' occurring.
+#'
 #' @param x A [tailor()].
 #' @param method Character. One of `"logistic"`, `"multinomial"`,
 #' `"beta"`, `"isotonic"`, or `"isotonic_boot"`, corresponding to the

@@ -15,7 +15,11 @@ function from the \pkg{probably} package \code{\link[probably:cal_estimate_logis
 \code{\link[probably:cal_estimate_multinomial]{probably::cal_estimate_multinomial()}}, etc., respectively.}
 }
 \description{
-Re-calibrate classification probability predictions
+Calibration is the process of adjusting a model's outputted probabilities
+to match the observed frequencies of events. This technique aims to
+ensure that when a model predicts a certain probability for an outcome,
+that probability accurately reflects the true likelihood of that outcome
+occurring.
 }
 \examples{
 \dontshow{if (FALSE) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}

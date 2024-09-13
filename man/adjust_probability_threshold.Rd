@@ -12,7 +12,14 @@ adjust_probability_threshold(x, threshold = 0.5)
 \item{threshold}{A numeric value (between zero and one) or \code{\link[hardhat:tune]{hardhat::tune()}}.}
 }
 \description{
-Change the event threshold
+Many machine learning systems determine hard class predictions by
+first predicting the probability of an event and then predicting that
+an event will occur if its respective probability is above 0.5. This
+adjustment allows practitioners to determine hard class predictions using
+a threshold other than 0.5. By setting appropriate thresholds, one can
+balance the trade-off between different types of errors (such as
+false positives and false negatives) to optimize the model's performance
+for specific use cases.
 }
 \examples{
 \dontshow{if (rlang::is_installed("modeldata")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}

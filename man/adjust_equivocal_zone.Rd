@@ -15,7 +15,10 @@ value is the size of the buffer around the threshold.}
 \item{threshold}{A numeric value (between zero and one) or \code{\link[hardhat:tune]{hardhat::tune()}}.}
 }
 \description{
-Apply an equivocal zone to a binary classification model.
+Equivocal zones describe intervals of predicted probabilities that are deemed
+too uncertain or ambiguous to be assigned a hard class. Rather than
+predicting a hard class when the probability is very close to a threshold,
+tailors using this adjustment predict "[EQ]".
 }
 \examples{
 \dontshow{if (rlang::is_installed("modeldata")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}

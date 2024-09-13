@@ -15,7 +15,8 @@ adjust_predictions_custom(x, ..., .pkgs = character(0))
 the commands.}
 }
 \description{
-Change or add variables
+This adjustment functions allows for arbitrary transformations of model
+predictions using \code{\link[dplyr:mutate]{dplyr::mutate()}} statements.
 }
 \examples{
 \dontshow{if (rlang::is_installed("modeldata")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}

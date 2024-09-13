@@ -1,5 +1,15 @@
 #' Change the event threshold
 #'
+#' @description
+#' Many machine learning systems determine hard class predictions by
+#' first predicting the probability of an event and then predicting that
+#' an event will occur if its respective probability is above 0.5. This
+#' adjustment allows practitioners to determine hard class predictions using
+#' a threshold other than 0.5. By setting appropriate thresholds, one can
+#' balance the trade-off between different types of errors (such as
+#' false positives and false negatives) to optimize the model's performance
+#' for specific use cases.
+#'
 #' @param x A [tailor()].
 #' @param threshold A numeric value (between zero and one) or [hardhat::tune()].
 #' @examplesIf rlang::is_installed("modeldata")

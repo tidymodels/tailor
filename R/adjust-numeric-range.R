@@ -1,5 +1,12 @@
 #' Truncate the range of numeric predictions
 #'
+#' @description
+#' Truncating ranges involves limiting the output of a model to a specific
+#' range of values, typically to avoid extreme or unrealistic predictions.
+#' This technique can help improve the practical applicability of a model's
+#' outputs by constraining them within reasonable bounds based on domain
+#' knowledge or physical limitations.
+#'
 #' @param x A [tailor()].
 #' @param upper_limit,lower_limit A numeric value, NA (for no truncation) or
 #' [hardhat::tune()].

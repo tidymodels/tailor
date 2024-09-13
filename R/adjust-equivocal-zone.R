@@ -1,5 +1,10 @@
 #' Apply an equivocal zone to a binary classification model.
 #'
+#' Equivocal zones describe intervals of predicted probabilities that are deemed
+#' too uncertain or ambiguous to be assigned a hard class. Rather than
+#' predicting a hard class when the probability is very close to a threshold,
+#' tailors using this adjustment predict "\[EQ\]".
+#'
 #' @param x A [tailor()].
 #' @param value A numeric value (between zero and 1/2) or [hardhat::tune()]. The
 #' value is the size of the buffer around the threshold.
