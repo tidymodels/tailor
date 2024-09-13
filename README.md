@@ -53,15 +53,6 @@ and `Class2`). The hard class predictions, in `predicted`, are
 `"Class2"` otherwise.
 
 ``` r
-library(dplyr)
-#> 
-#> Attaching package: 'dplyr'
-#> The following objects are masked from 'package:stats':
-#> 
-#>     filter, lag
-#> The following objects are masked from 'package:base':
-#> 
-#>     intersect, setdiff, setequal, union
 library(modeldata)
 
 head(two_class_example)

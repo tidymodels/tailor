@@ -48,7 +48,6 @@ library(tailor)
 The `two_class_example` dataset from modeldata gives the true value of an outcome variable `truth` as well as predicted probabilities (`Class1` and `Class2`). The hard class predictions, in `predicted`, are `"Class1"` if the probability assigned to `"Class1"` is above `.5`, and `"Class2"` otherwise.
 
 ```{r}
-library(dplyr)
 library(modeldata)
 
 head(two_class_example)
