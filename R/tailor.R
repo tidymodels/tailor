@@ -1,5 +1,23 @@
 #' Declare post-processing for model predictions
 #'
+#' @description
+#'
+#' Tailors compose iterative adjustments to model predictions. After
+#' initializing a tailor with this function, add adjustment specifications
+#' with `adjust_*()` functions:
+#'
+#' * For probability distributions: [adjust_probability_calibration()]
+#' * For transformation of probabilities to hard class predictions:
+#' [adjust_probability_threshold()], [adjust_equivocal_zone()]
+#' * For numeric distributions: [adjust_numeric_calibration], [adjust_numeric_range()]
+#'
+#' For ad-hoc adjustments, see [adjust_predictions_custom()].
+#'
+#' Tailors must be trained with [fit()][fit.tailor()] before being applied to
+#' new data with [predict()][predict.tailor()]. Tailors are tightly integrated
+#' with the [tidymodels](https://tidymodels.org) framework; for greatest ease
+#' of use, situate tailors in model workflows with [workflows::add_tailor()].
+#'
 #' @param type The model sub-type. Possible values are `"unknown"`, `"regression"`,
 #' `"binary"`, or `"multiclass"`.
 #' @param outcome The name of the outcome variable.
@@ -9,9 +27,34 @@
 #' @param probabilities The names of class probability estimates (if any). For
 #' classification, these should be given in the order of the factor levels of
 #' the `estimate`.
-#' @examples
+#' @examplesIf rlang::is_installed("modeldata")
+#' library(dplyr)
+#' library(modeldata)
 #'
-#' tailor()
+#' # `predicted` gives hard class predictions based on probabilities
+#' two_class_example %>% count(predicted)
+#'
+#' # change the probability threshold to allot one class vs the other
+#' tlr <-
+#'   tailor() %>%
+#'   adjust_probability_threshold(threshold = .1)
+#'
+#' tlr
+#'
+#' # fit by supplying column names. situate in a modeling workflow
+#' # with `workflows::add_tailor()` to avoid having to do so manually
+#' tlr_fit <- fit(
+#'   tlr,
+#'   two_class_example,
+#'   outcome = c(truth),
+#'   estimate = c(predicted),
+#'   probabilities = c(Class1, Class2)
+#' )
+#'
+#' tlr_fit
+#'
+#' # adjust hard class predictions
+#' predict(tlr_fit, two_class_example) %>% count(predicted)
 #' @export
 tailor <- function(type = "unknown", outcome = NULL, estimate = NULL,
                       probabilities = NULL) {

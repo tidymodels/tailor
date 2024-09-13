@@ -21,9 +21,51 @@ classification, these should be given in the order of the factor levels of
 the \code{estimate}.}
 }
 \description{
-Declare post-processing for model predictions
+Tailors compose iterative adjustments to model predictions. After
+initializing a tailor with this function, add adjustment specifications
+with \verb{adjust_*()} functions:
+\itemize{
+\item For probability distributions: \code{\link[=adjust_probability_calibration]{adjust_probability_calibration()}}
+\item For transformation of probabilities to hard class predictions:
+\code{\link[=adjust_probability_threshold]{adjust_probability_threshold()}}, \code{\link[=adjust_equivocal_zone]{adjust_equivocal_zone()}}
+\item For numeric distributions: \link{adjust_numeric_calibration}, \code{\link[=adjust_numeric_range]{adjust_numeric_range()}}
+}
+
+For ad-hoc adjustments, see \code{\link[=adjust_predictions_custom]{adjust_predictions_custom()}}.
+
+Tailors must be trained with \link[=fit.tailor]{fit()} before being applied to
+new data with \link[=predict.tailor]{predict()}. Tailors are tightly integrated
+with the \href{https://tidymodels.org}{tidymodels} framework; for greatest ease
+of use, situate tailors in model workflows with \code{\link[workflows:add_tailor]{workflows::add_tailor()}}.
 }
 \examples{
+\dontshow{if (rlang::is_installed("modeldata")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+library(dplyr)
+library(modeldata)
 
-tailor()
+# `predicted` gives hard class predictions based on probabilities
+two_class_example \%>\% count(predicted)
+
+# change the probability threshold to allot one class vs the other
+tlr <-
+  tailor() \%>\%
+  adjust_probability_threshold(threshold = .1)
+
+tlr
+
+# fit by supplying column names. situate in a modeling workflow
+# with `workflows::add_tailor()` to avoid having to do so manually
+tlr_fit <- fit(
+  tlr,
+  two_class_example,
+  outcome = c(truth),
+  estimate = c(predicted),
+  probabilities = c(Class1, Class2)
+)
+
+tlr_fit
+
+# adjust hard class predictions
+predict(tlr_fit, two_class_example) \%>\% count(predicted)
+\dontshow{\}) # examplesIf}
 }

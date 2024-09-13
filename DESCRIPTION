@@ -30,7 +30,8 @@ Imports:
     tidyselect
 Suggests: 
     modeldata,
-    testthat (>= 3.0.0)
+    testthat (>= 3.0.0),
+    workflows
 Remotes:
     tidymodels/probably
 Config/testthat/edition: 3
