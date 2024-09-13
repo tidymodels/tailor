@@ -82,24 +82,31 @@ of use, situate tailors in model workflows with <code>workflows::add_tailor()</c
 
 
 <dl><dt id="arg-type">type<a class="anchor" aria-label="anchor" href="#arg-type"></a></dt>
-<dd><p>The model sub-type. Possible values are <code>"unknown"</code>, <code>"regression"</code>,
-<code>"binary"</code>, or <code>"multiclass"</code>.</p></dd>
+<dd><p>Character. The model sub-mode. Possible values are
+<code>"unknown"</code>, <code>"regression"</code>, <code>"binary"</code>, or <code>"multiclass"</code>. Only required
+when used independently of <code>workflows::add_tailor()</code>.</p></dd>
 
 
 <dt id="arg-outcome">outcome<a class="anchor" aria-label="anchor" href="#arg-outcome"></a></dt>
-<dd><p>The name of the outcome variable.</p></dd>
+<dd><p>&lt;<code><a href="https://dplyr.tidyverse.org/reference/dplyr_tidy_select.html" class="external-link">tidy-select</a></code>&gt; Only required
+when used independently of <code>workflows::add_tailor()</code>, and can also be passed
+at <code><a href="https://generics.r-lib.org/reference/fit.html" class="external-link">fit()</a></code> time instead. The column name of the outcome variable.</p></dd>
 
 
 <dt id="arg-estimate">estimate<a class="anchor" aria-label="anchor" href="#arg-estimate"></a></dt>
-<dd><p>The name of the point estimate (e.g. predicted class). In
-tidymodels, this corresponds to column names <code>.pred</code>, <code>.pred_class</code>, or
-<code>.pred_time</code>.</p></dd>
+<dd><p>&lt;<code><a href="https://dplyr.tidyverse.org/reference/dplyr_tidy_select.html" class="external-link">tidy-select</a></code>&gt; Only required
+when used independently of <code>workflows::add_tailor()</code>, and can also be passed
+at <code><a href="https://generics.r-lib.org/reference/fit.html" class="external-link">fit()</a></code> time instead. The column name of the point estimate (e.g. predicted
+class), In tidymodels, this corresponds to column names <code>.pred</code>,
+<code>.pred_class</code>, or <code>.pred_time</code>.</p></dd>
 
 
 <dt id="arg-probabilities">probabilities<a class="anchor" aria-label="anchor" href="#arg-probabilities"></a></dt>
-<dd><p>The names of class probability estimates (if any). For
-classification, these should be given in the order of the factor levels of
-the <code>estimate</code>.</p></dd>
+<dd><p>&lt;<code><a href="https://dplyr.tidyverse.org/reference/dplyr_tidy_select.html" class="external-link">tidy-select</a></code>&gt; Only required
+when used independently of <code>workflows::add_tailor()</code> for the <code>"binary"</code> or
+<code>"multiclass"</code> types, and can also be passed at <code><a href="https://generics.r-lib.org/reference/fit.html" class="external-link">fit()</a></code> time instead.
+The column names of class probability estimates. These should be given in
+the order of the factor levels of the <code>estimate</code>.</p></dd>
 
 </dl></div>
 
