@@ -2,3 +2,8 @@ url: https://tailor.tidymodels.org
 template:
   bootstrap: 5
 
+reference:
+  - title: Compose tailors
+    contents:
+      - tailor
+      - contains("adjust")
