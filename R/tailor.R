@@ -9,7 +9,8 @@
 #' * For probability distributions: [adjust_probability_calibration()]
 #' * For transformation of probabilities to hard class predictions:
 #' [adjust_probability_threshold()], [adjust_equivocal_zone()]
-#' * For numeric distributions: [adjust_numeric_calibration], [adjust_numeric_range()]
+#' * For numeric distributions: [adjust_numeric_calibration()],
+#' [adjust_numeric_range()]
 #'
 #' For ad-hoc adjustments, see [adjust_predictions_custom()].
 #'

@@ -35,7 +35,8 @@ with \verb{adjust_*()} functions:
 \item For probability distributions: \code{\link[=adjust_probability_calibration]{adjust_probability_calibration()}}
 \item For transformation of probabilities to hard class predictions:
 \code{\link[=adjust_probability_threshold]{adjust_probability_threshold()}}, \code{\link[=adjust_equivocal_zone]{adjust_equivocal_zone()}}
-\item For numeric distributions: \link{adjust_numeric_calibration}, \code{\link[=adjust_numeric_range]{adjust_numeric_range()}}
+\item For numeric distributions: \code{\link[=adjust_numeric_calibration]{adjust_numeric_calibration()}},
+\code{\link[=adjust_numeric_range]{adjust_numeric_range()}}
 }
 
 For ad-hoc adjustments, see \code{\link[=adjust_predictions_custom]{adjust_predictions_custom()}}.
