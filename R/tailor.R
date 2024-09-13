@@ -18,15 +18,22 @@
 #' with the [tidymodels](https://tidymodels.org) framework; for greatest ease
 #' of use, situate tailors in model workflows with [workflows::add_tailor()].
 #'
-#' @param type The model sub-type. Possible values are `"unknown"`, `"regression"`,
-#' `"binary"`, or `"multiclass"`.
-#' @param outcome The name of the outcome variable.
-#' @param estimate The name of the point estimate (e.g. predicted class). In
-#' tidymodels, this corresponds to column names `.pred`, `.pred_class`, or
-#' `.pred_time`.
-#' @param probabilities The names of class probability estimates (if any). For
-#' classification, these should be given in the order of the factor levels of
-#' the `estimate`.
+#' @param type Character. The model sub-mode. Possible values are
+#' `"unknown"`, `"regression"`, `"binary"`, or `"multiclass"`. Only required
+#' when used independently of [workflows::add_tailor()].
+#' @param outcome <[`tidy-select`][dplyr::dplyr_tidy_select]> Only required
+#' when used independently of [workflows::add_tailor()], and can also be passed
+#' at `fit()` time instead. The column name of the outcome variable.
+#' @param estimate <[`tidy-select`][dplyr::dplyr_tidy_select]> Only required
+#' when used independently of [workflows::add_tailor()], and can also be passed
+#' at `fit()` time instead. The column name of the point estimate (e.g. predicted
+#' class), In tidymodels, this corresponds to column names `.pred`,
+#' `.pred_class`, or `.pred_time`.
+#' @param probabilities <[`tidy-select`][dplyr::dplyr_tidy_select]> Only required
+#' when used independently of [workflows::add_tailor()] for the `"binary"` or
+#' `"multiclass"` types, and can also be passed at `fit()` time instead.
+#' The column names of class probability estimates. These should be given in
+#' the order of the factor levels of the `estimate`.
 #' @examplesIf rlang::is_installed("modeldata")
 #' library(modeldata)
 #'

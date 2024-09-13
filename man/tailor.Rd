@@ -7,18 +7,25 @@
 tailor(type = "unknown", outcome = NULL, estimate = NULL, probabilities = NULL)
 }
 \arguments{
-\item{type}{The model sub-type. Possible values are \code{"unknown"}, \code{"regression"},
-\code{"binary"}, or \code{"multiclass"}.}
+\item{type}{Character. The model sub-mode. Possible values are
+\code{"unknown"}, \code{"regression"}, \code{"binary"}, or \code{"multiclass"}. Only required
+when used independently of \code{\link[workflows:add_tailor]{workflows::add_tailor()}}.}
 
-\item{outcome}{The name of the outcome variable.}
+\item{outcome}{<\code{\link[dplyr:dplyr_tidy_select]{tidy-select}}> Only required
+when used independently of \code{\link[workflows:add_tailor]{workflows::add_tailor()}}, and can also be passed
+at \code{fit()} time instead. The column name of the outcome variable.}
 
-\item{estimate}{The name of the point estimate (e.g. predicted class). In
-tidymodels, this corresponds to column names \code{.pred}, \code{.pred_class}, or
-\code{.pred_time}.}
+\item{estimate}{<\code{\link[dplyr:dplyr_tidy_select]{tidy-select}}> Only required
+when used independently of \code{\link[workflows:add_tailor]{workflows::add_tailor()}}, and can also be passed
+at \code{fit()} time instead. The column name of the point estimate (e.g. predicted
+class), In tidymodels, this corresponds to column names \code{.pred},
+\code{.pred_class}, or \code{.pred_time}.}
 
-\item{probabilities}{The names of class probability estimates (if any). For
-classification, these should be given in the order of the factor levels of
-the \code{estimate}.}
+\item{probabilities}{<\code{\link[dplyr:dplyr_tidy_select]{tidy-select}}> Only required
+when used independently of \code{\link[workflows:add_tailor]{workflows::add_tailor()}} for the \code{"binary"} or
+\code{"multiclass"} types, and can also be passed at \code{fit()} time instead.
+The column names of class probability estimates. These should be given in
+the order of the factor levels of the \code{estimate}.}
 }
 \description{
 Tailors compose iterative adjustments to model predictions. After
