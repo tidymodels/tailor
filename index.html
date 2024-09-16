@@ -73,6 +73,15 @@
 <p>The <code>two_class_example</code> dataset from modeldata gives the true value of an outcome variable <code>truth</code> as well as predicted probabilities (<code>Class1</code> and <code>Class2</code>). The hard class predictions, in <code>predicted</code>, are <code>"Class1"</code> if the probability assigned to <code>"Class1"</code> is above <code>.5</code>, and <code>"Class2"</code> otherwise.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://modeldata.tidymodels.org" class="external-link">modeldata</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org" class="external-link">dplyr</a></span><span class="op">)</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Attaching package: 'dplyr'</span></span>
+<span><span class="co">#&gt; The following objects are masked from 'package:stats':</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt;     filter, lag</span></span>
+<span><span class="co">#&gt; The following objects are masked from 'package:base':</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt;     intersect, setdiff, setequal, union</span></span>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">two_class_example</span><span class="op">)</span></span>
 <span><span class="co">#&gt;    truth      Class1       Class2 predicted</span></span>
@@ -84,7 +93,7 @@
 <span><span class="co">#&gt; 6 Class1 0.999275071 0.0007249286    Class1</span></span></code></pre></div>
 <p>The model predicts <code>"Class1"</code> more often than it does <code>"Class2"</code>.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">two_class_example</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu">count</span><span class="op">(</span><span class="va">predicted</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="va">two_class_example</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/count.html" class="external-link">count</a></span><span class="op">(</span><span class="va">predicted</span><span class="op">)</span></span>
 <span><span class="co">#&gt;   predicted   n</span></span>
 <span><span class="co">#&gt; 1    Class1 277</span></span>
 <span><span class="co">#&gt; 2    Class2 223</span></span></code></pre></div>
@@ -120,7 +129,7 @@
 <p>When used with a model <a href="https://workflows.tidymodels.org" class="external-link">workflow</a> via <code>add_tailor()</code>, the arguments to <code><a href="https://generics.r-lib.org/reference/fit.html" class="external-link">fit()</a></code> a tailor will be set automatically (in addition to the data splitting needed for postprocessors that require training).</p>
 <p>Now, when passed new data, the trained tailor will determine the outputted class based on whether the probability assigned to the level <code>"Class1"</code> is above <code>.9</code>, resulting in more predictions of <code>"Class2"</code> than before.</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/predict.html" class="external-link">predict</a></span><span class="op">(</span><span class="va">post_res</span>, <span class="va">two_class_example</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu">count</span><span class="op">(</span><span class="va">predicted</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/predict.html" class="external-link">predict</a></span><span class="op">(</span><span class="va">post_res</span>, <span class="va">two_class_example</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/count.html" class="external-link">count</a></span><span class="op">(</span><span class="va">predicted</span><span class="op">)</span></span>
 <span><span class="co">#&gt; # A tibble: 2 × 2</span></span>
 <span><span class="co">#&gt;   predicted     n</span></span>
 <span><span class="co">#&gt;   &lt;fct&gt;     &lt;int&gt;</span></span>
