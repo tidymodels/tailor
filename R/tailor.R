@@ -127,6 +127,29 @@ print.tailor <- function(x, ...) {
   invisible(x)
 }
 
+#' Fit and predict from tailors
+#'
+#' @description
+#' These functions apply `fit()` and `predict()` methods for each adjustment
+#' added to a tailor, in the order in which they were applied.
+#'
+#' Users do not need to interface with these methods directly when tailors
+#' are situated inside model workflows with [workflows::add_tailor()].
+#'
+#' @section Data Usage:
+#'
+#' For adjustments that don't require estimating parameters, training with
+#' `fit()` simply evaluates tidyselect expressions and logs column names.
+#' For others, as in [adjust_numeric_calibration()], adjustments actually
+#' learn from data; in that case, separate subsets of data ought to be used
+#' for training the tailor and evaluating its performance on predictions.
+#' See the Data Usage section in [workflows::add_tailor()] for more information
+#' on how tidymodels makes that split; when situated in a model workflow,
+#' tailors will automatically be trained on the appropriate subset of data.
+#'
+#' @param .data,new_data A data frame containing predictions from a model.
+#' @inheritParams tailor
+#'
 #' @export
 fit.tailor <- function(object, .data, outcome, estimate, probabilities = c(),
                        ...) {
@@ -170,6 +193,7 @@ fit.tailor <- function(object, .data, outcome, estimate, probabilities = c(),
   object
 }
 
+#' @rdname fit.tailor
 #' @export
 predict.tailor <- function(object, new_data, ...) {
   # validate levels/classes
