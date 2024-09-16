@@ -152,6 +152,7 @@ print.tailor <- function(x, ...) {
 #' @inheritParams tailor
 #' @param ... Currently ignored.
 #'
+#' @keywords internal
 #' @export
 fit.tailor <- function(object, .data, outcome, estimate, probabilities = c(),
                        ...) {
