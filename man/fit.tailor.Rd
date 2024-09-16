@@ -10,6 +10,8 @@
 \method{predict}{tailor}(object, new_data, ...)
 }
 \arguments{
+\item{object}{A \code{\link[=tailor]{tailor()}}.}
+
 \item{.data, new_data}{A data frame containing predictions from a model.}
 
 \item{outcome}{<\code{\link[dplyr:dplyr_tidy_select]{tidy-select}}> Only required
@@ -27,6 +29,8 @@ when used independently of \code{\link[workflows:add_tailor]{workflows::add_tail
 \code{"multiclass"} types, and can also be passed at \code{fit()} time instead.
 The column names of class probability estimates. These should be given in
 the order of the factor levels of the \code{estimate}.}
+
+\item{...}{Currently ignored.}
 }
 \description{
 These functions apply \code{fit()} and \code{predict()} methods for each adjustment

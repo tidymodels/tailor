@@ -147,8 +147,10 @@ print.tailor <- function(x, ...) {
 #' on how tidymodels makes that split; when situated in a model workflow,
 #' tailors will automatically be trained on the appropriate subset of data.
 #'
+#' @param object A [tailor()].
 #' @param .data,new_data A data frame containing predictions from a model.
 #' @inheritParams tailor
+#' @param ... Currently ignored.
 #'
 #' @export
 fit.tailor <- function(object, .data, outcome, estimate, probabilities = c(),
