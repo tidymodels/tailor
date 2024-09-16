@@ -9,20 +9,20 @@ tailor(type = "unknown", outcome = NULL, estimate = NULL, probabilities = NULL)
 \arguments{
 \item{type}{Character. The model sub-mode. Possible values are
 \code{"unknown"}, \code{"regression"}, \code{"binary"}, or \code{"multiclass"}. Only required
-when used independently of \code{\link[workflows:add_tailor]{workflows::add_tailor()}}.}
+when used independently of \code{?workflows::add_tailor()}.}
 
 \item{outcome}{<\code{\link[dplyr:dplyr_tidy_select]{tidy-select}}> Only required
-when used independently of \code{\link[workflows:add_tailor]{workflows::add_tailor()}}, and can also be passed
+when used independently of \code{?workflows::add_tailor()}, and can also be passed
 at \code{fit()} time instead. The column name of the outcome variable.}
 
 \item{estimate}{<\code{\link[dplyr:dplyr_tidy_select]{tidy-select}}> Only required
-when used independently of \code{\link[workflows:add_tailor]{workflows::add_tailor()}}, and can also be passed
+when used independently of \code{?workflows::add_tailor()}, and can also be passed
 at \code{fit()} time instead. The column name of the point estimate (e.g. predicted
 class), In tidymodels, this corresponds to column names \code{.pred},
 \code{.pred_class}, or \code{.pred_time}.}
 
 \item{probabilities}{<\code{\link[dplyr:dplyr_tidy_select]{tidy-select}}> Only required
-when used independently of \code{\link[workflows:add_tailor]{workflows::add_tailor()}} for the \code{"binary"} or
+when used independently of \code{?workflows::add_tailor()} for the \code{"binary"} or
 \code{"multiclass"} types, and can also be passed at \code{fit()} time instead.
 The column names of class probability estimates. These should be given in
 the order of the factor levels of the \code{estimate}.}
@@ -44,7 +44,7 @@ For ad-hoc adjustments, see \code{\link[=adjust_predictions_custom]{adjust_predi
 Tailors must be trained with \link[=fit.tailor]{fit()} before being applied to
 new data with \link[=predict.tailor]{predict()}. Tailors are tightly integrated
 with the \href{https://tidymodels.org}{tidymodels} framework; for greatest ease
-of use, situate tailors in model workflows with \code{\link[workflows:add_tailor]{workflows::add_tailor()}}.
+of use, situate tailors in model workflows with \code{?workflows::add_tailor()}.
 }
 \examples{
 \dontshow{if (rlang::is_installed("modeldata")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}

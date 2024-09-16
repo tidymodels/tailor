@@ -16,7 +16,7 @@
 #' @section Data Usage:
 #' This adjustment requires estimation and, as such, different subsets of data
 #' should be used to train it and evaluate its predictions. See the section
-#' by the same name in [workflows::add_tailor()] for more information on
+#' by the same name in `?workflows::add_tailor()` for more information on
 #' preventing data leakage with postprocessors that require estimation. When
 #' situated in a workflow, tailors will automatically be estimated with
 #' appropriate subsets of data.

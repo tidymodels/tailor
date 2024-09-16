@@ -15,17 +15,17 @@
 \item{.data, new_data}{A data frame containing predictions from a model.}
 
 \item{outcome}{<\code{\link[dplyr:dplyr_tidy_select]{tidy-select}}> Only required
-when used independently of \code{\link[workflows:add_tailor]{workflows::add_tailor()}}, and can also be passed
+when used independently of \code{?workflows::add_tailor()}, and can also be passed
 at \code{fit()} time instead. The column name of the outcome variable.}
 
 \item{estimate}{<\code{\link[dplyr:dplyr_tidy_select]{tidy-select}}> Only required
-when used independently of \code{\link[workflows:add_tailor]{workflows::add_tailor()}}, and can also be passed
+when used independently of \code{?workflows::add_tailor()}, and can also be passed
 at \code{fit()} time instead. The column name of the point estimate (e.g. predicted
 class), In tidymodels, this corresponds to column names \code{.pred},
 \code{.pred_class}, or \code{.pred_time}.}
 
 \item{probabilities}{<\code{\link[dplyr:dplyr_tidy_select]{tidy-select}}> Only required
-when used independently of \code{\link[workflows:add_tailor]{workflows::add_tailor()}} for the \code{"binary"} or
+when used independently of \code{?workflows::add_tailor()} for the \code{"binary"} or
 \code{"multiclass"} types, and can also be passed at \code{fit()} time instead.
 The column names of class probability estimates. These should be given in
 the order of the factor levels of the \code{estimate}.}
@@ -37,7 +37,7 @@ These functions apply \code{fit()} and \code{predict()} methods for each adjustm
 added to a tailor, in the order in which they were applied.
 
 Users do not need to interface with these methods directly when tailors
-are situated inside model workflows with \code{\link[workflows:add_tailor]{workflows::add_tailor()}}.
+are situated inside model workflows with \code{?workflows::add_tailor()}.
 }
 \section{Data Usage}{
 
@@ -47,7 +47,7 @@ For adjustments that don't require estimating parameters, training with
 For others, as in \code{\link[=adjust_numeric_calibration]{adjust_numeric_calibration()}}, adjustments actually
 learn from data; in that case, separate subsets of data ought to be used
 for training the tailor and evaluating its performance on predictions.
-See the Data Usage section in \code{\link[workflows:add_tailor]{workflows::add_tailor()}} for more information
+See the Data Usage section in \code{?workflows::add_tailor()} for more information
 on how tidymodels makes that split; when situated in a model workflow,
 tailors will automatically be trained on the appropriate subset of data.
 }
