@@ -93,11 +93,10 @@ test_that("error informatively with empty tidyselections", {
   )
 
   # probability doesn't exist, is selection helper, isn't needed
-  # (asserting here that we ought not to error on a bad selection
+  # (asserting here that we ought to error on a bad selection
   # if it would not be used anyway.)
-  # todo: need to overwrite column name for now, see #22.
-  two_class_example$.pred <- two_class_example$Class2
-  expect_no_condition(
+  expect_snapshot(
+    error = TRUE,
     tailor_fit <- tailor() %>%
       adjust_numeric_range(.5) %>%
       fit(

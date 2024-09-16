@@ -95,3 +95,14 @@
       ! `probabilities` must select at least one column.
       x Selector `tidyselect::contains("Class_WRONG")` did not match any columns in `.data`.
 
+---
+
+    Code
+      tailor_fit <- tailor() %>% adjust_numeric_range(0.5) %>% fit(two_class_example,
+        outcome = "Class1", estimate = ".pred", probabilities = tidyselect::contains(
+          "Class_WRONG"))
+    Condition
+      Error in `fit()`:
+      ! Can't select columns that don't exist.
+      x Column `.pred` doesn't exist.
+
