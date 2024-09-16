@@ -17,6 +17,7 @@
 #' not risk data leakage.
 #'
 #' @examplesIf rlang::is_installed("modeldata")
+#' library(dplyr)
 #' library(modeldata)
 #'
 #' head(two_class_example)

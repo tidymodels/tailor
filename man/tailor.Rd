@@ -48,6 +48,7 @@ of use, situate tailors in model workflows with \code{\link[workflows:add_tailor
 }
 \examples{
 \dontshow{if (rlang::is_installed("modeldata")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+library(dplyr)
 library(modeldata)
 
 # `predicted` gives hard class predictions based on probabilities

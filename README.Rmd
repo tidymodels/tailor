@@ -49,6 +49,7 @@ The `two_class_example` dataset from modeldata gives the true value of an outcom
 
 ```{r}
 library(modeldata)
+library(dplyr)
 
 head(two_class_example)
 ```
