@@ -14,7 +14,6 @@
 #' @inheritSection adjust_equivocal_zone Data Usage
 #'
 #' @examplesIf FALSE
-# # TODO: unskip -- fn currently requires estimate to be called `.pred` (#22)
 #' library(tibble)
 #'
 #' # create example data
@@ -105,10 +104,19 @@ predict.numeric_range <- function(object, new_data, tailor, ...) {
   lo <- object$arguments$lower_limit
   hi <- object$arguments$upper_limit
 
-  # todo depends on tm predict col names
   new_data[[est_nm]] <-
-    probably::bound_prediction(new_data, lower_limit = lo, upper_limit = hi)[[est_nm]]
+    probably::bound_prediction(
+      rename_prediction_column(new_data, est_nm),
+      lower_limit = lo,
+      upper_limit = hi
+    )[[".pred"]]
   new_data
+}
+
+rename_prediction_column <- function(data, est_nm) {
+  data[[".pred"]] <- data[[est_nm]]
+  data[[est_nm]] <- NULL
+  data
 }
 
 #' @export
