@@ -13,7 +13,7 @@ For ad-hoc adjustments, see adjust_predictions_custom().
 Tailors must be trained with fit() before being applied to
 new data with predict(). Tailors are tightly integrated
 with the tidymodels framework; for greatest ease
-of use, situate tailors in model workflows with workflows::add_tailor()."><meta property="og:description" content="Tailors compose iterative adjustments to model predictions. After
+of use, situate tailors in model workflows with ?workflows::add_tailor()."><meta property="og:description" content="Tailors compose iterative adjustments to model predictions. After
 initializing a tailor with this function, add adjustment specifications
 with adjust_*() functions:
 For probability distributions: adjust_probability_calibration()
@@ -27,7 +27,7 @@ For ad-hoc adjustments, see adjust_predictions_custom().
 Tailors must be trained with fit() before being applied to
 new data with predict(). Tailors are tightly integrated
 with the tidymodels framework; for greatest ease
-of use, situate tailors in model workflows with workflows::add_tailor()."></head><body>
+of use, situate tailors in model workflows with ?workflows::add_tailor()."></head><body>
     <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
 
 
@@ -69,10 +69,10 @@ with <code>adjust_*()</code> functions:</p><ul><li><p>For probability distributi
 <li><p>For numeric distributions: <code><a href="adjust_numeric_calibration.html">adjust_numeric_calibration()</a></code>,
 <code><a href="adjust_numeric_range.html">adjust_numeric_range()</a></code></p></li>
 </ul><p>For ad-hoc adjustments, see <code><a href="adjust_predictions_custom.html">adjust_predictions_custom()</a></code>.</p>
-<p>Tailors must be trained with fit() before being applied to
-new data with predict(). Tailors are tightly integrated
+<p>Tailors must be trained with <a href="fit.tailor.html">fit()</a> before being applied to
+new data with <a href="fit.tailor.html">predict()</a>. Tailors are tightly integrated
 with the <a href="https://tidymodels.org" class="external-link">tidymodels</a> framework; for greatest ease
-of use, situate tailors in model workflows with <code><a href="https://workflows.tidymodels.org/reference/add_tailor.html" class="external-link">workflows::add_tailor()</a></code>.</p>
+of use, situate tailors in model workflows with <code>?workflows::add_tailor()</code>.</p>
     </div>
 
     <div class="section level2">
@@ -87,18 +87,18 @@ of use, situate tailors in model workflows with <code><a href="https://workflows
 <dl><dt id="arg-type">type<a class="anchor" aria-label="anchor" href="#arg-type"></a></dt>
 <dd><p>Character. The model sub-mode. Possible values are
 <code>"unknown"</code>, <code>"regression"</code>, <code>"binary"</code>, or <code>"multiclass"</code>. Only required
-when used independently of <code><a href="https://workflows.tidymodels.org/reference/add_tailor.html" class="external-link">workflows::add_tailor()</a></code>.</p></dd>
+when used independently of <code>?workflows::add_tailor()</code>.</p></dd>
 
 
 <dt id="arg-outcome">outcome<a class="anchor" aria-label="anchor" href="#arg-outcome"></a></dt>
 <dd><p>&lt;<code><a href="https://dplyr.tidyverse.org/reference/dplyr_tidy_select.html" class="external-link">tidy-select</a></code>&gt; Only required
-when used independently of <code><a href="https://workflows.tidymodels.org/reference/add_tailor.html" class="external-link">workflows::add_tailor()</a></code>, and can also be passed
+when used independently of <code>?workflows::add_tailor()</code>, and can also be passed
 at <code><a href="https://generics.r-lib.org/reference/fit.html" class="external-link">fit()</a></code> time instead. The column name of the outcome variable.</p></dd>
 
 
 <dt id="arg-estimate">estimate<a class="anchor" aria-label="anchor" href="#arg-estimate"></a></dt>
 <dd><p>&lt;<code><a href="https://dplyr.tidyverse.org/reference/dplyr_tidy_select.html" class="external-link">tidy-select</a></code>&gt; Only required
-when used independently of <code><a href="https://workflows.tidymodels.org/reference/add_tailor.html" class="external-link">workflows::add_tailor()</a></code>, and can also be passed
+when used independently of <code>?workflows::add_tailor()</code>, and can also be passed
 at <code><a href="https://generics.r-lib.org/reference/fit.html" class="external-link">fit()</a></code> time instead. The column name of the point estimate (e.g. predicted
 class), In tidymodels, this corresponds to column names <code>.pred</code>,
 <code>.pred_class</code>, or <code>.pred_time</code>.</p></dd>
@@ -106,7 +106,7 @@ class), In tidymodels, this corresponds to column names <code>.pred</code>,
 
 <dt id="arg-probabilities">probabilities<a class="anchor" aria-label="anchor" href="#arg-probabilities"></a></dt>
 <dd><p>&lt;<code><a href="https://dplyr.tidyverse.org/reference/dplyr_tidy_select.html" class="external-link">tidy-select</a></code>&gt; Only required
-when used independently of <code><a href="https://workflows.tidymodels.org/reference/add_tailor.html" class="external-link">workflows::add_tailor()</a></code> for the <code>"binary"</code> or
+when used independently of <code>?workflows::add_tailor()</code> for the <code>"binary"</code> or
 <code>"multiclass"</code> types, and can also be passed at <code><a href="https://generics.r-lib.org/reference/fit.html" class="external-link">fit()</a></code> time instead.
 The column names of class probability estimates. These should be given in
 the order of the factor levels of the <code>estimate</code>.</p></dd>
