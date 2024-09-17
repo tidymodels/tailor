@@ -91,7 +91,7 @@
       tailor() %>% adjust_numeric_calibration() %>% adjust_probability_threshold()
     Condition
       Error in `adjust_probability_threshold()`:
-      ! Can't compose adjustments for different input types.
+      ! Can't compose adjustments for different prediction types.
       i Adjustment `adjust_numeric_calibration()` operates on numerics while `adjust_probability_threshold()` operates on probabilities.
 
 ---
@@ -102,7 +102,7 @@
         lower_limit = 2)
     Condition
       Error in `adjust_numeric_range()`:
-      ! Can't compose adjustments for different input types.
+      ! Can't compose adjustments for different prediction types.
       i Adjustment `adjust_numeric_range()` operates on numerics while `adjust_probability_calibration()` and `adjust_probability_threshold()` operate on probabilities.
 
 ---
@@ -112,7 +112,7 @@
         adjust_probability_threshold(threshold = 0.4)
     Condition
       Error in `adjust_probability_threshold()`:
-      ! Can't compose adjustments for different input types.
+      ! Can't compose adjustments for different prediction types.
       i Adjustments `adjust_numeric_calibration()` and `adjust_numeric_range()` operate on numerics while `adjust_probability_threshold()` operates on probabilities.
 
 ---
@@ -122,7 +122,7 @@
         adjust_numeric_calibration() %>% adjust_probability_threshold()
     Condition
       Error in `adjust_probability_threshold()`:
-      ! Can't compose adjustments for different input types.
+      ! Can't compose adjustments for different prediction types.
       i Adjustment `adjust_numeric_calibration()` operates on numerics while `adjust_probability_threshold()` operates on probabilities.
 
 ---
@@ -133,7 +133,7 @@
         threshold = 0.4) %>% adjust_numeric_range(lower_limit = 2)
     Condition
       Error in `adjust_numeric_range()`:
-      ! Can't compose adjustments for different input types.
+      ! Can't compose adjustments for different prediction types.
       i Adjustment `adjust_numeric_range()` operates on numerics while `adjust_probability_calibration()` and `adjust_probability_threshold()` operate on probabilities.
 
 ---
@@ -144,6 +144,6 @@
         adjust_probability_threshold(threshold = 0.4)
     Condition
       Error in `adjust_probability_threshold()`:
-      ! Can't compose adjustments for different input types.
+      ! Can't compose adjustments for different prediction types.
       i Adjustments `adjust_numeric_calibration()` and `adjust_numeric_range()` operate on numerics while `adjust_probability_threshold()` operates on probabilities.
 

@@ -21,7 +21,7 @@ check_incompatible_types <- function(orderings, call) {
     probability_adjustments <- orderings$name[which(orderings$input == "probability")]
     cli_abort(
       c(
-        "Can't compose adjustments for different input types.",
+        "Can't compose adjustments for different prediction types.",
         "i" = "{cli::qty(numeric_adjustments)}
                Adjustment{?s} {.fn {paste0('adjust_', numeric_adjustments)}}
                {cli::qty(numeric_adjustments[-1])} operate{?s} on numerics while
