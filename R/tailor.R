@@ -79,8 +79,6 @@ tailor <- function(outcome = NULL, estimate = NULL, probabilities = NULL) {
 }
 
 new_tailor <- function(type, adjustments, columns, ptype, call) {
-  type <- arg_match0(type, c("unknown", "regression", "binary", "multiclass"))
-
   if (!is.list(adjustments)) {
     cli_abort("The {.arg adjustments} argument should be a list.", call = call)
   }
