@@ -5,7 +5,7 @@
     Message
       
       -- tailor ----------------------------------------------------------------------
-      A postprocessor with 1 adjustment:
+      A binary postprocessor with 1 adjustment:
       
       * Re-calibrate classification probabilities.
 
@@ -20,15 +20,7 @@
 ---
 
     Code
-      tailor("regression") %>% adjust_probability_calibration("binary")
-    Condition
-      Error in `adjust_probability_calibration()`:
-      ! A regression tailor is incompatible with the adjustment `adjust_probability_calibration()`.
-
----
-
-    Code
-      tailor("binary") %>% adjust_probability_calibration("linear")
+      tailor() %>% adjust_probability_calibration("linear")
     Condition
       Error in `adjust_probability_calibration()`:
       ! `method` must be one of "logistic", "multinomial", "beta", "isotonic", or "isotonic_boot", not "linear".

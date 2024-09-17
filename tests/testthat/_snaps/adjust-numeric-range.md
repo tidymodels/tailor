@@ -5,7 +5,7 @@
     Message
       
       -- tailor ----------------------------------------------------------------------
-      A postprocessor with 1 adjustment:
+      A regression postprocessor with 1 adjustment:
       
       * Constrain numeric predictions to be between [-Inf, Inf].
 
@@ -16,7 +16,7 @@
     Message
       
       -- tailor ----------------------------------------------------------------------
-      A postprocessor with 1 adjustment:
+      A regression postprocessor with 1 adjustment:
       
       * Constrain numeric predictions to be between [?, Inf].
 
@@ -27,7 +27,7 @@
     Message
       
       -- tailor ----------------------------------------------------------------------
-      A postprocessor with 1 adjustment:
+      A regression postprocessor with 1 adjustment:
       
       * Constrain numeric predictions to be between [-1, ?].
 
@@ -38,7 +38,7 @@
     Message
       
       -- tailor ----------------------------------------------------------------------
-      A postprocessor with 1 adjustment:
+      A regression postprocessor with 1 adjustment:
       
       * Constrain numeric predictions to be between [?, 1].
 

@@ -1,21 +1,9 @@
-validate_order <- function(adjustments, type, call = caller_env()) {
-  orderings <-
-    tibble::new_tibble(list(
-      name = purrr::map_chr(adjustments, ~ class(.x)[1]),
-      input = purrr::map_chr(adjustments, ~ .x$inputs),
-      output_numeric = purrr::map_lgl(adjustments, ~ grepl("numeric", .x$outputs)),
-      output_prob = purrr::map_lgl(adjustments, ~ grepl("probability", .x$outputs)),
-      output_class = purrr::map_lgl(adjustments, ~ grepl("class", .x$outputs)),
-      output_all = purrr::map_lgl(adjustments, ~ grepl("everything", .x$outputs))
-    ))
-
-  if (length(adjustments) < 2) {
+validate_order <- function(orderings, type, call = caller_env()) {
+  if (nrow(orderings) < 2) {
     return(invisible(orderings))
   }
 
-  if (type == "unknown") {
-    type <- infer_type(orderings)
-  }
+  check_incompatible_types(orderings, call)
 
   switch(
     type,
@@ -25,6 +13,24 @@ validate_order <- function(adjustments, type, call = caller_env()) {
   )
 
   invisible(orderings)
+}
+
+check_incompatible_types <- function(orderings, call) {
+  if (all(c("numeric", "probability") %in% orderings$input)) {
+    numeric_adjustments <- orderings$name[which(orderings$input == "numeric")]
+    probability_adjustments <- orderings$name[which(orderings$input == "probability")]
+    cli_abort(
+      c(
+        "Can't compose adjustments for different prediction types.",
+        "i" = "{cli::qty(numeric_adjustments)}
+               Adjustment{?s} {.fn {paste0('adjust_', numeric_adjustments)}}
+               {cli::qty(numeric_adjustments[-1])} operate{?s} on numerics while
+               {.fn {paste0('adjust_', probability_adjustments)}}
+               {cli::qty(probability_adjustments[-1])} operate{?s} on probabilities."
+      ),
+      call = call
+    )
+  }
 }
 
 check_classification_order <- function(x, call) {

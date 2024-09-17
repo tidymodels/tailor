@@ -5,7 +5,7 @@
     Message
       
       -- tailor ----------------------------------------------------------------------
-      A postprocessor with 1 adjustment:
+      A regression postprocessor with 1 adjustment:
       
       * Re-calibrate numeric predictions.
 
@@ -20,15 +20,7 @@
 ---
 
     Code
-      tailor("binary") %>% adjust_numeric_calibration("linear")
-    Condition
-      Error in `adjust_numeric_calibration()`:
-      ! A binary tailor is incompatible with the adjustment `adjust_numeric_calibration()`.
-
----
-
-    Code
-      tailor("regression") %>% adjust_numeric_calibration("binary")
+      tailor() %>% adjust_numeric_calibration("binary")
     Condition
       Error in `adjust_numeric_calibration()`:
       ! `method` must be one of "linear", "isotonic", or "isotonic_boot", not "binary".

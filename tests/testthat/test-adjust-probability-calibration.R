@@ -54,11 +54,7 @@ test_that("errors informatively with bad input", {
   expect_snapshot(error = TRUE, adjust_probability_calibration(tailor(), "boop"))
   expect_snapshot(
     error = TRUE,
-    tailor("regression") %>% adjust_probability_calibration("binary")
-  )
-  expect_snapshot(
-    error = TRUE,
-    tailor("binary") %>% adjust_probability_calibration("linear")
+    tailor() %>% adjust_probability_calibration("linear")
   )
 
   expect_no_condition(adjust_numeric_calibration(tailor()))

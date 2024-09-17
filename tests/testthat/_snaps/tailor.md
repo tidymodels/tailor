@@ -10,16 +10,16 @@
 ---
 
     Code
-      tailor(type = "binary")
+      tailor()
     Message
       
       -- tailor ----------------------------------------------------------------------
-      A binary postprocessor with 0 adjustments.
+      A postprocessor with 0 adjustments.
 
 ---
 
     Code
-      tailor(type = "binary") %>% adjust_probability_threshold(0.2)
+      tailor() %>% adjust_probability_threshold(0.2)
     Message
       
       -- tailor ----------------------------------------------------------------------
@@ -30,8 +30,7 @@
 ---
 
     Code
-      tailor(type = "binary") %>% adjust_probability_threshold(0.2) %>%
-        adjust_equivocal_zone()
+      tailor() %>% adjust_probability_threshold(0.2) %>% adjust_equivocal_zone()
     Message
       
       -- tailor ----------------------------------------------------------------------
