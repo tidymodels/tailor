@@ -193,6 +193,27 @@ check_method <- function(method,
   method
 }
 
+# at `fit()` time, we check the type of the outcome vs the type
+# supported by the applied adjustments. where this is called currently,
+# we know already that `type` is not "unknown"
+check_outcome_type <- function(outcome, type, call) {
+  outcome_is_compatible <-
+    switch(
+      type,
+      regression = is.numeric(outcome),
+      binary = , multiclass = is.factor(outcome),
+      FALSE
+    )
+
+  if (!outcome_is_compatible) {
+    cli_abort(
+      "Tailors with {type} adjustments are not compatible
+       with {.cls {class(outcome)}} outcomes.",
+      call = call
+    )
+  }
+}
+
 check_selection <- function(selector, result, arg, call = caller_env()) {
   if (length(result) == 0) {
     cli_abort(

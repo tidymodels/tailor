@@ -209,8 +209,9 @@ predict.tailor <- function(object, new_data, ...) {
   new_data
 }
 
-set_tailor_type <- function(object, y) {
+set_tailor_type <- function(object, y, call = caller_env()) {
   if (object$type != "unknown") {
+    check_outcome_type(y, object$type, call = call)
     return(object)
   }
   if (is.factor(y)) {
@@ -223,7 +224,10 @@ set_tailor_type <- function(object, y) {
   } else if (is.numeric(y)) {
     object$type <- "regression"
   } else {
-    cli_abort("Only factor and numeric outcomes are currently supported.")
+    cli_abort(
+      "Only factor and numeric outcomes are currently supported.",
+      call = call
+    )
   }
   object
 }
