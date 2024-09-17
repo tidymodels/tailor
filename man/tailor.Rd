@@ -4,13 +4,9 @@
 \alias{tailor}
 \title{Declare post-processing for model predictions}
 \usage{
-tailor(type = "unknown", outcome = NULL, estimate = NULL, probabilities = NULL)
+tailor(outcome = NULL, estimate = NULL, probabilities = NULL)
 }
 \arguments{
-\item{type}{Character. The model sub-mode. Possible values are
-\code{"unknown"}, \code{"regression"}, \code{"binary"}, or \code{"multiclass"}. Only required
-when used independently of \code{?workflows::add_tailor()}.}
-
 \item{outcome}{<\code{\link[dplyr:dplyr_tidy_select]{tidy-select}}> Only required
 when used independently of \code{?workflows::add_tailor()}, and can also be passed
 at \code{fit()} time instead. The column name of the outcome variable.}

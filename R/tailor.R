@@ -19,9 +19,6 @@
 #' with the [tidymodels](https://tidymodels.org) framework; for greatest ease
 #' of use, situate tailors in model workflows with `?workflows::add_tailor()`.
 #'
-#' @param type Character. The model sub-mode. Possible values are
-#' `"unknown"`, `"regression"`, `"binary"`, or `"multiclass"`. Only required
-#' when used independently of `?workflows::add_tailor()`.
 #' @param outcome <[`tidy-select`][dplyr::dplyr_tidy_select]> Only required
 #' when used independently of `?workflows::add_tailor()`, and can also be passed
 #' at `fit()` time instead. The column name of the outcome variable.
@@ -64,18 +61,16 @@
 #' # adjust hard class predictions
 #' predict(tlr_fit, two_class_example) %>% count(predicted)
 #' @export
-tailor <- function(type = "unknown", outcome = NULL, estimate = NULL,
-                      probabilities = NULL) {
+tailor <- function(outcome = NULL, estimate = NULL, probabilities = NULL) {
   columns <-
     list(
       outcome = outcome,
-      type = type,
       estimate = estimate,
       probabilities = probabilities
     )
 
   new_tailor(
-    type,
+    "unknown",
     adjustments = list(),
     columns = columns,
     ptype = tibble::new_tibble(list()),
