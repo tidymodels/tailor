@@ -116,3 +116,75 @@ test_that("validation of adjustments (ambiguous type)", {
 
   expect_equal(ambiguous_tailor$type, "unknown")
 })
+
+test_that("validation of adjustments (incompatible types)", {
+  # one bad adjustment each
+  expect_snapshot(
+    error = TRUE,
+    tailor() %>%
+      adjust_numeric_calibration() %>%
+      adjust_probability_threshold()
+  )
+
+  # varying the pluralization...
+  expect_snapshot(
+    error = TRUE,
+    tailor() %>%
+      adjust_probability_calibration("logistic") %>%
+      adjust_probability_threshold(threshold = .4) %>%
+      adjust_numeric_range(lower_limit = 2)
+  )
+
+  expect_snapshot(
+    error = TRUE,
+    tailor() %>%
+      adjust_numeric_calibration() %>%
+      adjust_numeric_range(lower_limit = 2) %>%
+      adjust_probability_threshold(threshold = .4)
+  )
+
+  # ensure that mixing in ambiguous adjustments doesn't cause issues
+  expect_snapshot(
+    error = TRUE,
+    tailor() %>%
+      adjust_predictions_custom(veg = "potato") %>%
+      adjust_numeric_calibration() %>%
+      adjust_probability_threshold()
+  )
+
+  expect_snapshot(
+    error = TRUE,
+    tailor() %>%
+      adjust_predictions_custom(veg = "potato") %>%
+      adjust_probability_calibration("logistic") %>%
+      adjust_probability_threshold(threshold = .4) %>%
+      adjust_numeric_range(lower_limit = 2)
+  )
+
+  expect_snapshot(
+    error = TRUE,
+    tailor() %>%
+      adjust_predictions_custom(veg = "potato") %>%
+      adjust_numeric_calibration() %>%
+      adjust_numeric_range(lower_limit = 2) %>%
+      adjust_probability_threshold(threshold = .4)
+  )
+
+  expect_no_condition(
+    tailor() %>%
+      adjust_predictions_custom(veg = "potato") %>%
+      adjust_numeric_calibration()
+  )
+
+  expect_no_condition(
+    tailor() %>%
+      adjust_numeric_calibration() %>%
+      adjust_predictions_custom(veg = "potato")
+  )
+
+  expect_no_condition(
+    tailor() %>%
+      adjust_probability_threshold(threshold = .4) %>%
+      adjust_predictions_custom(veg = "potato")
+  )
+})

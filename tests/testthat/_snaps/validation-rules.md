@@ -85,3 +85,65 @@
       Error in `adjust_probability_threshold()`:
       ! Equivocal zone addition should come after adjustments that update the class probability estimates or hard class predictions.
 
+# validation of adjustments (incompatible types)
+
+    Code
+      tailor() %>% adjust_numeric_calibration() %>% adjust_probability_threshold()
+    Condition
+      Error in `adjust_probability_threshold()`:
+      ! Can't compose adjustments for different input types.
+      i Adjustment `adjust_numeric_calibration()` operates on numerics while `adjust_probability_threshold()` operates on probabilities.
+
+---
+
+    Code
+      tailor() %>% adjust_probability_calibration("logistic") %>%
+        adjust_probability_threshold(threshold = 0.4) %>% adjust_numeric_range(
+        lower_limit = 2)
+    Condition
+      Error in `adjust_numeric_range()`:
+      ! Can't compose adjustments for different input types.
+      i Adjustment `adjust_numeric_range()` operates on numerics while `adjust_probability_calibration()` and `adjust_probability_threshold()` operate on probabilities.
+
+---
+
+    Code
+      tailor() %>% adjust_numeric_calibration() %>% adjust_numeric_range(lower_limit = 2) %>%
+        adjust_probability_threshold(threshold = 0.4)
+    Condition
+      Error in `adjust_probability_threshold()`:
+      ! Can't compose adjustments for different input types.
+      i Adjustments `adjust_numeric_calibration()` and `adjust_numeric_range()` operate on numerics while `adjust_probability_threshold()` operates on probabilities.
+
+---
+
+    Code
+      tailor() %>% adjust_predictions_custom(veg = "potato") %>%
+        adjust_numeric_calibration() %>% adjust_probability_threshold()
+    Condition
+      Error in `adjust_probability_threshold()`:
+      ! Can't compose adjustments for different input types.
+      i Adjustment `adjust_numeric_calibration()` operates on numerics while `adjust_probability_threshold()` operates on probabilities.
+
+---
+
+    Code
+      tailor() %>% adjust_predictions_custom(veg = "potato") %>%
+        adjust_probability_calibration("logistic") %>% adjust_probability_threshold(
+        threshold = 0.4) %>% adjust_numeric_range(lower_limit = 2)
+    Condition
+      Error in `adjust_numeric_range()`:
+      ! Can't compose adjustments for different input types.
+      i Adjustment `adjust_numeric_range()` operates on numerics while `adjust_probability_calibration()` and `adjust_probability_threshold()` operate on probabilities.
+
+---
+
+    Code
+      tailor() %>% adjust_predictions_custom(veg = "potato") %>%
+        adjust_numeric_calibration() %>% adjust_numeric_range(lower_limit = 2) %>%
+        adjust_probability_threshold(threshold = 0.4)
+    Condition
+      Error in `adjust_probability_threshold()`:
+      ! Can't compose adjustments for different input types.
+      i Adjustments `adjust_numeric_calibration()` and `adjust_numeric_range()` operate on numerics while `adjust_probability_threshold()` operates on probabilities.
+
