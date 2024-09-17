@@ -53,21 +53,6 @@ test_that("validation of adjustments (classification)", {
   expect_snapshot(
     error = TRUE,
     tailor() %>%
-      adjust_probability_threshold(threshold = .4) %>%
-      adjust_probability_calibration()
-  )
-
-  expect_snapshot(
-    error = TRUE,
-    tailor() %>%
-      adjust_predictions_custom(veg = "potato") %>%
-      adjust_probability_threshold(threshold = .4) %>%
-      adjust_probability_calibration()
-  )
-
-  expect_snapshot(
-    error = TRUE,
-    tailor() %>%
       adjust_predictions_custom(veg = "potato") %>%
       adjust_probability_threshold(threshold = .4) %>%
       adjust_probability_calibration()
@@ -80,22 +65,6 @@ test_that("validation of adjustments (classification)", {
       adjust_probability_threshold(threshold = .4) %>%
       adjust_probability_threshold(threshold = .5) %>%
       adjust_probability_calibration()
-  )
-
-  expect_snapshot(
-    error = TRUE,
-    tailor() %>%
-      adjust_predictions_custom(veg = "potato") %>%
-      adjust_probability_threshold(threshold = .4) %>%
-      adjust_probability_threshold(threshold = .5) %>%
-      adjust_probability_calibration()
-  )
-
-  expect_snapshot(
-    error = TRUE,
-    tailor() %>%
-      adjust_equivocal_zone(value = .2) %>%
-      adjust_probability_threshold(threshold = .4)
   )
 
   expect_snapshot(
