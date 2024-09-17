@@ -88,6 +88,19 @@ tailor_adjustment_requires_fit <- function(x) {
   isTRUE(x$requires_fit)
 }
 
+# an tidy-esque method for adjustment lists, used in validating
+# compatibility of adjustments
+adjustment_orderings <- function(adjustments) {
+  tibble::new_tibble(list(
+    name = purrr::map_chr(adjustments, ~ class(.x)[1]),
+    input = purrr::map_chr(adjustments, ~ .x$inputs),
+    output_numeric = purrr::map_lgl(adjustments, ~ grepl("numeric", .x$outputs)),
+    output_prob = purrr::map_lgl(adjustments, ~ grepl("probability", .x$outputs)),
+    output_class = purrr::map_lgl(adjustments, ~ grepl("class", .x$outputs)),
+    output_all = purrr::map_lgl(adjustments, ~ grepl("everything", .x$outputs))
+  ))
+}
+
 # ad-hoc checking --------------------------------------------------------------
 check_tailor <- function(x, calibration_type = NULL, call = caller_env(), arg = caller_arg(x)) {
   if (!is_tailor(x)) {

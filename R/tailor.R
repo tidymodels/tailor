@@ -90,8 +90,14 @@ new_tailor <- function(type, adjustments, columns, ptype, call) {
                    {.val adjustment}: {bad_adjustment}.", call = call)
   }
 
+  orderings <- adjustment_orderings(adjustments)
+
+  if (type == "unknown") {
+    type <- infer_type(orderings)
+  }
+
   # validate adjustment order and check duplicates
-  validate_order(adjustments, type, call)
+  validate_order(orderings, type, call)
 
   # check columns
   res <- list(
@@ -226,5 +232,5 @@ set_tailor_type <- function(object, y) {
 # todo setup eval_time
 # todo missing methods:
 # todo tune_args
-# todo tidy
+# todo tidy (this should probably just be `adjustment_orderings()`)
 # todo extract_parameter_set_dials

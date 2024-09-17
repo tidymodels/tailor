@@ -5,7 +5,7 @@
     Message
       
       -- tailor ----------------------------------------------------------------------
-      A postprocessor with 1 adjustment:
+      A binary postprocessor with 1 adjustment:
       
       * Re-calibrate classification probabilities.
 

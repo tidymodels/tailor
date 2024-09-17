@@ -1,23 +1,9 @@
-validate_order <- function(adjustments, type, call = caller_env()) {
-  orderings <-
-    tibble::new_tibble(list(
-      name = purrr::map_chr(adjustments, ~ class(.x)[1]),
-      input = purrr::map_chr(adjustments, ~ .x$inputs),
-      output_numeric = purrr::map_lgl(adjustments, ~ grepl("numeric", .x$outputs)),
-      output_prob = purrr::map_lgl(adjustments, ~ grepl("probability", .x$outputs)),
-      output_class = purrr::map_lgl(adjustments, ~ grepl("class", .x$outputs)),
-      output_all = purrr::map_lgl(adjustments, ~ grepl("everything", .x$outputs))
-    ))
-
-  if (length(adjustments) < 2) {
+validate_order <- function(orderings, type, call = caller_env()) {
+  if (nrow(orderings) < 2) {
     return(invisible(orderings))
   }
 
   check_incompatible_types(orderings, call)
-
-  if (type == "unknown") {
-    type <- infer_type(orderings)
-  }
 
   switch(
     type,

@@ -5,7 +5,7 @@
     Message
       
       -- tailor ----------------------------------------------------------------------
-      A postprocessor with 1 adjustment:
+      A binary postprocessor with 1 adjustment:
       
       * Add equivocal zone of size 0.1.
 
@@ -16,7 +16,7 @@
     Message
       
       -- tailor ----------------------------------------------------------------------
-      A postprocessor with 1 adjustment:
+      A binary postprocessor with 1 adjustment:
       
       * Add equivocal zone of optimized size.
 
