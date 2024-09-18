@@ -114,6 +114,9 @@ predict.numeric_range <- function(object, new_data, tailor, ...) {
 }
 
 rename_prediction_column <- function(data, est_nm) {
+  if (identical(est_nm, ".pred")) {
+    return(data)
+  }
   data[[".pred"]] <- data[[est_nm]]
   data[[est_nm]] <- NULL
   data
