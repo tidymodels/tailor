@@ -95,10 +95,10 @@ fit.probability_calibration <- function(object, data, tailor = NULL, ...) {
     eval_bare(
       call2(
         paste0("cal_estimate_", method),
-        .data = data,
+        .data = expr(data),
         # todo: make getters for the entries in `columns`
         truth = tailor$columns$outcome,
-        estimate = tailor$columns$estimate,
+        estimate = tailor$columns$probabilities,
         .ns = "probably"
       )
     )
@@ -116,7 +116,11 @@ fit.probability_calibration <- function(object, data, tailor = NULL, ...) {
 
 #' @export
 predict.probability_calibration <- function(object, new_data, tailor, ...) {
-  probably::cal_apply(new_data, object$results$fit)
+  probably::cal_apply(
+    .data = new_data,
+    object = object$results$fit,
+    pred_class = !!tailor$columns$estimate
+  )
 }
 
 # todo probably needs required_pkgs methods for cal objects
