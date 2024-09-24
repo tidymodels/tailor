@@ -58,8 +58,6 @@ test_that("basic adjust_probability_calibration() usage works", {
       adjust_probability_calibration(method = "isotonic")
   )
 
-  skip("TODO: cannot run until #49 is merged")
-
   expect_no_condition(
     tlr_fit <- fit(
       tlr,
