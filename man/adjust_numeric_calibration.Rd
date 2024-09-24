@@ -36,10 +36,10 @@ library(tibble)
 
 # create example data
 set.seed(1)
-d_potato <- tibble(y = rnorm(100), y_pred = y/2 + rnorm(100))
+d_calibration <- tibble(y = rnorm(100), y_pred = y/2 + rnorm(100))
 d_test <- tibble(y = rnorm(100), y_pred = y/2 + rnorm(100))
 
-d_potato
+d_calibration
 
 # specify calibration
 tlr <-
@@ -48,7 +48,7 @@ tlr <-
 
 # train tailor on a subset of data. situate in a modeling workflow with
 # `workflows::add_tailor()` to avoid having to specify column names manually
-tlr_fit <- fit(tlr, d_potato, outcome = y, estimate = y_pred)
+tlr_fit <- fit(tlr, d_calibration, outcome = y, estimate = y_pred)
 
 # apply to predictions on another subset of data
 d_test

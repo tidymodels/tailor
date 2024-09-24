@@ -2,7 +2,7 @@ test_that("basic adjust_numeric_calibration usage works", {
   library(tibble)
 
   set.seed(1)
-  d_potato <- tibble(y = rnorm(100), y_pred = y/2 + rnorm(100))
+  d_calibration <- tibble(y = rnorm(100), y_pred = y/2 + rnorm(100))
   d_test <- tibble(y = rnorm(100), y_pred = y/2 + rnorm(100))
 
   # fitting and predicting happens without raising conditions
@@ -13,7 +13,7 @@ test_that("basic adjust_numeric_calibration usage works", {
   )
 
   expect_no_condition(
-    tlr_fit <- fit(tlr, d_potato, outcome = y, estimate = y_pred)
+    tlr_fit <- fit(tlr, d_calibration, outcome = y, estimate = y_pred)
   )
 
   expect_no_condition(

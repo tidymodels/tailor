@@ -5,7 +5,7 @@ test_that("basic adjust_probability_calibration() usage works", {
   # split example data
   set.seed(1)
   in_rows <- sample(c(TRUE, FALSE), nrow(two_class_example), replace = TRUE)
-  d_potato <- two_class_example[in_rows, ]
+  d_calibration <- two_class_example[in_rows, ]
   d_test <- two_class_example[!in_rows, ]
 
   # fitting and predicting happens without raising conditions
@@ -20,7 +20,7 @@ test_that("basic adjust_probability_calibration() usage works", {
   expect_no_condition(
     tlr_fit <- fit(
       tlr,
-      d_potato,
+      d_calibration,
       outcome = c(truth),
       estimate = c(predicted),
       probabilities = c(Class1, Class2)
