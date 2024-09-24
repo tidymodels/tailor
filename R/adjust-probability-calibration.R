@@ -15,7 +15,6 @@
 #'
 #' @inheritSection adjust_numeric_calibration Data Usage
 #'
-# TODO: see #36
 #' @examplesIf FALSE
 # @examplesIf rlang::is_installed("modeldata")
 #' library(modeldata)
