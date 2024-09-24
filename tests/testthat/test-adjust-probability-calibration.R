@@ -15,8 +15,6 @@ test_that("basic adjust_probability_calibration() usage works", {
       adjust_probability_calibration(method = "logistic")
   )
 
-  skip("TODO: cannot run for now due to #36")
-
   expect_no_condition(
     tlr_fit <- fit(
       tlr,
@@ -28,7 +26,7 @@ test_that("basic adjust_probability_calibration() usage works", {
   )
 
   expect_no_condition(
-    predict(tlr_fit, d_test)
+    tlr_pred <- predict(tlr_fit, d_test)
   )
 
   # classes are as expected
