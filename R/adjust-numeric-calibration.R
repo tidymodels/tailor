@@ -84,7 +84,7 @@ print.numeric_calibration <- function(x, ...) {
 
 #' @export
 fit.numeric_calibration <- function(object, data, tailor = NULL, ...) {
-  method <- check_method(object$method, tailor$type)
+  method <- check_method(object$arguments$method, tailor$type)
   # todo: adjust_numeric_calibration() should take arguments to pass to
   # cal_estimate_* via dots
   fit <-
