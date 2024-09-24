@@ -82,7 +82,7 @@ test_that("basic adjust_probability_calibration() usage works", {
   expect_equal(colnames(d_test), colnames(tlr_pred))
 
   # probably actually used an isotonic calibrator
-  expect_equal(tlr_fit$adjustments[[1]]$results$fit$method, "Generalized additive model")
+  expect_equal(tlr_fit$adjustments[[1]]$results$fit$method, "Isotonic regression")
 })
 
 test_that("adjustment printing", {
