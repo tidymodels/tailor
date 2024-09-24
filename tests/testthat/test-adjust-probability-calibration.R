@@ -41,6 +41,49 @@ test_that("basic adjust_probability_calibration() usage works", {
   # TODO: write out the manual code with probably
 })
 
+test_that("basic adjust_probability_calibration() usage works", {
+  skip_if_not_installed("modeldata")
+  library(modeldata)
+
+  # split example data
+  set.seed(1)
+  in_rows <- sample(c(TRUE, FALSE), nrow(two_class_example), replace = TRUE)
+  d_calibration <- two_class_example[in_rows, ]
+  d_test <- two_class_example[!in_rows, ]
+
+  # fitting and predicting happens without raising conditions
+  expect_no_condition(
+    tlr <-
+      tailor() %>%
+      adjust_probability_calibration(method = "isotonic")
+  )
+
+  # TODO: cannot be `expect_no_condition()` due to tidymodels/probably#157
+  expect_no_error(expect_no_warning(
+    tlr_fit <- fit(
+      tlr,
+      d_calibration,
+      outcome = c(truth),
+      estimate = c(predicted),
+      probabilities = c(Class1, Class2)
+    )
+  ))
+
+  expect_no_error(expect_no_warning(
+    tlr_pred <- predict(tlr_fit, d_test)
+  ))
+
+  # classes are as expected
+  expect_s3_class(tlr, "tailor")
+  expect_s3_class(tlr_fit, "tailor")
+  expect_s3_class(tlr_pred, "tbl_df")
+
+  # column names are as expected
+  expect_equal(colnames(d_test), colnames(tlr_pred))
+
+  # probably actually used an isotonic calibrator
+  expect_equal(tlr_fit$adjustments[[1]]$results$fit$method, "Isotonic regression")
+})
 
 test_that("adjustment printing", {
   expect_snapshot(tailor() %>% adjust_probability_calibration("logistic"))

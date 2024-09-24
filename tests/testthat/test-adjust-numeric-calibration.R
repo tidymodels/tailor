@@ -32,7 +32,39 @@ test_that("basic adjust_numeric_calibration usage works", {
   # TODO: write out the probably code manually here
 })
 
-# TODO: test sensitivity to function arguments
+test_that("adjust_numeric_calibration() respects `method` argument", {
+  library(tibble)
+
+  set.seed(1)
+  d_calibration <- tibble(y = rnorm(100), y_pred = y/2 + rnorm(100))
+  d_test <- tibble(y = rnorm(100), y_pred = y/2 + rnorm(100))
+
+  expect_no_condition(
+    tlr <-
+      tailor() %>%
+      adjust_numeric_calibration(method = "isotonic")
+  )
+
+  # TODO: cannot be `expect_no_condition()` due to tidymodels/probably#157
+  expect_no_error(expect_no_warning(
+    tlr_fit <- fit(tlr, d_calibration, outcome = y, estimate = y_pred)
+  ))
+
+  expect_no_error(expect_no_warning(
+    tlr_pred <- predict(tlr_fit, d_test)
+  ))
+
+  # classes are as expected
+  expect_s3_class(tlr, "tailor")
+  expect_s3_class(tlr_fit, "tailor")
+  expect_s3_class(tlr_pred, "tbl_df")
+
+  # column names are as expected
+  expect_equal(colnames(d_test), colnames(tlr_pred))
+
+  # probably actually used an isotonic calibrator
+  expect_equal(tlr_fit$adjustments[[1]]$results$fit$method, "Isotonic regression")
+})
 
 test_that("adjustment printing", {
   expect_snapshot(tailor() %>% adjust_numeric_calibration())
