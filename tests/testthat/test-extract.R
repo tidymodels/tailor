@@ -17,14 +17,7 @@ test_that("extract parameter set from tailor with no tunable parameters", {
 
   tlr_info <- extract_parameter_set_dials(tlr)
 
-  expect_equal(names(tlr_info), c("name", "id", "source", "component", "component_id", "object"))
-  expect_equal(class(tlr_info$name), "character")
-  expect_equal(class(tlr_info$id), "character")
-  expect_equal(class(tlr_info$source), "character")
-  expect_equal(class(tlr_info$component), "character")
-  expect_equal(class(tlr_info$component_id), "character")
-  expect_true(!any(duplicated(tlr_info$id)))
-  expect_equal(class(tlr_info$object), "list")
+  check_parameter_set_tibble(tlr_info)
   expect_equal(nrow(tlr_info), 0)
 })
 
@@ -38,14 +31,7 @@ test_that("extract parameter set from tailor with a tunable parameter", {
 
   tlr_info <- extract_parameter_set_dials(tlr)
 
-  expect_equal(names(tlr_info), c("name", "id", "source", "component", "component_id", "object"))
-  expect_equal(class(tlr_info$name), "character")
-  expect_equal(class(tlr_info$id), "character")
-  expect_equal(class(tlr_info$source), "character")
-  expect_equal(class(tlr_info$component), "character")
-  expect_equal(class(tlr_info$component_id), "character")
-  expect_true(!any(duplicated(tlr_info$id)))
-  expect_equal(class(tlr_info$object), "list")
+  check_parameter_set_tibble(tlr_info)
   expect_equal(nrow(tlr_info), 1)
 
   expect_equal(tlr_info$component, "numeric_range")
@@ -69,14 +55,7 @@ test_that("extract parameter set from tailor with multiple tunable parameters", 
 
   tlr_info <- extract_parameter_set_dials(tlr)
 
-  expect_equal(names(tlr_info), c("name", "id", "source", "component", "component_id", "object"))
-  expect_equal(class(tlr_info$name), "character")
-  expect_equal(class(tlr_info$id), "character")
-  expect_equal(class(tlr_info$source), "character")
-  expect_equal(class(tlr_info$component), "character")
-  expect_equal(class(tlr_info$component_id), "character")
-  expect_true(!any(duplicated(tlr_info$id)))
-  expect_equal(class(tlr_info$object), "list")
+  check_parameter_set_tibble(tlr_info)
   expect_equal(nrow(tlr_info), 2)
 
   expect_equal(tlr_info$component, rep("numeric_range", 2))
