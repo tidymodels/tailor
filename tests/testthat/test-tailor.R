@@ -107,3 +107,33 @@ test_that("error informatively with empty tidyselections", {
       )
   )
 })
+
+test_that("tunable (no adjustments)", {
+  tlr <-
+    tailor()
+
+  tlr_param <- tunable(tlr)
+  expect_equal(tlr_param, no_param)
+})
+
+test_that("tunable (multiple adjustments)", {
+  tlr <-
+    tailor() %>%
+    adjust_probability_threshold(.2) %>%
+    adjust_equivocal_zone()
+
+  tlr_param <- tunable(tlr)
+  expect_equal(tlr_param$name, c("threshold", "buffer"))
+  expect_true(all(tlr_param$source == "tailor"))
+  expect_true(is.list(tlr_param$call_info))
+  expect_equal(nrow(tlr_param), 2)
+  expect_equal(
+    names(tlr_param),
+    c("name", "call_info", "source", "component", "component_id")
+  )
+
+  expect_equal(
+    tlr_param,
+    dplyr::bind_rows(tunable(tlr$adjustments[[1]]), tunable(tlr$adjustments[[2]]))
+  )
+})

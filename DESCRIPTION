@@ -27,12 +27,15 @@ Imports:
     purrr,
     rlang (>= 1.1.0),
     tibble,
-    tidyselect
+    tidyselect,
+    vctrs
 Suggests: 
+    dials,
     modeldata,
     testthat (>= 3.0.0),
     workflows
 Remotes:
+    tidymodels/dials#358,
     tidymodels/probably,
     tidymodels/workflows
 Config/testthat/edition: 3

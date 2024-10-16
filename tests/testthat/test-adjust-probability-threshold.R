@@ -40,3 +40,18 @@ test_that("adjustment printing", {
   expect_snapshot(tailor() %>% adjust_probability_threshold())
   expect_snapshot(tailor() %>% adjust_probability_threshold(hardhat::tune()))
 })
+
+test_that("tunable", {
+  tlr <-
+    tailor() %>%
+    adjust_probability_threshold(.1)
+  adj_param <- tunable(tlr$adjustments[[1]])
+  expect_equal(adj_param$name, "threshold")
+  expect_true(all(adj_param$source == "tailor"))
+  expect_true(is.list(adj_param$call_info))
+  expect_equal(nrow(adj_param), 1)
+  expect_equal(
+    names(adj_param),
+    c("name", "call_info", "source", "component", "component_id")
+  )
+})

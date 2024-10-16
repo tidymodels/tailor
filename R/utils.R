@@ -6,7 +6,7 @@
 #' @name tailor-internals
 NULL
 
-
+# tuning machinery -------------------------------------------------------------
 is_tune <- function(x) {
   if (!is.call(x)) {
     return(FALSE)
@@ -14,8 +14,62 @@ is_tune <- function(x) {
   isTRUE(identical(quote(tune), x[[1]]))
 }
 
-# for adjustments with no tunable parameters
+tune_tbl <- function(name = character(), tunable = logical(), id = character(),
+                     source = character(), component = character(),
+                     component_id = character(), full = FALSE, call = caller_env()) {
+  complete_id <- id[!is.na(id)]
+  dups <- duplicated(complete_id)
 
+  if (any(dups)) {
+    offenders <- unique(complete_id[dups])
+    cli::cli_abort(
+      "{.val {offenders}} {?has a/have} duplicate {.field id} value{?s}.",
+      call = call
+    )
+  }
+
+  tune_tbl <-
+    tibble::tibble(
+      name = as.character(name),
+      tunable = as.logical(tunable),
+      id = as.character(id),
+      source = as.character(source),
+      component = as.character(component),
+      component_id = as.character(component_id)
+    )
+
+  if (!full) {
+    tune_tbl <- tune_tbl[tune_tbl$tunable, ]
+  }
+
+  tune_tbl
+}
+
+#' @export
+tune_args.adjustment <- function(object, full = FALSE, ...) {
+  # Grab the adjustment class before the subset, as that removes the class
+  adjustment_type <- class(object)[1]
+
+  tune_param_list <- tunable(object)$name
+
+  # remove the non-tunable arguments as they are not important
+  adjustment_args <- object$arguments[tune_param_list]
+
+  res <- purrr::map_chr(adjustment_args, find_tune_id)
+  res <- ifelse(res == "", names(res), res)
+
+  tune_tbl(
+    name = names(res),
+    tunable = unname(!is.na(res)),
+    id = unname(res),
+    source = "tailor",
+    component = adjustment_type,
+    component_id = adjustment_type,
+    full = full
+  )
+}
+
+# for adjustments with no tunable parameters
 no_param <-
   tibble::tibble(
     name = character(0),
@@ -25,6 +79,87 @@ no_param <-
     component_id = character(0)
   )
 
+find_tune_id <- function(x, arg = caller_arg(x), call = caller_env()) {
+  if (length(x) == 0L) {
+    return(NA_character_)
+  }
+  if (rlang::is_quosures(x)) {
+    .x <- try(purrr::map(x, rlang::eval_tidy), silent = TRUE)
+    if (inherits(.x, "try-error")) {
+      x <- purrr::map(x, rlang::quo_get_expr)
+    } else {
+      x <- .x
+    }
+  }
+  id <- tune_id(x, call = call)
+
+  if (!is.na(id)) {
+    return(id)
+  }
+
+  if (is.atomic(x) | is.name(x) | length(x) == 1) {
+    return(NA_character_)
+  }
+
+  tunable_elems <- vector("character", length = length(x))
+  for (i in seq_along(x)) {
+    tunable_elems[i] <- find_tune_id(x[[i]], call = call)
+  }
+  tunable_elems <- tunable_elems[!is.na(tunable_elems)]
+
+  if (length(tunable_elems) == 0) {
+    tunable_elems <- NA_character_
+  }
+
+  if (sum(tunable_elems == "", na.rm = TRUE) > 1) {
+    offenders <- paste0(deparse(x), collapse = "")
+    cli::cli_abort(
+      c(
+        "Only one tunable value is currently allowed per argument.",
+        "{.arg {arg}} has {.code {offenders}}."
+      ),
+      call = call
+    )
+  }
+
+  return(tunable_elems)
+}
+
+tune_id <- function(x, call = caller_env()) {
+  if (is.null(x)) {
+    return(NA_character_)
+  } else {
+    if (rlang::is_quosures(x)) {
+      .x <- try(purrr::map(x, rlang::eval_tidy), silent = TRUE)
+      if (inherits(.x, "try-error")) {
+        x <- purrr::map(x, rlang::quo_get_expr)
+      } else {
+        x <- .x
+      }
+      if (is.null(x)) {
+        return(NA_character_)
+      }
+    }
+
+    if (is.call(x)) {
+      if (rlang::call_name(x) == "tune") {
+        if (length(x) > 1) {
+          return(x[[2]])
+        } else {
+          return("")
+        }
+
+        return(x$id)
+      } else {
+        return(NA_character_)
+      }
+    }
+  }
+
+  NA_character_
+}
+
+# new_adjustment -------------------------------------------------------------
 # These values are used to specify "what will we need for the adjustment?" and
 # "what will we change?". For the outputs, we cannot change the probabilities
 # without changing the classes. This is important because we are going to have

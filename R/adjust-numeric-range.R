@@ -129,7 +129,7 @@ required_pkgs.numeric_range <- function(x, ...) {
 
 #' @export
 tunable.numeric_range <- function(x, ...) {
-  tibble::new_tibble(list(
+  tibble::tibble(
     name = c("lower_limit", "upper_limit"),
     call_info = list(
       list(pkg = "dials", fun = "lower_limit"), # todo make these dials functions
@@ -138,10 +138,9 @@ tunable.numeric_range <- function(x, ...) {
     source = "tailor",
     component = "numeric_range",
     component_id = "numeric_range"
-  ))
+  )
 }
 
 # todo missing methods:
-# todo tune_args
 # todo tidy
 # todo extract_parameter_set_dials

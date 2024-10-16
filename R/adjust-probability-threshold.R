@@ -113,16 +113,15 @@ required_pkgs.probability_threshold <- function(x, ...) {
 
 #' @export
 tunable.probability_threshold <- function(x, ...) {
-  tibble::new_tibble(list(
+  tibble::tibble(
     name = "threshold",
     call_info = list(list(pkg = "dials", fun = "threshold")),
     source = "tailor",
     component = "probability_threshold",
     component_id = "probability_threshold"
-  ))
+  )
 }
 
 # todo missing methods:
-# todo tune_args
 # todo tidy
 # todo extract_parameter_set_dials

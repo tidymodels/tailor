@@ -128,16 +128,15 @@ required_pkgs.equivocal_zone <- function(x, ...) {
 
 #' @export
 tunable.equivocal_zone <- function(x, ...) {
-  tibble::new_tibble(list(
+  tibble::tibble(
     name = "buffer",
     call_info = list(list(pkg = "dials", fun = "buffer")),
     source = "tailor",
     component = "equivocal_zone",
     component_id = "equivocal_zone"
-  ))
+  )
 }
 
 # todo missing methods:
-# todo tune_args
 # todo tidy
 # todo extract_parameter_set_dials
