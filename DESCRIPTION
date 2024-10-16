@@ -27,7 +27,8 @@ Imports:
     purrr,
     rlang (>= 1.1.0),
     tibble,
-    tidyselect
+    tidyselect,
+    vctrs
 Suggests: 
     modeldata,
     testthat (>= 3.0.0),
