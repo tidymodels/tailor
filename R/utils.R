@@ -74,11 +74,6 @@ tune_args.adjustment <- function(object, full = FALSE, ...) {
   )
 }
 
-#' @export
-tunable.adjustment <- function(x, ...) {
-  no_param
-}
-
 # for adjustments with no tunable parameters
 no_param <-
   tibble::tibble(
