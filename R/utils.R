@@ -47,20 +47,15 @@ tune_tbl <- function(name = character(), tunable = logical(), id = character(),
 
 #' @export
 tune_args.adjustment <- function(object, full = FALSE, ...) {
-  adjustment_id <- object$id
   # Grab the adjustment class before the subset, as that removes the class
   adjustment_type <- class(object)[1]
 
   tune_param_list <- tunable(object)$name
 
   # remove the non-tunable arguments as they are not important
-  object <- object[tune_param_list]
+  adjustment_args <- object$arguments[tune_param_list]
 
-  # Remove NULL argument adjustments. These are reserved
-  # for deprecated args or those set at fit() time.
-  object <- object[!purrr::map_lgl(object, is.null)]
-
-  res <- purrr::map_chr(object, find_tune_id)
+  res <- purrr::map_chr(adjustment_args, find_tune_id)
   res <- ifelse(res == "", names(res), res)
 
   tune_tbl(
@@ -69,7 +64,7 @@ tune_args.adjustment <- function(object, full = FALSE, ...) {
     id = unname(res),
     source = "tailor",
     component = adjustment_type,
-    component_id = adjustment_id,
+    component_id = adjustment_type,
     full = full
   )
 }
