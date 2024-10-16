@@ -28,21 +28,21 @@ tune_tbl <- function(name = character(), tunable = logical(), id = character(),
     )
   }
 
-  vry_tbl <-
-    tibble::new_tibble(list(
+  tune_tbl <-
+    tibble::tibble(
       name = as.character(name),
       tunable = as.logical(tunable),
       id = as.character(id),
       source = as.character(source),
       component = as.character(component),
       component_id = as.character(component_id)
-    ))
+    )
 
   if (!full) {
-    vry_tbl <- vry_tbl[vry_tbl$tunable, ]
+    tune_tbl <- tune_tbl[tune_tbl$tunable, ]
   }
 
-  vry_tbl
+  tune_tbl
 }
 
 #' @export
