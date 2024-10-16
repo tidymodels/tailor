@@ -125,3 +125,34 @@ test_that("fit.tailor() errors informatively with incompatible outcome", {
     )
   )
 })
+
+test_that("find_tune_id() works", {
+  # empty input
+  expect_equal(find_tune_id(list()), NA_character_)
+
+  # handles quosures
+  x <- rlang::quos(a = 1, b = tune())
+  expect_equal(find_tune_id(x), "")
+
+  # non-tunable atomic values
+  expect_equal(find_tune_id(1), NA_character_)
+  expect_equal(find_tune_id("a"), NA_character_)
+  expect_equal(find_tune_id(TRUE), NA_character_)
+
+  # non-tunable names
+  expect_equal(find_tune_id(quote(x)), NA_character_)
+
+  # nested lists
+  x <- list(a = 1, b = list(c = hardhat::tune(), d = 2))
+  expect_equal(find_tune_id(x), "")
+
+  # tune() without id
+  expect_equal(find_tune_id(hardhat::tune()), "")
+
+  # tune() with id
+  expect_equal(find_tune_id(hardhat::tune("test_id")), "test_id")
+
+  # multiple tunable values
+  x <- list(a = hardhat::tune(), b = hardhat::tune())
+  expect_snapshot(error = TRUE, find_tune_id(x))
+})

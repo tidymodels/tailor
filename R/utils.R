@@ -84,7 +84,7 @@ no_param <-
     component_id = character(0)
   )
 
-find_tune_id <- function(x, call = caller_env()) {
+find_tune_id <- function(x, arg = caller_arg(x), call = caller_env()) {
   if (length(x) == 0L) {
     return(NA_character_)
   }
@@ -121,7 +121,7 @@ find_tune_id <- function(x, call = caller_env()) {
     cli::cli_abort(
       c(
         "Only one tunable value is currently allowed per argument.",
-        "The current argument has {.val {offenders}}."
+        "{.arg {arg}} has {.code {offenders}}."
       ),
       call = call
     )
