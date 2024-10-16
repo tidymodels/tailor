@@ -41,3 +41,17 @@ test_that("adjustment printing", {
   expect_snapshot(tailor() %>% adjust_numeric_range(hardhat::tune(), 1))
 })
 
+test_that("tunable", {
+  tlr <-
+    tailor() %>%
+    adjust_numeric_range(lower_limit = 1, upper_limit = 2)
+  adj_param <- tunable(tlr$adjustments[[1]])
+  expect_equal(adj_param$name, c("lower_limit", "upper_limit"))
+  expect_true(all(adj_param$source == "tailor"))
+  expect_true(is.list(adj_param$call_info))
+  expect_equal(nrow(adj_param), 2)
+  expect_equal(
+    names(adj_param),
+    c("name", "call_info", "source", "component", "component_id")
+  )
+})

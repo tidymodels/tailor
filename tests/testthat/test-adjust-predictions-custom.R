@@ -43,3 +43,11 @@ test_that("basic adjust_predictions_custom() usage works", {
 test_that("adjustment printing", {
   expect_snapshot(tailor() %>% adjust_predictions_custom())
 })
+
+test_that("tunable", {
+  tlr <-
+    tailor() %>%
+    adjust_predictions_custom(linear_predictor = binomial()$linkfun(Class2))
+  adj_param <- tunable(tlr$adjustments[[1]])
+  expect_equal(adj_param, no_param)
+})

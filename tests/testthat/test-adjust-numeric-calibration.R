@@ -82,3 +82,11 @@ test_that("errors informatively with bad input", {
   expect_no_condition(adjust_numeric_calibration(tailor()))
   expect_no_condition(adjust_numeric_calibration(tailor(), "linear"))
 })
+
+test_that("tunable", {
+  tlr <-
+    tailor() %>%
+    adjust_numeric_calibration(method = "linear")
+  adj_param <- tunable(tlr$adjustments[[1]])
+  expect_equal(adj_param, no_param)
+})

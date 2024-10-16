@@ -235,6 +235,42 @@ set_tailor_type <- function(object, y, call = caller_env()) {
 # todo: where to validate #levels?
 # todo setup eval_time
 # todo missing methods:
-# todo tune_args
+
+#' @export
+tune_args.tailor <- function(object, full = FALSE, ...) {
+  adjustments <- object$adjustments
+
+  if (length(adjustments) == 0L) {
+    return(tune_tbl())
+  }
+
+  res <- purrr::map(object$adjustments, tune_args, full = full)
+  res <- purrr::list_rbind(res)
+
+  tune_tbl(
+    res$name,
+    res$tunable,
+    res$id,
+    res$source,
+    res$component,
+    res$component_id,
+    full = full
+  )
+}
+
+#' @export
+tunable.tailor <- function(x, ...) {
+  if (length(x$adjustments) == 0) {
+    res <- no_param
+  } else {
+    res <- purrr::map(x$adjustments, tunable)
+    res <- vctrs::vec_rbind(!!!res)
+    if (nrow(res) > 0) {
+      res <- res[!is.na(res$name), ]
+    }
+  }
+  res
+}
+
 # todo tidy (this should probably just be `adjustment_orderings()`)
 # todo extract_parameter_set_dials

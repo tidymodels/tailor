@@ -6,7 +6,7 @@
 #' @name tailor-internals
 NULL
 
-
+# tuning machinery -------------------------------------------------------------
 is_tune <- function(x) {
   if (!is.call(x)) {
     return(FALSE)
@@ -14,8 +14,72 @@ is_tune <- function(x) {
   isTRUE(identical(quote(tune), x[[1]]))
 }
 
-# for adjustments with no tunable parameters
+tune_tbl <- function(name = character(), tunable = logical(), id = character(),
+                     source = character(), component = character(),
+                     component_id = character(), full = FALSE, call = caller_env()) {
+  complete_id <- id[!is.na(id)]
+  dups <- duplicated(complete_id)
 
+  if (any(dups)) {
+    offenders <- unique(complete_id[dups])
+    cli::cli_abort(
+      "{.val {offenders}} {?has a/have} duplicate {.field id} value{?s}.",
+      call = call
+    )
+  }
+
+  vry_tbl <-
+    tibble::new_tibble(list(
+      name = as.character(name),
+      tunable = as.logical(tunable),
+      id = as.character(id),
+      source = as.character(source),
+      component = as.character(component),
+      component_id = as.character(component_id)
+    ))
+
+  if (!full) {
+    vry_tbl <- vry_tbl[vry_tbl$tunable, ]
+  }
+
+  vry_tbl
+}
+
+#' @export
+tune_args.adjustment <- function(object, full = FALSE, ...) {
+  adjustment_id <- object$id
+  # Grab the adjustment class before the subset, as that removes the class
+  adjustment_type <- class(object)[1]
+
+  tune_param_list <- tunable(object)$name
+
+  # remove the non-tunable arguments as they are not important
+  object <- object[tune_param_list]
+
+  # Remove NULL argument adjustments. These are reserved
+  # for deprecated args or those set at fit() time.
+  object <- object[!purrr::map_lgl(object, is.null)]
+
+  res <- purrr::map_chr(object, find_tune_id)
+  res <- ifelse(res == "", names(res), res)
+
+  tune_tbl(
+    name = names(res),
+    tunable = unname(!is.na(res)),
+    id = unname(res),
+    source = "tailor",
+    component = adjustment_type,
+    component_id = adjustment_id,
+    full = full
+  )
+}
+
+#' @export
+tunable.adjustment <- function(x, ...) {
+  no_param
+}
+
+# for adjustments with no tunable parameters
 no_param <-
   tibble::tibble(
     name = character(0),
@@ -25,6 +89,7 @@ no_param <-
     component_id = character(0)
   )
 
+# new_adjustment -------------------------------------------------------------
 # These values are used to specify "what will we need for the adjustment?" and
 # "what will we change?". For the outputs, we cannot change the probabilities
 # without changing the classes. This is important because we are going to have

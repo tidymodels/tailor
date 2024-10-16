@@ -55,3 +55,18 @@ test_that("adjustment printing", {
   expect_snapshot(tailor() %>% adjust_equivocal_zone())
   expect_snapshot(tailor() %>% adjust_equivocal_zone(hardhat::tune()))
 })
+
+test_that("tunable", {
+  tlr <-
+    tailor() %>%
+    adjust_equivocal_zone(value = 1 / 4)
+  adj_param <- tunable(tlr$adjustments[[1]])
+  expect_equal(adj_param$name, c("buffer"))
+  expect_true(all(adj_param$source == "tailor"))
+  expect_true(is.list(adj_param$call_info))
+  expect_equal(nrow(adj_param), 1)
+  expect_equal(
+    names(adj_param),
+    c("name", "call_info", "source", "component", "component_id")
+  )
+})
