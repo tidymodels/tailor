@@ -43,7 +43,7 @@ with the \href{https://tidymodels.org}{tidymodels} framework; for greatest ease
 of use, situate tailors in model workflows with \code{?workflows::add_tailor()}.
 }
 \examples{
-\dontshow{if (rlang::is_installed("modeldata")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+\dontshow{if (rlang::is_installed(c("probably", "modeldata"))) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
 library(dplyr)
 library(modeldata)
 

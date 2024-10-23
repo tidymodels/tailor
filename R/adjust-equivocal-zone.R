@@ -16,7 +16,7 @@
 #' this adjustment just collects metadata on the supplied column names and does
 #' not risk data leakage.
 #'
-#' @examplesIf rlang::is_installed("modeldata")
+#' @examplesIf rlang::is_installed(c("probably", "modeldata"))
 #' library(dplyr)
 #' library(modeldata)
 #'

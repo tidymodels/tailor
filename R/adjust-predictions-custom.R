@@ -10,7 +10,7 @@
 #'
 #' @inheritSection adjust_equivocal_zone Data Usage
 #'
-#' @examplesIf rlang::is_installed("modeldata")
+#' @examplesIf rlang::is_installed(c("probably", "modeldata"))
 #' library(modeldata)
 #'
 #' head(two_class_example)
