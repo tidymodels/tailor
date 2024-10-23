@@ -23,13 +23,13 @@ Imports:
     dplyr,
     generics,
     hardhat,
-    probably (>= 1.0.3.9000),
     purrr,
     rlang (>= 1.1.0),
     tibble,
     tidyselect
 Suggests: 
     modeldata,
+    probably (>= 1.0.3.9000),
     testthat (>= 3.0.0),
     workflows
 Remotes:

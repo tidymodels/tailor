@@ -3,6 +3,12 @@ test_that("check_tailor raises informative error", {
   expect_no_condition(tailor() %>% adjust_probability_threshold(.5))
 })
 
+test_that("errors informatively without probably installed", {
+  testthat::local_mocked_bindings(requireNamespace = function(...) {FALSE})
+
+  expect_snapshot(error = TRUE, tailor() %>% adjust_numeric_calibration())
+})
+
 test_that("tailor_fully_trained works", {
   skip_if_not_installed("modeldata")
   data("two_class_example", package = "modeldata")

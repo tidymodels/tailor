@@ -33,6 +33,8 @@
 #' predict(tlr_fit, d)
 #' @export
 adjust_numeric_range <- function(x, lower_limit = -Inf, upper_limit = Inf) {
+  validate_probably_available()
+
   # remaining input checks are done via probably::bound_prediction
   check_tailor(x)
 
@@ -87,6 +89,8 @@ print.numeric_range <- function(x, ...) {
 
 #' @export
 fit.numeric_range <- function(object, data, tailor = NULL, ...) {
+  validate_probably_available()
+
   new_adjustment(
     class(object),
     inputs = object$inputs,
@@ -100,6 +104,8 @@ fit.numeric_range <- function(object, data, tailor = NULL, ...) {
 
 #' @export
 predict.numeric_range <- function(object, new_data, tailor, ...) {
+  validate_probably_available()
+
   est_nm <- tailor$columns$estimate
   lo <- object$arguments$lower_limit
   hi <- object$arguments$upper_limit
