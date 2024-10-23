@@ -6,6 +6,14 @@
       Error in `adjust_probability_threshold()`:
       ! `x` should be a <tailor> (`?tailor::tailor()`), not a string.
 
+# errors informatively without probably installed
+
+    Code
+      tailor() %>% adjust_numeric_calibration()
+    Condition
+      Error in `adjust_numeric_calibration()`:
+      ! The probably package must be available to use this adjustment.
+
 # fit.tailor() errors informatively with incompatible outcome
 
     Code

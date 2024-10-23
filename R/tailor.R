@@ -32,7 +32,7 @@
 #' `"multiclass"` types, and can also be passed at `fit()` time instead.
 #' The column names of class probability estimates. These should be given in
 #' the order of the factor levels of the `estimate`.
-#' @examplesIf rlang::is_installed("modeldata")
+#' @examplesIf rlang::is_installed(c("probably", "modeldata"))
 #' library(dplyr)
 #' library(modeldata)
 #'

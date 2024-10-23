@@ -16,7 +16,7 @@
 #' @inheritSection adjust_numeric_calibration Data Usage
 #'
 #' @examplesIf FALSE
-# @examplesIf rlang::is_installed("modeldata")
+# @examplesIf rlang::is_installed(c("probably", "modeldata"))
 #' library(modeldata)
 #'
 #' # split example data
@@ -49,6 +49,8 @@
 #'
 #' @export
 adjust_probability_calibration <- function(x, method = NULL) {
+  validate_probably_available()
+
   check_tailor(x, calibration_type = "probability")
   # wait to `check_method()` until `fit()` time
   if (!is.null(method)) {
@@ -87,6 +89,8 @@ print.probability_calibration <- function(x, ...) {
 
 #' @export
 fit.probability_calibration <- function(object, data, tailor = NULL, ...) {
+  validate_probably_available()
+
   method <- check_method(object$arguments$method, tailor$type)
   # todo: adjust_probability_calibration() should take arguments to pass to
   # cal_estimate_* via dots
@@ -115,6 +119,8 @@ fit.probability_calibration <- function(object, data, tailor = NULL, ...) {
 
 #' @export
 predict.probability_calibration <- function(object, new_data, tailor, ...) {
+  validate_probably_available()
+
   probably::cal_apply(
     .data = new_data,
     object = object$results$fit,

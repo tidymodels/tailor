@@ -16,7 +16,7 @@
 #' this adjustment just collects metadata on the supplied column names and does
 #' not risk data leakage.
 #'
-#' @examplesIf rlang::is_installed("modeldata")
+#' @examplesIf rlang::is_installed(c("probably", "modeldata"))
 #' library(dplyr)
 #' library(modeldata)
 #'
@@ -48,6 +48,8 @@
 #' predict(tlr_fit, two_class_example) %>% count(predicted)
 #' @export
 adjust_equivocal_zone <- function(x, value = 0.1, threshold = 1 / 2) {
+  validate_probably_available()
+
   check_tailor(x)
   if (!is_tune(value)) {
     check_number_decimal(value, min = 0, max = 1 / 2)
@@ -94,6 +96,8 @@ print.equivocal_zone <- function(x, ...) {
 
 #' @export
 fit.equivocal_zone <- function(object, data, tailor = NULL, ...) {
+  validate_probably_available()
+
   new_adjustment(
     class(object),
     inputs = object$inputs,
@@ -107,6 +111,8 @@ fit.equivocal_zone <- function(object, data, tailor = NULL, ...) {
 
 #' @export
 predict.equivocal_zone <- function(object, new_data, tailor, ...) {
+  validate_probably_available()
+
   est_nm <- tailor$columns$estimate
   prob_nm <- tailor$columns$probabilities[1]
   lvls <- levels(new_data[[est_nm]])

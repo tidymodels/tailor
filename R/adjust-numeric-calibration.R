@@ -21,7 +21,7 @@
 #' situated in a workflow, tailors will automatically be estimated with
 #' appropriate subsets of data.
 #'
-#' @examples
+#' @examplesIf rlang::is_installed("probably")
 #' library(tibble)
 #'
 #' # create example data
@@ -46,6 +46,8 @@
 #' predict(tlr_fit, d_test)
 #' @export
 adjust_numeric_calibration <- function(x, method = NULL) {
+  validate_probably_available()
+
   check_tailor(x, calibration_type = "numeric")
   # wait to `check_method()` until `fit()` time
   if (!is.null(method)) {
@@ -84,6 +86,8 @@ print.numeric_calibration <- function(x, ...) {
 
 #' @export
 fit.numeric_calibration <- function(object, data, tailor = NULL, ...) {
+  validate_probably_available()
+
   method <- check_method(object$arguments$method, tailor$type)
   # todo: adjust_numeric_calibration() should take arguments to pass to
   # cal_estimate_* via dots
@@ -111,6 +115,8 @@ fit.numeric_calibration <- function(object, data, tailor = NULL, ...) {
 
 #' @export
 predict.numeric_calibration <- function(object, new_data, tailor, ...) {
+  validate_probably_available()
+
   probably::cal_apply(new_data, object$results$fit)
 }
 

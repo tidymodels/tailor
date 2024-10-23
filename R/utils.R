@@ -193,6 +193,21 @@ is_tailor <- function(x) {
   inherits(x, "tailor")
 }
 
+validate_probably_available <- function(..., call = caller_env()) {
+  check_dots_empty()
+
+  if (!requireNamespace("probably", quietly = TRUE)) {
+    cli_abort(
+      "The {.pkg probably} package must be available to use this adjustment.",
+      call = call
+    )
+  }
+
+  invisible()
+}
+
+requireNamespace <- NULL
+
 #' @export
 #' @keywords internal
 #' @rdname tailor-internals
