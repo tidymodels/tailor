@@ -32,6 +32,7 @@ appropriate subsets of data.
 }
 
 \examples{
+\dontshow{if (rlang::is_installed("probably")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
 library(tibble)
 
 # create example data
@@ -54,4 +55,5 @@ tlr_fit <- fit(tlr, d_calibration, outcome = y, estimate = y_pred)
 d_test
 
 predict(tlr_fit, d_test)
+\dontshow{\}) # examplesIf}
 }

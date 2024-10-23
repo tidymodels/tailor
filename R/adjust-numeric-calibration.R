@@ -21,7 +21,7 @@
 #' situated in a workflow, tailors will automatically be estimated with
 #' appropriate subsets of data.
 #'
-#' @examples
+#' @examplesIf rlang::is_installed("probably")
 #' library(tibble)
 #'
 #' # create example data
