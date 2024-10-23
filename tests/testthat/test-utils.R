@@ -58,6 +58,8 @@ test_that("tailor_fully_trained works", {
 
 
 test_that("tailor_requires_fit works", {
+  skip_if_not_installed("probably")
+
   expect_false(tailor_requires_fit(tailor()))
   expect_false(
     tailor_requires_fit(tailor() %>% adjust_probability_threshold(.5))
