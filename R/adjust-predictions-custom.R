@@ -92,6 +92,5 @@ tunable.predictions_custom <- function(x, ...) {
 }
 
 # todo missing methods:
-# todo tune_args
 # todo tidy
 # todo extract_parameter_set_dials

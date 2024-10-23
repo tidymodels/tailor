@@ -42,3 +42,12 @@
       Error in `fit()`:
       ! Only factor and numeric outcomes are currently supported.
 
+# find_tune_id() works
+
+    Code
+      find_tune_id(x)
+    Condition
+      Error:
+      ! Only one tunable value is currently allowed per argument.
+      `x` has `list(a = tune(), b = tune())`.
+
