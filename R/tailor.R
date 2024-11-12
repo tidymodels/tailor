@@ -191,7 +191,6 @@ fit.tailor <- function(object, .data, outcome, estimate, probabilities = c(),
     .data <- predict(object$adjustments[[adj]], .data, object)
   }
 
-  # todo Add a fitted tailor class?
   object
 }
 
