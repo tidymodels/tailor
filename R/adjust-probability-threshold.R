@@ -124,4 +124,3 @@ tunable.probability_threshold <- function(x, ...) {
 
 # todo missing methods:
 # todo tidy
-# todo extract_parameter_set_dials

@@ -273,4 +273,3 @@ tunable.tailor <- function(x, ...) {
 }
 
 # todo tidy (this should probably just be `adjustment_orderings()`)
-# todo extract_parameter_set_dials
