@@ -138,7 +138,7 @@ tunable.numeric_range <- function(x, ...) {
   tibble::tibble(
     name = c("lower_limit", "upper_limit"),
     call_info = list(
-      list(pkg = "dials", fun = "lower_limit"), # todo make these dials functions
+      list(pkg = "dials", fun = "lower_limit"),
       list(pkg = "dials", fun = "upper_limit")
     ),
     source = "tailor",
