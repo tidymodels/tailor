@@ -60,7 +60,6 @@ test_that("basic adjust_probability_calibration() usage works", {
       adjust_probability_calibration(method = "isotonic")
   )
 
-  # TODO: cannot be `expect_no_condition()` due to tidymodels/probably#157
   expect_no_condition(
     tlr_fit <- fit(
       tlr,
