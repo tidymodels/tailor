@@ -61,7 +61,7 @@ test_that("basic adjust_probability_calibration() usage works", {
   )
 
   # TODO: cannot be `expect_no_condition()` due to tidymodels/probably#157
-  expect_no_error(expect_no_warning(
+  expect_no_condition(
     tlr_fit <- fit(
       tlr,
       d_calibration,
@@ -69,11 +69,11 @@ test_that("basic adjust_probability_calibration() usage works", {
       estimate = c(predicted),
       probabilities = c(Class1, Class2)
     )
-  ))
+  )
 
-  expect_no_error(expect_no_warning(
+  expect_no_condition(
     tlr_pred <- predict(tlr_fit, d_test)
-  ))
+  )
 
   # classes are as expected
   expect_s3_class(tlr, "tailor")

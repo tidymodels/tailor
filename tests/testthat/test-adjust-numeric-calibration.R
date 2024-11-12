@@ -47,14 +47,13 @@ test_that("adjust_numeric_calibration() respects `method` argument", {
       adjust_numeric_calibration(method = "isotonic")
   )
 
-  # TODO: cannot be `expect_no_condition()` due to tidymodels/probably#157
-  expect_no_error(expect_no_warning(
+  expect_no_condition(
     tlr_fit <- fit(tlr, d_calibration, outcome = y, estimate = y_pred)
-  ))
+  )
 
-  expect_no_error(expect_no_warning(
+  expect_no_condition(
     tlr_pred <- predict(tlr_fit, d_test)
-  ))
+  )
 
   # classes are as expected
   expect_s3_class(tlr, "tailor")
