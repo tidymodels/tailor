@@ -233,7 +233,6 @@ set_tailor_type <- function(object, y, call = caller_env()) {
 
 # todo: where to validate #levels?
 # todo setup eval_time
-# todo missing methods:
 
 #' @export
 tune_args.tailor <- function(object, full = FALSE, ...) {
