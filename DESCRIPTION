@@ -35,7 +35,7 @@ Suggests:
     testthat (>= 3.0.0),
     workflows
 Remotes:
-    tidymodels/dials#358,
+    tidymodels/dials,
     tidymodels/probably,
     tidymodels/workflows
 Config/testthat/edition: 3
