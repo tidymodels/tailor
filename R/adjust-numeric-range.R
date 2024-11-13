@@ -146,6 +146,3 @@ tunable.numeric_range <- function(x, ...) {
     component_id = "numeric_range"
   )
 }
-
-# todo missing methods:
-# todo tidy

@@ -269,5 +269,3 @@ tunable.tailor <- function(x, ...) {
   }
   res
 }
-
-# todo tidy (this should probably just be `adjustment_orderings()`)

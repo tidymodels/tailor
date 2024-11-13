@@ -138,6 +138,3 @@ required_pkgs.probability_calibration <- function(x, ...) {
 tunable.probability_calibration <- function(x, ...) {
   no_param
 }
-
-# todo missing methods:
-# todo tidy

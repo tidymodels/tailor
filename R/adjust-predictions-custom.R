@@ -90,6 +90,3 @@ required_pkgs.predictions_custom <- function(x, ...) {
 tunable.predictions_custom <- function(x, ...) {
   no_param
 }
-
-# todo missing methods:
-# todo tidy

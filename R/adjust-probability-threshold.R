@@ -121,6 +121,3 @@ tunable.probability_threshold <- function(x, ...) {
     component_id = "probability_threshold"
   )
 }
-
-# todo missing methods:
-# todo tidy

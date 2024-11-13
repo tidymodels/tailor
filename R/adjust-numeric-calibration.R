@@ -130,6 +130,3 @@ required_pkgs.numeric_calibration <- function(x, ...) {
 tunable.numeric_calibration <- function(x, ...) {
   no_param
 }
-
-# todo missing methods:
-# todo tidy

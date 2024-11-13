@@ -142,6 +142,3 @@ tunable.equivocal_zone <- function(x, ...) {
     component_id = "equivocal_zone"
   )
 }
-
-# todo missing methods:
-# todo tidy
