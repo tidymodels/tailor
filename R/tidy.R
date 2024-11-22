@@ -38,16 +38,3 @@ tidy.tailor <- function(x, number = NA, ...) {
 
   tibble::new_tibble(res)
 }
-
-tidy_adjustments <- function(adjustments) {
-  res <- adjustment_orderings(x$adjustments)
-
-  res <- vctrs::vec_cbind(
-    number = seq_len(nrow(res)),
-    res,
-    trained = purrr::map_lgl(x$adjustments, purrr::pluck, "trained"),
-    requires_train = purrr::map_lgl(x$adjustments, purrr::pluck, "requires_fit")
-  )
-
-  tibble::new_tibble(res)
-}
