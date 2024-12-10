@@ -370,7 +370,7 @@ check_selection <- function(selector, result, arg, call = caller_env()) {
       c(
         "!" = "{.arg {arg}} must select at least one column.",
         "x" = "Selector {.code {as_label(selector)}} did not match any columns \\
-               in {.arg {arg}}."
+               in {.arg .data}."
       ),
       call = caller_env()
     )
