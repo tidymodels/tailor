@@ -40,6 +40,24 @@ test_that("basic adjust_predictions_custom() usage works", {
   )
 })
 
+test_that("adjust_predictions_custom() for numerics works without setting type (#61)", {
+  library(tibble)
+
+  set.seed(1)
+  d_calibration <- tibble(y = rnorm(100), y_pred = y/2 + rnorm(100))
+  d_test <- tibble(y = rnorm(100), y_pred = y/2 + rnorm(100))
+
+  expect_no_error({
+    tlr <-
+      tailor() %>%
+      adjust_numeric_calibration() %>%
+      adjust_numeric_range(lower_limit = 2) %>%
+      adjust_predictions_custom(squared = y_pred^2)
+
+    tlr_fit <- fit(tlr, d_calibration, outcome = y, estimate = y_pred)
+  })
+})
+
 test_that("adjustment printing", {
   expect_snapshot(tailor() %>% adjust_predictions_custom())
 })
