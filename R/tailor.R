@@ -167,6 +167,9 @@ fit.tailor <- function(object, .data, outcome, estimate, probabilities = c(),
   if (any(c("probability", "everything") %in%
           purrr::map_chr(object$adjustments, purrr::pluck, "inputs"))) {
     check_selection(enquo(probabilities), columns$probabilities, "probabilities")
+    for (col in columns$probabilities) {
+      check_variable_type(.data[[col]], "probability", "probabilities")
+    }
   }
 
   .data <- .data[, names(.data) %in% unlist(columns)]
@@ -176,6 +179,9 @@ fit.tailor <- function(object, .data, outcome, estimate, probabilities = c(),
   ptype <- .data[0, ]
 
   object <- set_tailor_type(object, .data[[columns$outcome]])
+
+  check_variable_type(.data[[columns$outcome]], object$type, "outcome")
+  check_variable_type(.data[[columns$estimate]], object$type, "estimate")
 
   object <- new_tailor(
     object$type,
@@ -210,7 +216,7 @@ predict.tailor <- function(object, new_data, ...) {
 
 set_tailor_type <- function(object, y, call = caller_env()) {
   if (object$type != "unknown") {
-    check_outcome_type(y, object$type, call = call)
+    check_variable_type(y, object$type, "outcome", call = call)
     return(object)
   }
   if (is.factor(y)) {

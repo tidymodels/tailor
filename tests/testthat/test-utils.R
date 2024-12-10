@@ -166,6 +166,80 @@ test_that("fit.tailor() errors informatively with incompatible outcome", {
   )
 })
 
+test_that("fit.tailor() errors informatively with incompatible estimate", {
+  skip_if_not_installed("modeldata")
+  library(modeldata)
+
+  two_class_example$test_numeric <- two_class_example$Class1 + 1
+  two_class_example$test_date <- as.POSIXct(two_class_example$Class1)
+
+  # supply a numeric estimate to a binary tailor
+  expect_snapshot(
+    error = TRUE,
+    fit(
+      tailor() %>% adjust_probability_threshold(.1),
+      two_class_example,
+      outcome = c(predicted),
+      estimate = c(test_numeric),
+      probabilities = c(Class1, Class2)
+    )
+  )
+
+  # supply a factor estimate to a regression tailor
+  expect_snapshot(
+    error = TRUE,
+    fit(
+      tailor() %>% adjust_numeric_range(lower_limit = .1),
+      two_class_example,
+      outcome = c(Class1),
+      estimate = c(truth)
+    )
+  )
+
+  # supply a totally wild estimate to a regression tailor
+  expect_snapshot(
+    error = TRUE,
+    fit(
+      tailor() %>% adjust_probability_threshold(.1),
+      two_class_example,
+      outcome = c(truth),
+      estimate = c(test_date),
+      probabilities = c(Class1, Class2)
+    )
+  )
+
+  # supply a totally wild estimate to an unknown tailor
+  expect_snapshot(
+    error = TRUE,
+    fit(
+      tailor() %>% adjust_predictions_custom(hey = "there"),
+      two_class_example,
+      outcome = c(truth),
+      estimate = c(test_date),
+      probabilities = c(Class1)
+    )
+  )
+})
+
+test_that("fit.tailor() errors informatively with incompatible probability", {
+  skip_if_not_installed("modeldata")
+  library(modeldata)
+
+  two_class_example$test_date <- as.POSIXct(two_class_example$Class1)
+
+  # supply a date probability to a binary tailor
+  expect_snapshot(
+    error = TRUE,
+    fit(
+      tailor() %>% adjust_probability_threshold(.1),
+      two_class_example,
+      outcome = c(truth),
+      estimate = c(predicted),
+      probabilities = c(test_date)
+    )
+  )
+})
+
 test_that("find_tune_id() works", {
   # empty input
   expect_equal(find_tune_id(list()), NA_character_)
