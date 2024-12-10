@@ -6,6 +6,30 @@
       Error in `adjust_probability_threshold()`:
       ! `x` should be a <tailor> (`?tailor::tailor()`), not a string.
 
+# check_calibration_type errors informatively
+
+    Code
+      check_calibration_type("probability", "numeric", "regression")
+    Condition
+      Error in `check_calibration_type()`:
+      ! A regression tailor is incompatible with the adjustment `adjust_probability_calibration()`.
+
+---
+
+    Code
+      check_calibration_type("numeric", "probability", "binary")
+    Condition
+      Error in `check_calibration_type()`:
+      ! A binary tailor is incompatible with the adjustment `adjust_numeric_calibration()`.
+
+---
+
+    Code
+      check_calibration_type("numeric", "probability", "multiclass")
+    Condition
+      Error in `check_calibration_type()`:
+      ! A multiclass tailor is incompatible with the adjustment `adjust_numeric_calibration()`.
+
 # errors informatively without probably installed
 
     Code
@@ -58,4 +82,13 @@
       Error:
       ! Only one tunable value is currently allowed per argument.
       `x` has `list(a = tune(), b = tune())`.
+
+# check_selection() errors informatively
+
+    Code
+      check_selection(quote(contains("boop")), numeric(0), ".data")
+    Condition
+      Error:
+      ! `.data` must select at least one column.
+      x Selector `contains("boop")` did not match any columns in `.data`.
 

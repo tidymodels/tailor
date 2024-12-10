@@ -1,6 +1,39 @@
+test_that("is_tune works", {
+  expect_false(is_tune(1))
+  expect_false(is_tune("x"))
+  expect_false(is_tune(quote(x)))
+  expect_false(is_tune(quote(f(x))))
+  expect_false(is_tune(NULL))
+  expect_false(is_tune(list()))
+
+  expect_true(is_tune(quote(tune())))
+  expect_true(is_tune(quote(tune("my_param"))))
+})
+
 test_that("check_tailor raises informative error", {
   expect_snapshot(error = TRUE, adjust_probability_threshold("boop"))
   expect_no_condition(tailor() %>% adjust_probability_threshold(.5))
+})
+
+test_that("check_calibration_type errors informatively", {
+  expect_no_error(check_calibration_type("numeric", "numeric", "regression"))
+  expect_no_error(check_calibration_type("probability", "probability", "binary"))
+  expect_no_error(check_calibration_type("probability", "probability", "multiclass"))
+
+  expect_snapshot(
+    error = TRUE,
+    check_calibration_type("probability", "numeric", "regression")
+  )
+
+  expect_snapshot(
+    error = TRUE,
+    check_calibration_type("numeric", "probability", "binary")
+  )
+
+  expect_snapshot(
+    error = TRUE,
+    check_calibration_type("numeric", "probability", "multiclass")
+  )
 })
 
 test_that("errors informatively without probably installed", {
@@ -55,7 +88,6 @@ test_that("tailor_fully_trained works", {
     )
   )
 })
-
 
 test_that("tailor_requires_fit works", {
   skip_if_not_installed("probably")
@@ -163,4 +195,24 @@ test_that("find_tune_id() works", {
   # multiple tunable values
   x <- list(a = hardhat::tune(), b = hardhat::tune())
   expect_snapshot(error = TRUE, find_tune_id(x))
+})
+
+test_that("tune_id() works", {
+  # works when input is tune
+  expect_equal(tune_id(hardhat::tune()), "")
+  expect_equal(tune_id(hardhat::tune("param")), "param")
+
+  # returns character NA for non-tunable inputs
+  expect_equal(tune_id(NULL), NA_character_)
+  expect_equal(tune_id(1), NA_character_)
+  expect_equal(tune_id("x"), NA_character_)
+  expect_equal(tune_id(quote(x)), NA_character_)
+  expect_equal(tune_id(quote(f(x))), NA_character_)
+})
+
+test_that("check_selection() errors informatively", {
+  expect_snapshot(
+    check_selection(quote(contains("boop")), numeric(0), ".data"),
+    error = TRUE
+  )
 })
