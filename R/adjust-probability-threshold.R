@@ -113,11 +113,14 @@ required_pkgs.probability_threshold <- function(x, ...) {
 
 #' @export
 tunable.probability_threshold <- function(x, ...) {
-  tibble::tibble(
-    name = "threshold",
-    call_info = list(list(pkg = "dials", fun = "threshold")),
-    source = "tailor",
-    component = "probability_threshold",
-    component_id = "probability_threshold"
+  tibble::new_tibble(
+    list(
+      name = "threshold",
+      call_info = list(list(pkg = "dials", fun = "threshold")),
+      source = "tailor",
+      component = "probability_threshold",
+      component_id = "probability_threshold"
+    ),
+    nrow = 1
   )
 }

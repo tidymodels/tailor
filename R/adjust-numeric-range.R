@@ -135,14 +135,17 @@ required_pkgs.numeric_range <- function(x, ...) {
 
 #' @export
 tunable.numeric_range <- function(x, ...) {
-  tibble::tibble(
-    name = c("lower_limit", "upper_limit"),
-    call_info = list(
-      list(pkg = "dials", fun = "lower_limit"),
-      list(pkg = "dials", fun = "upper_limit")
+  tibble::new_tibble(
+    list(
+      name = c("lower_limit", "upper_limit"),
+      call_info = list(
+        list(pkg = "dials", fun = "lower_limit"),
+        list(pkg = "dials", fun = "upper_limit")
+      ),
+      source = c("tailor", "tailor"),
+      component = c("numeric_range", "numeric_range"),
+      component_id = c("numeric_range", "numeric_range")
     ),
-    source = "tailor",
-    component = "numeric_range",
-    component_id = "numeric_range"
+    nrow = 2
   )
 }
