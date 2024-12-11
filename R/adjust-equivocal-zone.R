@@ -9,6 +9,8 @@
 #' @param value A numeric value (between zero and 1/2) or [hardhat::tune()]. The
 #' value is the size of the buffer around the threshold.
 #' @param threshold A numeric value (between zero and one) or [hardhat::tune()].
+#' Defaults to `adjust_probability_threshold(threshold)` if previously set
+#' in `x`, or `1 / 2` if not.
 #'
 #' @section Data Usage:
 #' This adjustment doesn't require estimation and, as such, the same data that's
@@ -56,15 +58,13 @@
 #' # adjust hard class predictions
 #' predict(tlr_fit, two_class_example) %>% count(predicted)
 #' @export
-adjust_equivocal_zone <- function(x, value = 0.1, threshold = 1 / 2) {
+adjust_equivocal_zone <- function(x, value = 0.1, threshold = NULL) {
   validate_probably_available()
 
   check_tailor(x)
+  threshold <- infer_threshold(x = x, threshold = threshold)
   if (!is_tune(value)) {
     check_number_decimal(value, min = 0, max = 1 / 2)
-  }
-  if (!is_tune(threshold)) {
-    check_number_decimal(threshold, min = 10^-10, max = 1 - 10^-10)
   }
 
   adj <-
@@ -150,4 +150,25 @@ tunable.equivocal_zone <- function(x, ...) {
     component = "equivocal_zone",
     component_id = "equivocal_zone"
   )
+}
+
+infer_threshold <- function(x, threshold, call = caller_env()) {
+  if (!is.null(threshold) && !is_tune(threshold)) {
+    check_number_decimal(threshold, min = 10^-10, max = 1 - 10^-10, call = call)
+    return(threshold)
+  }
+
+  if (is_tune(threshold)) {
+    return(threshold)
+  }
+
+  # use `map() %>% unlist()` rather than `map_dbl` to handle NULLs
+  thresholds <- purrr::map(x$adjustments, purrr::pluck, "arguments", "threshold")
+  thresholds <- unlist(thresholds)
+
+  if (!is.null(thresholds)) {
+    return(thresholds[length(thresholds)])
+  }
+
+  1 / 2
 }

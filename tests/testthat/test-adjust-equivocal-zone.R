@@ -72,3 +72,37 @@ test_that("tunable", {
     c("name", "call_info", "source", "component", "component_id")
   )
 })
+
+test_that("adjust_equivocal_zone inherits previously set threshold", {
+  # previously set
+  tlr <-
+    tailor() %>%
+    adjust_probability_threshold(threshold = .4) %>%
+    adjust_equivocal_zone(value = .2)
+
+  expect_equal(tlr$adjustments[[2]]$arguments$threshold, .4)
+
+  # not previously set, defualts to 1 / 2
+  tlr <-
+    tailor() %>%
+    adjust_equivocal_zone(value = .2)
+
+  expect_equal(tlr$adjustments[[1]]$arguments$threshold, .5)
+
+  # previously set, among other things
+  tlr <-
+    tailor() %>%
+    adjust_predictions_custom(.pred = identity(.pred)) %>%
+    adjust_probability_threshold(threshold = .4) %>%
+    adjust_equivocal_zone(value = .2)
+
+  expect_equal(tlr$adjustments[[3]]$arguments$threshold, .4)
+
+  # not previously set, but other stuff happened
+  tlr <-
+    tailor() %>%
+    adjust_predictions_custom(.pred = identity(.pred)) %>%
+    adjust_equivocal_zone(value = .2)
+
+  expect_equal(tlr$adjustments[[2]]$arguments$threshold, .5)
+})

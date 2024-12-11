@@ -4,7 +4,7 @@
 \alias{adjust_equivocal_zone}
 \title{Apply an equivocal zone to a binary classification model.}
 \usage{
-adjust_equivocal_zone(x, value = 0.1, threshold = 1/2)
+adjust_equivocal_zone(x, value = 0.1, threshold = NULL)
 }
 \arguments{
 \item{x}{A \code{\link[=tailor]{tailor()}}.}
@@ -12,7 +12,9 @@ adjust_equivocal_zone(x, value = 0.1, threshold = 1/2)
 \item{value}{A numeric value (between zero and 1/2) or \code{\link[hardhat:tune]{hardhat::tune()}}. The
 value is the size of the buffer around the threshold.}
 
-\item{threshold}{A numeric value (between zero and one) or \code{\link[hardhat:tune]{hardhat::tune()}}.}
+\item{threshold}{A numeric value (between zero and one) or \code{\link[hardhat:tune]{hardhat::tune()}}.
+Defaults to \code{adjust_probability_threshold(threshold)} if previously set
+in \code{x}, or \code{1 / 2} if not.}
 }
 \description{
 Equivocal zones describe intervals of predicted probabilities that are deemed
