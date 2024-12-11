@@ -35,7 +35,7 @@
         adjust_probability_calibration()
     Condition
       Error in `adjust_probability_threshold()`:
-      ! adjustments cannot be duplicated: "probability_threshold"
+      ! Adjustment `probability_threshold()` was duplicated.
 
 ---
 

@@ -94,7 +94,10 @@ check_duplicates <- function(x, call) {
   non_mutates <- table(x$name[x$name != "predictions_custom"])
   if (any(non_mutates > 1)) {
     bad_adjustment <- names(non_mutates[non_mutates > 1])
-    cli_abort("adjustments cannot be duplicated: {.val {bad_adjustment}}", call = call)
+    cli_abort(
+      "Adjustment{?s} {.fn {bad_adjustment}} {?was/were} duplicated.",
+      call = call
+    )
   }
   invisible(x)
 }
