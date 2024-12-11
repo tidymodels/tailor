@@ -19,6 +19,7 @@ knitr::opts_chunk$set(
 [![Lifecycle: experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
 [![CRAN status](https://www.r-pkg.org/badges/version/tailor)](https://CRAN.R-project.org/package=tailor)
 [![R-CMD-check](https://github.com/tidymodels/tailor/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/tidymodels/tailor/actions/workflows/R-CMD-check.yaml)
+[![Codecov test coverage](https://codecov.io/gh/tidymodels/tailor/graph/badge.svg)](https://app.codecov.io/gh/tidymodels/tailor)
 <!-- badges: end -->
 
 Postprocessors refine predictions outputted from machine learning models to improve predictive performance or better satisfy distributional limitations. This package introduces 'tailor' objects, which compose iterative adjustments to model predictions. In addition to utilities to create new adjustments, the package provides a number of pre-written ones:

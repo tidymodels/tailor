@@ -10,6 +10,8 @@ experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](h
 [![CRAN
 status](https://www.r-pkg.org/badges/version/tailor)](https://CRAN.R-project.org/package=tailor)
 [![R-CMD-check](https://github.com/tidymodels/tailor/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/tidymodels/tailor/actions/workflows/R-CMD-check.yaml)
+[![Codecov test
+coverage](https://codecov.io/gh/tidymodels/tailor/graph/badge.svg)](https://app.codecov.io/gh/tidymodels/tailor)
 <!-- badges: end -->
 
 Postprocessors refine predictions outputted from machine learning models
@@ -97,7 +99,7 @@ post_obj <-
 post_obj
 #> 
 #> ── tailor ──────────────────────────────────────────────────────────────────────
-#> A postprocessor with 1 adjustment:
+#> A binary postprocessor with 1 adjustment:
 #> 
 #> • Adjust probability threshold to 0.9.
 ```
