@@ -106,7 +106,7 @@
 <span><span class="va">post_obj</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; ── tailor ──────────────────────────────────────────────────────────────────────</span></span>
-<span><span class="co">#&gt; A postprocessor with 1 adjustment:</span></span>
+<span><span class="co">#&gt; A binary postprocessor with 1 adjustment:</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; • Adjust probability threshold to 0.9.</span></span></code></pre></div>
 <p>tailors must be fitted before they can predict on new data. For adjustments like <code><a href="reference/adjust_probability_threshold.html">adjust_probability_threshold()</a></code>, there’s no training that actually happens at the <code><a href="https://generics.r-lib.org/reference/fit.html" class="external-link">fit()</a></code> step besides recording the name and type of relevant variables. For other adjustments, like probability calibration with <code><a href="reference/adjust_probability_calibration.html">adjust_probability_calibration()</a></code>, parameters are actually estimated at the <code><a href="https://generics.r-lib.org/reference/fit.html" class="external-link">fit()</a></code> step and separate data should be used to train the postprocessor and evaluate its performance.</p>
@@ -187,6 +187,7 @@
 <li><a href="https://lifecycle.r-lib.org/articles/stages.html#experimental" class="external-link"><img src="https://img.shields.io/badge/lifecycle-experimental-orange.svg" alt="Lifecycle: experimental"></a></li>
 <li><a href="https://CRAN.R-project.org/package=tailor" class="external-link"><img src="https://www.r-pkg.org/badges/version/tailor" alt="CRAN status"></a></li>
 <li><a href="https://github.com/tidymodels/tailor/actions/workflows/R-CMD-check.yaml" class="external-link"><img src="https://github.com/tidymodels/tailor/actions/workflows/R-CMD-check.yaml/badge.svg" alt="R-CMD-check"></a></li>
+<li><a href="https://app.codecov.io/gh/tidymodels/tailor" class="external-link"><img src="https://codecov.io/gh/tidymodels/tailor/graph/badge.svg" alt="Codecov test coverage"></a></li>
 </ul>
 </div>
 
