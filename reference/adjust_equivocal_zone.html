@@ -68,6 +68,16 @@ value is the size of the buffer around the threshold.</p></dd>
 
 </dl></div>
     <div class="section level2">
+    <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
+    <p>This function transforms the class prediction column <code>estimate</code> to have type
+<code>class_pred</code> from <code><a href="https://probably.tidymodels.org/reference/class_pred.html" class="external-link">probably::class_pred()</a></code>. You can loosely think of this
+column type as a factor, except there's a possible entry <code>[EQ]</code> that is
+<em>not</em> a level and will be excluded from performance metric calculations.
+As a result, the output column has the same number of levels as the input,
+except now has a possible entry <code>[EQ]</code> that tidymodels funcitons know to
+exclude from further analyses.</p>
+    </div>
+    <div class="section level2">
     <h2 id="data-usage">Data Usage<a class="anchor" aria-label="anchor" href="#data-usage"></a></h2>
 
 
