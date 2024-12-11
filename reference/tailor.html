@@ -106,6 +106,31 @@ The column names of class probability estimates. These should be given in
 the order of the factor levels of the <code>estimate</code>.</p></dd>
 
 </dl></div>
+    <div class="section level2">
+    <h2 id="ordering-of-adjustments">Ordering of adjustments<a class="anchor" aria-label="anchor" href="#ordering-of-adjustments"></a></h2>
+
+
+
+<p>When composing multiple adjustments in a tailor object, the order matters
+and must follow specific rules depending on the type of predictions being
+adjusted (classification or regression).</p>
+<p>For classification problems (binary and multiclass), adjustments that modify
+probability estimates (e.g., <code><a href="adjust_probability_calibration.html">adjust_probability_calibration()</a></code>) must be
+applied before adjustments that change hard class predictions (including
+<code><a href="adjust_equivocal_zone.html">adjust_equivocal_zone()</a></code>). This ensures that class predictions are based
+on the final calibrated probabilities.
+For regression problems, <code><a href="adjust_numeric_calibration.html">adjust_numeric_calibration()</a></code> must be applied
+before other numeric adjustments. This ensures that subsequent adjustments
+work with calibrated predictions.</p>
+<p>Generally, adjustments cannot be duplicated (i.e. the same adjustment type
+cannot be used multiple times in a tailor object), though
+<code><a href="adjust_predictions_custom.html">adjust_predictions_custom()</a></code> can be used multiple times. Adjustments for
+different prediction types cannot be mixed—numeric adjustments (for
+regression) and probability adjustments (for classification) cannot be
+used in the same tailor object.</p>
+<p>If these ordering rules are violated, <code>tailor()</code> will raise an
+error describing the issue.</p>
+    </div>
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
