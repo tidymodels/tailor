@@ -14,7 +14,7 @@
         adjust_probability_calibration()
     Condition
       Error in `adjust_probability_calibration()`:
-      ! adjustments that change the hard class predictions must come after adjustments that update the class probability estimates.
+      ! Adjustments that change the hard class predictions must come after adjustments that update the class probability estimates.
 
 ---
 
@@ -24,7 +24,7 @@
         adjust_probability_calibration()
     Condition
       Error in `adjust_probability_calibration()`:
-      ! adjustments that change the hard class predictions must come after adjustments that update the class probability estimates.
+      ! Adjustments that change the hard class predictions must come after adjustments that update the class probability estimates.
 
 ---
 

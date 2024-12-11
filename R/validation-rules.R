@@ -42,9 +42,11 @@ check_classification_order <- function(x, call) {
   # does probability steps come after steps that change the hard classes?
   if (length(prob_ind) > 0) {
     if (any(class_ind < prob_ind)) {
-      cli_abort("adjustments that change the hard class predictions \\
-                     must come after adjustments that update the class \\
-                     probability estimates.", call = call)
+      cli_abort(
+        "Adjustments that change the hard class predictions must come after
+         adjustments that update the class probability estimates.",
+        call = call
+      )
     }
   }
 
@@ -53,9 +55,11 @@ check_classification_order <- function(x, call) {
   # do any steps come before Eq zones
   if (length(eq_ind) > 0) {
     if (any(eq_ind < class_ind) | any(eq_ind < prob_ind)) {
-      cli_abort("Equivocal zone addition should come after adjustments \\
-                     that update the class probability estimates or hard \\
-                     class predictions.", call = call)
+      cli_abort(
+        "Equivocal zone addition should come after adjustments that update the
+         class probability estimates or hard class predictions.",
+        call = call
+      )
     }
   }
 
