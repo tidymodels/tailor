@@ -42,6 +42,33 @@ new data with \link[=predict.tailor]{predict()}. Tailors are tightly integrated
 with the \href{https://tidymodels.org}{tidymodels} framework; for greatest ease
 of use, situate tailors in model workflows with \code{?workflows::add_tailor()}.
 }
+\section{Ordering of adjustments}{
+
+
+When composing multiple adjustments in a tailor object, the order matters
+and must follow specific rules depending on the type of predictions being
+adjusted (classification or regression).
+
+For classification problems (binary and multiclass), adjustments that modify
+probability estimates (e.g., \code{\link[=adjust_probability_calibration]{adjust_probability_calibration()}}) must be
+applied before adjustments that change hard class predictions (including
+\code{\link[=adjust_equivocal_zone]{adjust_equivocal_zone()}}). This ensures that class predictions are based
+on the final calibrated probabilities.
+For regression problems, \code{adjust_numeric_calibration()} must be applied
+before other numeric adjustments. This ensures that subsequent adjustments
+work with calibrated predictions.
+
+Generally, adjustments cannot be duplicated (i.e. the same adjustment type
+cannot be used multiple times in a tailor object), though
+\code{adjust_predictions_custom()} can be used multiple times. Adjustments for
+different prediction types cannot be mixed---numeric adjustments (for
+regression) and probability adjustments (for classification) cannot be
+used in the same tailor object.
+
+If these ordering rules are violated, \code{\link[=tailor]{tailor()}} will raise an
+error describing the issue.
+}
+
 \examples{
 \dontshow{if (rlang::is_installed(c("probably", "modeldata"))) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
 library(dplyr)

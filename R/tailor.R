@@ -32,6 +32,33 @@
 #' `"multiclass"` types, and can also be passed at `fit()` time instead.
 #' The column names of class probability estimates. These should be given in
 #' the order of the factor levels of the `estimate`.
+#'
+#' @section Ordering of adjustments:
+#'
+#' When composing multiple adjustments in a tailor object, the order matters
+#' and must follow specific rules depending on the type of predictions being
+#' adjusted (classification or regression).
+#'
+#' For classification problems (binary and multiclass), adjustments that modify
+#' probability estimates (e.g., [adjust_probability_calibration()]) must be
+#' applied before adjustments that change hard class predictions (including
+#' [adjust_equivocal_zone()]). This ensures that class predictions are based
+#' on the final calibrated probabilities.
+
+#' For regression problems, `adjust_numeric_calibration()` must be applied
+#' before other numeric adjustments. This ensures that subsequent adjustments
+#' work with calibrated predictions.
+#'
+#' Generally, adjustments cannot be duplicated (i.e. the same adjustment type
+#' cannot be used multiple times in a tailor object), though
+#' `adjust_predictions_custom()` can be used multiple times. Adjustments for
+#' different prediction types cannot be mixed---numeric adjustments (for
+#' regression) and probability adjustments (for classification) cannot be
+#' used in the same tailor object.
+#'
+#' If these ordering rules are violated, [tailor()] will raise an
+#' error describing the issue.
+#'
 #' @examplesIf rlang::is_installed(c("probably", "modeldata"))
 #' library(dplyr)
 #' library(modeldata)
