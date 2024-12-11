@@ -3,7 +3,24 @@ template:
   bootstrap: 5
 
 reference:
-  - title: Compose tailors
-    contents:
-      - tailor
-      - contains("adjust")
+- title: "Create a tailor object"
+  desc: >
+    After creating a tailor object with this function, iteratively compose
+    postprocessing steps using adjustment functions.
+  contents:
+  - tailor
+- title: "Adjustments for classification"
+  contents:
+  - adjust_equivocal_zone
+  - adjust_probability_calibration
+  - adjust_probability_threshold
+- title: "Adjustments for regression"
+  contents:
+  - adjust_numeric_calibration
+  - adjust_numeric_range
+- title: "Mode-independent adjustments"
+  contents:
+  - adjust_predictions_custom
+- title: "Utilities"
+  contents:
+  - tidy.tailor
