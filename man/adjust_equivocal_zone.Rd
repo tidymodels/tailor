@@ -20,6 +20,15 @@ too uncertain or ambiguous to be assigned a hard class. Rather than
 predicting a hard class when the probability is very close to a threshold,
 tailors using this adjustment predict "[EQ]".
 }
+\details{
+This function transforms the class prediction column \code{estimate} to have type
+\code{class_pred} from \code{\link[probably:class_pred]{probably::class_pred()}}. You can loosely think of this
+column type as a factor, except there's a possible entry \verb{[EQ]} that is
+\emph{not} a level and will be excluded from performance metric calculations.
+As a result, the output column has the same number of levels as the input,
+except now has a possible entry \verb{[EQ]} that tidymodels funcitons know to
+exclude from further analyses.
+}
 \section{Data Usage}{
 
 This adjustment doesn't require estimation and, as such, the same data that's

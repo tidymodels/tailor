@@ -16,6 +16,15 @@
 #' this adjustment just collects metadata on the supplied column names and does
 #' not risk data leakage.
 #'
+#' @details
+#' This function transforms the class prediction column `estimate` to have type
+#' `class_pred` from [probably::class_pred()]. You can loosely think of this
+#' column type as a factor, except there's a possible entry `[EQ]` that is
+#' _not_ a level and will be excluded from performance metric calculations.
+#' As a result, the output column has the same number of levels as the input,
+#' except now has a possible entry `[EQ]` that tidymodels funcitons know to
+#' exclude from further analyses.
+#'
 #' @examplesIf rlang::is_installed(c("probably", "modeldata"))
 #' library(dplyr)
 #' library(modeldata)
