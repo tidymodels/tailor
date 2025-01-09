@@ -5,6 +5,6 @@
 "_PACKAGE"
 
 ## usethis namespace: start
-utils::globalVariables("data")
+utils::globalVariables("call_info", "data")
 ## usethis namespace: end
 NULL
