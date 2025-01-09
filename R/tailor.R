@@ -19,20 +19,6 @@
 #' with the [tidymodels](https://tidymodels.org) framework; for greatest ease
 #' of use, situate tailors in model workflows with `?workflows::add_tailor()`.
 #'
-#' @param outcome <[`tidy-select`][dplyr::dplyr_tidy_select]> Only required
-#' when used independently of `?workflows::add_tailor()`, and can also be passed
-#' at `fit()` time instead. The column name of the outcome variable.
-#' @param estimate <[`tidy-select`][dplyr::dplyr_tidy_select]> Only required
-#' when used independently of `?workflows::add_tailor()`, and can also be passed
-#' at `fit()` time instead. The column name of the point estimate (e.g. predicted
-#' class), In tidymodels, this corresponds to column names `.pred`,
-#' `.pred_class`, or `.pred_time`.
-#' @param probabilities <[`tidy-select`][dplyr::dplyr_tidy_select]> Only required
-#' when used independently of `?workflows::add_tailor()` for the `"binary"` or
-#' `"multiclass"` types, and can also be passed at `fit()` time instead.
-#' The column names of class probability estimates. These should be given in
-#' the order of the factor levels of the `estimate`.
-#'
 #' @section Ordering of adjustments:
 #'
 #' When composing multiple adjustments in a tailor object, the order matters
@@ -88,20 +74,21 @@
 #' # adjust hard class predictions
 #' predict(tlr_fit, two_class_example) %>% count(predicted)
 #' @export
-tailor <- function(outcome = NULL, estimate = NULL, probabilities = NULL) {
-  columns <-
-    list(
-      outcome = outcome,
-      estimate = estimate,
-      probabilities = probabilities
-    )
-
+tailor <- function() {
   new_tailor(
     "unknown",
     adjustments = list(),
-    columns = columns,
+    columns = null_columns(),
     ptype = tibble::new_tibble(list()),
     call = current_env()
+  )
+}
+
+null_columns <- function() {
+  list(
+    outcome = NULL,
+    estimate = NULL,
+    probabilities = NULL
   )
 }
 
@@ -175,7 +162,18 @@ print.tailor <- function(x, ...) {
 #'
 #' @param object A [tailor()].
 #' @param .data,new_data A data frame containing predictions from a model.
-#' @inheritParams tailor
+#' @param outcome <[`tidy-select`][dplyr::dplyr_tidy_select]> Only required
+#' when used independently of `?workflows::add_tailor()`.
+#' The column name of the outcome variable.
+#' @param estimate <[`tidy-select`][dplyr::dplyr_tidy_select]> Only required
+#' when used independently of `?workflows::add_tailor()`.
+#' The column name of the point estimate (e.g. predicted
+#' class), In tidymodels, this corresponds to column names `.pred`,
+#' `.pred_class`, or `.pred_time`.
+#' @param probabilities <[`tidy-select`][dplyr::dplyr_tidy_select]> Only required
+#' when used independently of `?workflows::add_tailor()` for the `"binary"` or
+#' `"multiclass"` types. The column names of class probability estimates. These
+#' should be given in the order of the factor levels of the `estimate`.
 #' @param ... Currently ignored.
 #'
 #' @keywords internal

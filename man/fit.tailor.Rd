@@ -15,20 +15,19 @@
 \item{.data, new_data}{A data frame containing predictions from a model.}
 
 \item{outcome}{<\code{\link[dplyr:dplyr_tidy_select]{tidy-select}}> Only required
-when used independently of \code{?workflows::add_tailor()}, and can also be passed
-at \code{fit()} time instead. The column name of the outcome variable.}
+when used independently of \code{?workflows::add_tailor()}.
+The column name of the outcome variable.}
 
 \item{estimate}{<\code{\link[dplyr:dplyr_tidy_select]{tidy-select}}> Only required
-when used independently of \code{?workflows::add_tailor()}, and can also be passed
-at \code{fit()} time instead. The column name of the point estimate (e.g. predicted
+when used independently of \code{?workflows::add_tailor()}.
+The column name of the point estimate (e.g. predicted
 class), In tidymodels, this corresponds to column names \code{.pred},
 \code{.pred_class}, or \code{.pred_time}.}
 
 \item{probabilities}{<\code{\link[dplyr:dplyr_tidy_select]{tidy-select}}> Only required
 when used independently of \code{?workflows::add_tailor()} for the \code{"binary"} or
-\code{"multiclass"} types, and can also be passed at \code{fit()} time instead.
-The column names of class probability estimates. These should be given in
-the order of the factor levels of the \code{estimate}.}
+\code{"multiclass"} types. The column names of class probability estimates. These
+should be given in the order of the factor levels of the \code{estimate}.}
 
 \item{...}{Currently ignored.}
 }

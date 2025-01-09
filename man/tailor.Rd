@@ -4,24 +4,7 @@
 \alias{tailor}
 \title{Declare post-processing for model predictions}
 \usage{
-tailor(outcome = NULL, estimate = NULL, probabilities = NULL)
-}
-\arguments{
-\item{outcome}{<\code{\link[dplyr:dplyr_tidy_select]{tidy-select}}> Only required
-when used independently of \code{?workflows::add_tailor()}, and can also be passed
-at \code{fit()} time instead. The column name of the outcome variable.}
-
-\item{estimate}{<\code{\link[dplyr:dplyr_tidy_select]{tidy-select}}> Only required
-when used independently of \code{?workflows::add_tailor()}, and can also be passed
-at \code{fit()} time instead. The column name of the point estimate (e.g. predicted
-class), In tidymodels, this corresponds to column names \code{.pred},
-\code{.pred_class}, or \code{.pred_time}.}
-
-\item{probabilities}{<\code{\link[dplyr:dplyr_tidy_select]{tidy-select}}> Only required
-when used independently of \code{?workflows::add_tailor()} for the \code{"binary"} or
-\code{"multiclass"} types, and can also be passed at \code{fit()} time instead.
-The column names of class probability estimates. These should be given in
-the order of the factor levels of the \code{estimate}.}
+tailor()
 }
 \description{
 Tailors compose iterative adjustments to model predictions. After
