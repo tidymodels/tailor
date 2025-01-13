@@ -18,6 +18,16 @@ the commands.}
 This adjustment functions allows for arbitrary transformations of model
 predictions using \code{\link[dplyr:mutate]{dplyr::mutate()}} statements.
 }
+\section{Data-dependent transformations}{
+
+Note that custom adjustments should not carry out estimation. If they do,
+the estimation steps will be carried out independently at \code{fit()}
+and \code{predict()} time. For example, if your transformation includes a mean
+shift, the postprocessor will take the mean of the column supplied in the
+training data at \code{fit()} and, rather than reusing that mean at \code{predict()}
+will take the mean again of the dataset supplied at \code{predict()} time.
+}
+
 \section{Data Usage}{
 
 This adjustment doesn't require estimation and, as such, the same data that's

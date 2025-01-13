@@ -8,6 +8,14 @@
 #' the commands.
 #' @param ... Name-value pairs of expressions. See [dplyr::mutate()].
 #'
+#' @section Data-dependent transformations:
+#' Note that custom adjustments should not carry out estimation. If they do,
+#' the estimation steps will be carried out independently at `fit()`
+#' and `predict()` time. For example, if your transformation includes a mean
+#' shift, the postprocessor will take the mean of the column supplied in the
+#' training data at `fit()` and, rather than reusing that mean at `predict()`
+#' will take the mean again of the dataset supplied at `predict()` time.
+#'
 #' @inheritSection adjust_equivocal_zone Data Usage
 #'
 #' @examplesIf rlang::is_installed(c("probably", "modeldata"))
@@ -42,8 +50,6 @@ adjust_predictions_custom <- function(x, ..., .pkgs = character(0)) {
       arguments = list(commands = cmds, pkgs = .pkgs),
       results = list(),
       trained = FALSE,
-      # todo: should there be a user interface to tell tailor whether this
-      # adjustment requires fit?
       requires_fit = FALSE
     )
 
