@@ -97,11 +97,14 @@ new_tailor <- function(type, adjustments, columns, ptype, call) {
     cli_abort("The {.arg adjustments} argument should be a list.", call = call)
   }
 
-  is_adjustment <- purrr::map_lgl(adjustments, ~ inherits(.x, "adjustment"))
+  is_adjustment <- purrr::map_lgl(adjustments, ~inherits(.x, "adjustment"))
   if (length(is_adjustment) > 0 && !any(is_adjustment)) {
     bad_adjustment <- names(is_adjustment)[!is_adjustment]
-    cli_abort("The following {.arg adjustments} do not have the class \\
-                   {.val adjustment}: {bad_adjustment}.", call = call)
+    cli_abort(
+      "The following {.arg adjustments} do not have the class \\
+                   {.val adjustment}: {bad_adjustment}.",
+      call = call
+    )
   }
 
   orderings <- adjustment_orderings(adjustments)
@@ -115,8 +118,10 @@ new_tailor <- function(type, adjustments, columns, ptype, call) {
 
   # check columns
   res <- list(
-    type = type, adjustments = adjustments,
-    columns = columns, ptype = ptype
+    type = type,
+    adjustments = adjustments,
+    columns = columns,
+    ptype = ptype
   )
   class(res) <- "tailor"
   res
@@ -176,10 +181,15 @@ print.tailor <- function(x, ...) {
 #' should be given in the order of the factor levels of the `estimate`.
 #' @param ... Currently ignored.
 #'
-#' @keywords internal
 #' @export
-fit.tailor <- function(object, .data, outcome, estimate, probabilities = c(),
-                       ...) {
+fit.tailor <- function(
+  object,
+  .data,
+  outcome,
+  estimate,
+  probabilities = c(),
+  ...
+) {
   # ------------------------------------------------------------------------------
   # set columns via tidyselect
 
@@ -188,10 +198,18 @@ fit.tailor <- function(object, .data, outcome, estimate, probabilities = c(),
   check_selection(enquo(outcome), columns$outcome, "outcome")
   columns$estimate <- names(tidyselect::eval_select(enquo(estimate), .data))
   check_selection(enquo(estimate), columns$estimate, "estimate")
-  columns$probabilities <- names(tidyselect::eval_select(enquo(probabilities), .data))
-  if ("probability" %in%
-      purrr::map_chr(object$adjustments, purrr::pluck, "inputs")) {
-    check_selection(enquo(probabilities), columns$probabilities, "probabilities")
+  columns$probabilities <- names(
+    tidyselect::eval_select(enquo(probabilities), .data)
+  )
+  if (
+    "probability" %in%
+      purrr::map_chr(object$adjustments, purrr::pluck, "inputs")
+  ) {
+    check_selection(
+      enquo(probabilities),
+      columns$probabilities,
+      "probabilities"
+    )
     for (col in columns$probabilities) {
       check_variable_type(.data[[col]], "probability", "probabilities")
     }
