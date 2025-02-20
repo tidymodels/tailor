@@ -23,4 +23,6 @@ reference:
   - adjust_predictions_custom
 - title: "Utilities"
   contents:
+  - fit.tailor
+  - predict.tailor
   - tidy.tailor
