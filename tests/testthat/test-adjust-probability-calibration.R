@@ -105,10 +105,41 @@ test_that("errors informatively with bad input", {
   expect_no_condition(adjust_numeric_calibration(tailor(), "linear"))
 })
 
-test_that("tunable", {
+test_that("tunable S3 method", {
   tlr <-
     tailor() %>%
     adjust_probability_calibration(method = "logistic")
   adj_param <- tunable(tlr$adjustments[[1]])
   expect_equal(adj_param, no_param)
 })
+
+
+
+test_that("tuning the calibration method", {
+  skip_if_not_installed("modeldata")
+  library(modeldata)
+
+  # split example data
+  set.seed(1)
+  in_rows <- sample(c(TRUE, FALSE), nrow(two_class_example), replace = TRUE)
+  d_calibration <- two_class_example[in_rows, ]
+  d_test <- two_class_example[!in_rows, ]
+
+  tlr <-
+    tailor() %>%
+    adjust_probability_calibration(method = hardhat::tune())
+  expect_true(tailor:::is_tune(tlr$adjustments[[1]]$arguments$method))
+
+  expect_snapshot(
+    fit(
+      tlr,
+      d_calibration,
+      outcome = c(truth),
+      estimate = c(predicted),
+      probabilities = c(Class1, Class2)
+    ),
+    error = TRUE
+  )
+})
+
+

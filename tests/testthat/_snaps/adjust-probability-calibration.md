@@ -25,3 +25,12 @@
       Error in `adjust_probability_calibration()`:
       ! `method` must be one of "logistic", "multinomial", "beta", "isotonic", or "isotonic_boot", not "linear".
 
+# tuning the calibration method
+
+    Code
+      fit(tlr, d_calibration, outcome = c(truth), estimate = c(predicted),
+      probabilities = c(Class1, Class2))
+    Condition
+      Error in `check_method()`:
+      ! The calibration method cannot be a value of `tune()` at `fit()` time.
+
