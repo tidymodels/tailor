@@ -50,7 +50,7 @@ adjust_numeric_calibration <- function(x, method = NULL) {
 
   check_tailor(x, calibration_type = "numeric")
   # wait to `check_method()` until `fit()` time
-  if (!is.null(method)) {
+  if (!is.null(method) & !is_tune(method)) {
     arg_match0(
       method,
       c("linear", "isotonic", "isotonic_boot")
@@ -128,5 +128,14 @@ required_pkgs.numeric_calibration <- function(x, ...) {
 
 #' @export
 tunable.numeric_calibration <- function(x, ...) {
-  no_param
+  tibble::new_tibble(
+    list(
+      name = "method",
+      call_info = list(list(pkg = "dials", fun = "reg_cal_method")),
+      source = "tailor",
+      component = "numeric_calibration",
+      component_id = "numeric_calibration"
+    ),
+    nrow = 1
+  )
 }

@@ -53,7 +53,7 @@ adjust_probability_calibration <- function(x, method = NULL) {
 
   check_tailor(x, calibration_type = "probability")
   # wait to `check_method()` until `fit()` time
-  if (!is.null(method)) {
+  if (!is.null(method) & !is_tune(method)) {
     arg_match(
       method,
       c("logistic", "multinomial", "beta", "isotonic", "isotonic_boot")
@@ -136,5 +136,15 @@ required_pkgs.probability_calibration <- function(x, ...) {
 
 #' @export
 tunable.probability_calibration <- function(x, ...) {
-  no_param
+  tibble::new_tibble(
+    list(
+      name = "method",
+      call_info = list(list(pkg = "dials", fun = "class_cal_method")),
+      source = "tailor",
+      component = "probability_calibration",
+      component_id = "probability_calibration"
+    ),
+    nrow = 1
+  )
 }
+

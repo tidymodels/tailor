@@ -1,6 +1,6 @@
 Package: tailor
 Title: Iterative Steps for Postprocessing Model Predictions
-Version: 0.0.0.9001
+Version: 0.0.0.9002
 Authors@R: c(
     person("Simon", "Couch", , "simon.couch@posit.co", role = "aut"),
     person("Hannah", "Frick", , "hannah@posit.co", role = "aut"),
@@ -30,6 +30,7 @@ Imports:
     vctrs
 Suggests: 
     dials,
+    mgcv,
     modeldata,
     probably (>= 1.0.3.9000),
     testthat (>= 3.0.0),

@@ -26,3 +26,11 @@
       ! `method` must be one of "linear", "isotonic", or "isotonic_boot", not "binary".
       i Did you mean "linear"?
 
+# tuning the calibration method
+
+    Code
+      fit(tlr, d_calibration, outcome = y, estimate = y_pred)
+    Condition
+      Error in `fit()`:
+      ! The calibration method cannot be a value of `tune()` at `fit()` time.
+
