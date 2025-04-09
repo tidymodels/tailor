@@ -138,7 +138,7 @@ required_pkgs.probability_calibration <- function(x, ...) {
 tunable.probability_calibration <- function(x, ...) {
   tibble::new_tibble(
     list(
-      name = c("class_cal_method"),
+      name = "method",
       call_info = list(list(pkg = "dials", fun = "class_cal_method")),
       source = "tailor",
       component = "probability_calibration",

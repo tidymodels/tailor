@@ -130,7 +130,7 @@ required_pkgs.numeric_calibration <- function(x, ...) {
 tunable.numeric_calibration <- function(x, ...) {
   tibble::new_tibble(
     list(
-      name = c("reg_cal_method"),
+      name = "method",
       call_info = list(list(pkg = "dials", fun = "reg_cal_method")),
       source = "tailor",
       component = "numeric_calibration",
