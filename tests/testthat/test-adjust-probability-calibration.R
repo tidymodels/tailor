@@ -111,15 +111,12 @@ test_that("tunable S3 method", {
     adjust_probability_calibration(method = "logistic")
   adj_param <- tunable(tlr$adjustments[[1]])
   exp_tunable <-
-    tibble::new_tibble(
-      list(
-        name = "method",
-        call_info = list(list(pkg = "dials", fun = "class_cal_method")),
-        source = "tailor",
-        component = "probability_calibration",
-        component_id = "probability_calibration"
-      ),
-      nrow = 1
+    tibble::tibble(
+      name = "method",
+      call_info = list(list(pkg = "dials", fun = "class_cal_method")),
+      source = "tailor",
+      component = "probability_calibration",
+      component_id = "probability_calibration"
     )
   expect_equal(adj_param, exp_tunable)
 })
