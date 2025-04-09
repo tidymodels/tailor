@@ -112,9 +112,6 @@ test_that("tunable S3 method", {
   adj_param <- tunable(tlr$adjustments[[1]])
   expect_equal(adj_param, no_param)
 })
-
-
-
 test_that("tuning the calibration method", {
   skip_if_not_installed("modeldata")
   library(modeldata)
@@ -141,5 +138,3 @@ test_that("tuning the calibration method", {
     error = TRUE
   )
 })
-
-

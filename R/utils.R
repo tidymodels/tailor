@@ -304,7 +304,8 @@ check_method <- function(method,
                        call = caller_env()) {
   if (is_tune(method)) {
     cli::cli_abort("The calibration method cannot be a value of {.fn tune} at
-                   {.fn fit} time.")
+                   {.fn fit} time.",
+                   call = call)
   }
 
   # if no `method` was supplied, infer a reasonable one based on the `type`
