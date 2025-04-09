@@ -91,7 +91,18 @@ test_that("tunable S3 method", {
     tailor() %>%
     adjust_numeric_calibration(method = "linear")
   adj_param <- tunable(tlr$adjustments[[1]])
-  expect_equal(adj_param, no_param)
+  exp_tunable <-
+    tibble::new_tibble(
+      list(
+        name = c("reg_cal_method"),
+        call_info = list(list(pkg = "dials", fun = "reg_cal_method")),
+        source = "tailor",
+        component = "numeric_calibration",
+        component_id = "numeric_calibration"
+      ),
+      nrow = 1
+    )
+  expect_equal(adj_param, exp_tunable)
 })
 
 

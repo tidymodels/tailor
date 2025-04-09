@@ -31,6 +31,6 @@
     Code
       fit(tlr, d_calibration, outcome = y, estimate = y_pred)
     Condition
-      Error in `check_method()`:
+      Error in `fit()`:
       ! The calibration method cannot be a value of `tune()` at `fit()` time.
 

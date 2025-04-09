@@ -110,7 +110,18 @@ test_that("tunable S3 method", {
     tailor() %>%
     adjust_probability_calibration(method = "logistic")
   adj_param <- tunable(tlr$adjustments[[1]])
-  expect_equal(adj_param, no_param)
+  exp_tunable <-
+    tibble::new_tibble(
+      list(
+        name = c("class_cal_method"),
+        call_info = list(list(pkg = "dials", fun = "class_cal_method")),
+        source = "tailor",
+        component = "probability_calibration",
+        component_id = "probability_calibration"
+      ),
+      nrow = 1
+    )
+  expect_equal(adj_param, exp_tunable)
 })
 test_that("tuning the calibration method", {
   skip_if_not_installed("modeldata")
