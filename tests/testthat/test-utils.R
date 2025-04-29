@@ -122,7 +122,10 @@ test_that("fit.tailor() errors informatively with incompatible outcome", {
   library(modeldata)
 
   two_class_example$test_numeric <- two_class_example$Class1 + 1
-  two_class_example$test_date <- as.POSIXct(two_class_example$Class1)
+  two_class_example$test_date <- as.POSIXct(
+    two_class_example$Class1,
+    origin = "1970-01-01"
+  )
 
   # supply a numeric outcome to a binary tailor
   expect_snapshot(
@@ -177,7 +180,10 @@ test_that("fit.tailor() errors informatively with incompatible estimate", {
   library(modeldata)
 
   two_class_example$test_numeric <- two_class_example$Class1 + 1
-  two_class_example$test_date <- as.POSIXct(two_class_example$Class1)
+  two_class_example$test_date <- as.POSIXct(
+    two_class_example$Class1,
+    origin = "1970-01-01"
+  )
 
   # supply a numeric estimate to a binary tailor
   expect_snapshot(
@@ -231,7 +237,10 @@ test_that("fit.tailor() errors informatively with incompatible probability", {
   skip_if_not_installed("modeldata")
   library(modeldata)
 
-  two_class_example$test_date <- as.POSIXct(two_class_example$Class1)
+  two_class_example$test_date <- as.POSIXct(
+    two_class_example$Class1,
+    origin = "1970-01-01"
+  )
 
   # supply a date probability to a binary tailor
   expect_snapshot(
