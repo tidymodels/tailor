@@ -32,7 +32,11 @@ test_that("basic adjust_probability_threshold() usage works", {
   expect_equal(colnames(two_class_example), colnames(tlr_pred))
 
   # calculations match those done manually
-  manual_pred <- factor(ifelse(two_class_example$Class1 > .1, "Class1", "Class2"))
+  manual_pred <- factor(ifelse(
+    two_class_example$Class1 > .1,
+    "Class1",
+    "Class2"
+  ))
   expect_equal(tlr_pred$predicted, manual_pred)
 })
 

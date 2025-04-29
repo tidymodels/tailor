@@ -5,7 +5,7 @@ test_that("basic adjust_numeric_range() usage works", {
 
   # create example data
   set.seed(1)
-  d <- tibble(y = rnorm(100), y_pred = y/2 + rnorm(100))
+  d <- tibble(y = rnorm(100), y_pred = y / 2 + rnorm(100))
 
   # fitting and predicting happens without raising conditions
   expect_no_condition(

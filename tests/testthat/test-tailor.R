@@ -136,6 +136,9 @@ test_that("tunable (multiple adjustments)", {
 
   expect_equal(
     tlr_param,
-    dplyr::bind_rows(tunable(tlr$adjustments[[1]]), tunable(tlr$adjustments[[2]]))
+    dplyr::bind_rows(
+      tunable(tlr$adjustments[[1]]),
+      tunable(tlr$adjustments[[2]])
+    )
   )
 })

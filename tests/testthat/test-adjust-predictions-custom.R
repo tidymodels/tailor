@@ -46,8 +46,8 @@ test_that("adjust_predictions_custom() for numerics works without setting type (
   library(tibble)
 
   set.seed(1)
-  d_calibration <- tibble(y = rnorm(100), y_pred = y/2 + rnorm(100))
-  d_test <- tibble(y = rnorm(100), y_pred = y/2 + rnorm(100))
+  d_calibration <- tibble(y = rnorm(100), y_pred = y / 2 + rnorm(100))
+  d_test <- tibble(y = rnorm(100), y_pred = y / 2 + rnorm(100))
 
   expect_no_error({
     tlr <-

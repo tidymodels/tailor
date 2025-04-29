@@ -6,8 +6,8 @@ test_that("basic adjust_numeric_calibration usage works", {
   library(tibble)
 
   set.seed(1)
-  d_calibration <- tibble(y = rnorm(100), y_pred = y/2 + rnorm(100))
-  d_test <- tibble(y = rnorm(100), y_pred = y/2 + rnorm(100))
+  d_calibration <- tibble(y = rnorm(100), y_pred = y / 2 + rnorm(100))
+  d_test <- tibble(y = rnorm(100), y_pred = y / 2 + rnorm(100))
 
   # fitting and predicting happens without raising conditions
   expect_no_condition(
@@ -40,8 +40,8 @@ test_that("adjust_numeric_calibration() respects `method` argument", {
   library(tibble)
 
   set.seed(1)
-  d_calibration <- tibble(y = rnorm(100), y_pred = y/2 + rnorm(100))
-  d_test <- tibble(y = rnorm(100), y_pred = y/2 + rnorm(100))
+  d_calibration <- tibble(y = rnorm(100), y_pred = y / 2 + rnorm(100))
+  d_test <- tibble(y = rnorm(100), y_pred = y / 2 + rnorm(100))
 
   expect_no_condition(
     tlr <-
@@ -66,7 +66,10 @@ test_that("adjust_numeric_calibration() respects `method` argument", {
   expect_equal(colnames(d_test), colnames(tlr_pred))
 
   # probably actually used an isotonic calibrator
-  expect_equal(tlr_fit$adjustments[[1]]$results$fit$method, "Isotonic regression")
+  expect_equal(
+    tlr_fit$adjustments[[1]]$results$fit$method,
+    "Isotonic regression"
+  )
 })
 
 test_that("adjustment printing", {
@@ -107,8 +110,8 @@ test_that("tuning the calibration method", {
   library(tibble)
 
   set.seed(1)
-  d_calibration <- tibble(y = rnorm(100), y_pred = y/2 + rnorm(100))
-  d_test <- tibble(y = rnorm(100), y_pred = y/2 + rnorm(100))
+  d_calibration <- tibble(y = rnorm(100), y_pred = y / 2 + rnorm(100))
+  d_test <- tibble(y = rnorm(100), y_pred = y / 2 + rnorm(100))
 
   tlr <-
     tailor() %>%

@@ -166,7 +166,12 @@ infer_threshold <- function(x, threshold, call = caller_env()) {
   }
 
   # use `map() %>% unlist()` rather than `map_dbl` to handle NULLs
-  thresholds <- purrr::map(x$adjustments, purrr::pluck, "arguments", "threshold")
+  thresholds <- purrr::map(
+    x$adjustments,
+    purrr::pluck,
+    "arguments",
+    "threshold"
+  )
   thresholds <- unlist(thresholds)
 
   if (!is.null(thresholds)) {

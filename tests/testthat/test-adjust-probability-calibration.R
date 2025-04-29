@@ -85,7 +85,10 @@ test_that("basic adjust_probability_calibration() usage works", {
   expect_equal(colnames(d_test), colnames(tlr_pred))
 
   # probably actually used an isotonic calibrator
-  expect_equal(tlr_fit$adjustments[[1]]$results$fit$method, "Isotonic regression")
+  expect_equal(
+    tlr_fit$adjustments[[1]]$results$fit$method,
+    "Isotonic regression"
+  )
 })
 
 test_that("adjustment printing", {
@@ -95,7 +98,10 @@ test_that("adjustment printing", {
 test_that("errors informatively with bad input", {
   # check for `adjust_probably_calibration(tailor)` is in `utils.R` tests
 
-  expect_snapshot(error = TRUE, adjust_probability_calibration(tailor(), "boop"))
+  expect_snapshot(
+    error = TRUE,
+    adjust_probability_calibration(tailor(), "boop")
+  )
   expect_snapshot(
     error = TRUE,
     tailor() %>% adjust_probability_calibration("linear")

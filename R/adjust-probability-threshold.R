@@ -70,7 +70,9 @@ print.probability_threshold <- function(x, ...) {
   # check for tune() first
 
   if (is_tune(x$arguments$threshold)) {
-    cli::cli_bullets(c("*" = "Adjust probability threshold to optimized value."))
+    cli::cli_bullets(c(
+      "*" = "Adjust probability threshold to optimized value."
+    ))
   } else {
     trn <- ifelse(x$trained, " [trained]", "")
     cli::cli_bullets(c(

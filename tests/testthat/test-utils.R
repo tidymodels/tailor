@@ -17,8 +17,12 @@ test_that("check_tailor raises informative error", {
 
 test_that("check_calibration_type errors informatively", {
   expect_no_error(check_calibration_type("numeric", "numeric", "regression"))
-  expect_no_error(check_calibration_type("probability", "probability", "binary"))
-  expect_no_error(check_calibration_type("probability", "probability", "multiclass"))
+  expect_no_error(
+    check_calibration_type("probability", "probability", "binary")
+  )
+  expect_no_error(
+    check_calibration_type("probability", "probability", "multiclass")
+  )
 
   expect_snapshot(
     error = TRUE,
@@ -37,7 +41,9 @@ test_that("check_calibration_type errors informatively", {
 })
 
 test_that("errors informatively without probably installed", {
-  testthat::local_mocked_bindings(requireNamespace = function(...) {FALSE})
+  testthat::local_mocked_bindings(requireNamespace = function(...) {
+    FALSE
+  })
 
   expect_snapshot(error = TRUE, tailor() %>% adjust_numeric_calibration())
 })

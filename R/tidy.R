@@ -1,4 +1,3 @@
-
 #' Tidy a tailor object
 #'
 #' @description
@@ -18,7 +17,10 @@
 tidy.tailor <- function(x, number = NA, ...) {
   n_adjustments <- length(x$adjustments)
   check_number_whole(
-    number, min = 1, max = as.double(n_adjustments), allow_na = TRUE
+    number,
+    min = 1,
+    max = as.double(n_adjustments),
+    allow_na = TRUE
   )
   check_dots_empty()
   if (is.na(number)) {
@@ -32,7 +34,9 @@ tidy.tailor <- function(x, number = NA, ...) {
     res,
     trained = purrr::map_lgl(x$adjustments[number], purrr::pluck, "trained"),
     requires_training = purrr::map_lgl(
-      x$adjustments[number], purrr::pluck, "requires_fit"
+      x$adjustments[number],
+      purrr::pluck,
+      "requires_fit"
     )
   )
 
