@@ -97,7 +97,7 @@ new_tailor <- function(type, adjustments, columns, ptype, call) {
     cli_abort("The {.arg adjustments} argument should be a list.", call = call)
   }
 
-  is_adjustment <- purrr::map_lgl(adjustments, ~ inherits(.x, "adjustment"))
+  is_adjustment <- purrr::map_lgl(adjustments, \(.x) inherits(.x, "adjustment"))
   if (length(is_adjustment) > 0 && !any(is_adjustment)) {
     bad_adjustment <- names(is_adjustment)[!is_adjustment]
     cli_abort(

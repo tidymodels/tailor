@@ -257,18 +257,24 @@ tailor_adjustment_requires_fit <- function(x) {
 # compatibility of adjustments
 adjustment_orderings <- function(adjustments) {
   tibble::new_tibble(list(
-    name = purrr::map_chr(adjustments, ~ class(.x)[1]),
-    input = purrr::map_chr(adjustments, ~ .x$inputs),
+    name = purrr::map_chr(adjustments, \(.x) class(.x)[1]),
+    input = purrr::map_chr(adjustments, \(.x) .x$inputs),
     output_numeric = purrr::map_lgl(
       adjustments,
-      ~ grepl("numeric", .x$outputs)
+      \(.x) grepl("numeric", .x$outputs)
     ),
     output_prob = purrr::map_lgl(
       adjustments,
-      ~ grepl("probability", .x$outputs)
+      \(.x) grepl("probability", .x$outputs)
     ),
-    output_class = purrr::map_lgl(adjustments, ~ grepl("class", .x$outputs)),
-    output_all = purrr::map_lgl(adjustments, ~ grepl("everything", .x$outputs))
+    output_class = purrr::map_lgl(
+      adjustments,
+      \(.x) grepl("class", .x$outputs)
+    ),
+    output_all = purrr::map_lgl(
+      adjustments,
+      \(.x) grepl("everything", .x$outputs)
+    )
   ))
 }
 
