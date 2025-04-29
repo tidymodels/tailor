@@ -1,7 +1,7 @@
 # adjustment printing
 
     Code
-      tailor() %>% adjust_numeric_calibration()
+      adjust_numeric_calibration(tailor())
     Message
       
       -- tailor ----------------------------------------------------------------------
@@ -20,7 +20,7 @@
 ---
 
     Code
-      tailor() %>% adjust_numeric_calibration("binary")
+      adjust_numeric_calibration(tailor(), "binary")
     Condition
       Error in `adjust_numeric_calibration()`:
       ! `method` must be one of "linear", "isotonic", or "isotonic_boot", not "binary".

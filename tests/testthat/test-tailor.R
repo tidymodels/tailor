@@ -4,12 +4,12 @@ test_that("tailor printing", {
   expect_snapshot(tailor())
   expect_snapshot(tailor())
   expect_snapshot(
-    tailor() %>%
+    tailor() |>
       adjust_probability_threshold(.2)
   )
   expect_snapshot(
-    tailor() %>%
-      adjust_probability_threshold(.2) %>%
+    tailor() |>
+      adjust_probability_threshold(.2) |>
       adjust_equivocal_zone()
   )
 })
@@ -19,8 +19,8 @@ test_that("error informatively with empty tidyselections", {
   data("two_class_example", package = "modeldata")
 
   expect_no_condition(
-    tailor_fit <- tailor() %>%
-      adjust_probability_threshold(.5) %>%
+    tailor_fit <- tailor() |>
+      adjust_probability_threshold(.5) |>
       fit(
         two_class_example,
         outcome = "truth",
@@ -32,8 +32,8 @@ test_that("error informatively with empty tidyselections", {
   # outcome doesn't exist, is bare string
   expect_snapshot(
     error = TRUE,
-    tailor_fit <- tailor() %>%
-      adjust_probability_threshold(.5) %>%
+    tailor_fit <- tailor() |>
+      adjust_probability_threshold(.5) |>
       fit(
         two_class_example,
         outcome = "truth_WRONG",
@@ -45,8 +45,8 @@ test_that("error informatively with empty tidyselections", {
   # outcome doesn't exist, is selection helper
   expect_snapshot(
     error = TRUE,
-    tailor_fit <- tailor() %>%
-      adjust_probability_threshold(.5) %>%
+    tailor_fit <- tailor() |>
+      adjust_probability_threshold(.5) |>
       fit(
         two_class_example,
         outcome = contains("truth_WRONG"),
@@ -58,8 +58,8 @@ test_that("error informatively with empty tidyselections", {
   # estimate doesn't exist, is bare string
   expect_snapshot(
     error = TRUE,
-    tailor_fit <- tailor() %>%
-      adjust_probability_threshold(.5) %>%
+    tailor_fit <- tailor() |>
+      adjust_probability_threshold(.5) |>
       fit(
         two_class_example,
         outcome = "truth",
@@ -71,8 +71,8 @@ test_that("error informatively with empty tidyselections", {
   # estimate doesn't exist, is selection helper
   expect_snapshot(
     error = TRUE,
-    tailor_fit <- tailor() %>%
-      adjust_probability_threshold(.5) %>%
+    tailor_fit <- tailor() |>
+      adjust_probability_threshold(.5) |>
       fit(
         two_class_example,
         outcome = "truth",
@@ -84,8 +84,8 @@ test_that("error informatively with empty tidyselections", {
   # probability doesn't exist, is selection helper, is needed
   expect_snapshot(
     error = TRUE,
-    tailor_fit <- tailor() %>%
-      adjust_probability_threshold(.5) %>%
+    tailor_fit <- tailor() |>
+      adjust_probability_threshold(.5) |>
       fit(
         two_class_example,
         outcome = contains("truth"),
@@ -99,8 +99,8 @@ test_that("error informatively with empty tidyselections", {
   # if it would not be used anyway.)
   expect_snapshot(
     error = TRUE,
-    tailor_fit <- tailor() %>%
-      adjust_numeric_range(.5) %>%
+    tailor_fit <- tailor() |>
+      adjust_numeric_range(.5) |>
       fit(
         two_class_example,
         outcome = "Class1",
@@ -120,8 +120,8 @@ test_that("tunable (no adjustments)", {
 
 test_that("tunable (multiple adjustments)", {
   tlr <-
-    tailor() %>%
-    adjust_probability_threshold(.2) %>%
+    tailor() |>
+    adjust_probability_threshold(.2) |>
     adjust_equivocal_zone()
 
   tlr_param <- tunable(tlr)

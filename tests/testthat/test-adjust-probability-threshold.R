@@ -5,7 +5,7 @@ test_that("basic adjust_probability_threshold() usage works", {
   # fitting and predicting happens without raising conditions
   expect_no_condition(
     tlr <-
-      tailor() %>%
+      tailor() |>
       adjust_probability_threshold(.1)
   )
 
@@ -41,13 +41,13 @@ test_that("basic adjust_probability_threshold() usage works", {
 })
 
 test_that("adjustment printing", {
-  expect_snapshot(tailor() %>% adjust_probability_threshold())
-  expect_snapshot(tailor() %>% adjust_probability_threshold(hardhat::tune()))
+  expect_snapshot(tailor() |> adjust_probability_threshold())
+  expect_snapshot(tailor() |> adjust_probability_threshold(hardhat::tune()))
 })
 
 test_that("tunable", {
   tlr <-
-    tailor() %>%
+    tailor() |>
     adjust_probability_threshold(.1)
   adj_param <- tunable(tlr$adjustments[[1]])
   expect_equal(adj_param$name, "threshold")

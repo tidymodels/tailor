@@ -15,7 +15,7 @@ test_that("basic adjust_probability_calibration() usage works", {
   # fitting and predicting happens without raising conditions
   expect_no_condition(
     tlr <-
-      tailor() %>%
+      tailor() |>
       adjust_probability_calibration(method = "logistic")
   )
 
@@ -58,7 +58,7 @@ test_that("basic adjust_probability_calibration() usage works", {
   # fitting and predicting happens without raising conditions
   expect_no_condition(
     tlr <-
-      tailor() %>%
+      tailor() |>
       adjust_probability_calibration(method = "isotonic")
   )
 
@@ -92,7 +92,7 @@ test_that("basic adjust_probability_calibration() usage works", {
 })
 
 test_that("adjustment printing", {
-  expect_snapshot(tailor() %>% adjust_probability_calibration("logistic"))
+  expect_snapshot(tailor() |> adjust_probability_calibration("logistic"))
 })
 
 test_that("errors informatively with bad input", {
@@ -104,7 +104,7 @@ test_that("errors informatively with bad input", {
   )
   expect_snapshot(
     error = TRUE,
-    tailor() %>% adjust_probability_calibration("linear")
+    tailor() |> adjust_probability_calibration("linear")
   )
 
   expect_no_condition(adjust_numeric_calibration(tailor()))
@@ -113,7 +113,7 @@ test_that("errors informatively with bad input", {
 
 test_that("tunable S3 method", {
   tlr <-
-    tailor() %>%
+    tailor() |>
     adjust_probability_calibration(method = "logistic")
   adj_param <- tunable(tlr$adjustments[[1]])
   exp_tunable <-
@@ -137,7 +137,7 @@ test_that("tuning the calibration method", {
   d_test <- two_class_example[!in_rows, ]
 
   tlr <-
-    tailor() %>%
+    tailor() |>
     adjust_probability_calibration(method = hardhat::tune())
   expect_true(tailor:::is_tune(tlr$adjustments[[1]]$arguments$method))
 

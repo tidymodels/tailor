@@ -12,7 +12,7 @@ test_that("basic adjust_numeric_calibration usage works", {
   # fitting and predicting happens without raising conditions
   expect_no_condition(
     tlr <-
-      tailor() %>%
+      tailor() |>
       adjust_numeric_calibration(method = "linear")
   )
 
@@ -45,7 +45,7 @@ test_that("adjust_numeric_calibration() respects `method` argument", {
 
   expect_no_condition(
     tlr <-
-      tailor() %>%
+      tailor() |>
       adjust_numeric_calibration(method = "isotonic")
   )
 
@@ -73,7 +73,7 @@ test_that("adjust_numeric_calibration() respects `method` argument", {
 })
 
 test_that("adjustment printing", {
-  expect_snapshot(tailor() %>% adjust_numeric_calibration())
+  expect_snapshot(tailor() |> adjust_numeric_calibration())
 })
 
 test_that("errors informatively with bad input", {
@@ -82,7 +82,7 @@ test_that("errors informatively with bad input", {
   expect_snapshot(error = TRUE, adjust_numeric_calibration(tailor(), "boop"))
   expect_snapshot(
     error = TRUE,
-    tailor() %>% adjust_numeric_calibration("binary")
+    tailor() |> adjust_numeric_calibration("binary")
   )
 
   expect_no_condition(adjust_numeric_calibration(tailor()))
@@ -91,7 +91,7 @@ test_that("errors informatively with bad input", {
 
 test_that("tunable S3 method", {
   tlr <-
-    tailor() %>%
+    tailor() |>
     adjust_numeric_calibration(method = "linear")
   adj_param <- tunable(tlr$adjustments[[1]])
   exp_tunable <-
@@ -114,7 +114,7 @@ test_that("tuning the calibration method", {
   d_test <- tibble(y = rnorm(100), y_pred = y / 2 + rnorm(100))
 
   tlr <-
-    tailor() %>%
+    tailor() |>
     adjust_numeric_calibration(method = hardhat::tune())
   expect_true(tailor:::is_tune(tlr$adjustments[[1]]$arguments$method))
 

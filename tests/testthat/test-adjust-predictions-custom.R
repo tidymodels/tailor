@@ -5,7 +5,7 @@ test_that("basic adjust_predictions_custom() usage works", {
   # fitting and predicting happens without raising conditions
   expect_no_condition(
     tlr <-
-      tailor() %>%
+      tailor() |>
       adjust_predictions_custom(linear_predictor = binomial()$linkfun(Class2))
   )
 
@@ -51,9 +51,9 @@ test_that("adjust_predictions_custom() for numerics works without setting type (
 
   expect_no_error({
     tlr <-
-      tailor() %>%
-      adjust_numeric_calibration() %>%
-      adjust_numeric_range(lower_limit = 2) %>%
+      tailor() |>
+      adjust_numeric_calibration() |>
+      adjust_numeric_range(lower_limit = 2) |>
       adjust_predictions_custom(squared = y_pred^2)
 
     tlr_fit <- fit(tlr, d_calibration, outcome = y, estimate = y_pred)
@@ -61,12 +61,12 @@ test_that("adjust_predictions_custom() for numerics works without setting type (
 })
 
 test_that("adjustment printing", {
-  expect_snapshot(tailor() %>% adjust_predictions_custom())
+  expect_snapshot(tailor() |> adjust_predictions_custom())
 })
 
 test_that("tunable", {
   tlr <-
-    tailor() %>%
+    tailor() |>
     adjust_predictions_custom(linear_predictor = binomial()$linkfun(Class2))
   adj_param <- tunable(tlr$adjustments[[1]])
   expect_equal(adj_param, no_param)

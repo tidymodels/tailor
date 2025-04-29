@@ -50,11 +50,11 @@
 #' library(modeldata)
 #'
 #' # `predicted` gives hard class predictions based on probabilities
-#' two_class_example %>% count(predicted)
+#' two_class_example |> count(predicted)
 #'
 #' # change the probability threshold to allot one class vs the other
 #' tlr <-
-#'   tailor() %>%
+#'   tailor() |>
 #'   adjust_probability_threshold(threshold = .1)
 #'
 #' tlr
@@ -72,7 +72,7 @@
 #' tlr_fit
 #'
 #' # adjust hard class predictions
-#' predict(tlr_fit, two_class_example) %>% count(predicted)
+#' predict(tlr_fit, two_class_example) |> count(predicted)
 #' @export
 tailor <- function() {
   new_tailor(

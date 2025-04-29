@@ -56,6 +56,11 @@ and `Class2`). The hard class predictions, in `predicted`, are
 
 ``` r
 library(modeldata)
+#> 
+#> Attaching package: 'modeldata'
+#> The following object is masked from 'package:datasets':
+#> 
+#>     penguins
 library(dplyr)
 #> 
 #> Attaching package: 'dplyr'
@@ -79,7 +84,7 @@ head(two_class_example)
 The model predicts `"Class1"` more often than it does `"Class2"`.
 
 ``` r
-two_class_example %>% count(predicted)
+two_class_example |> count(predicted)
 #>   predicted   n
 #> 1    Class1 277
 #> 2    Class2 223
@@ -93,7 +98,7 @@ which can be situated in a tailor object.
 
 ``` r
 post_obj <-
-  tailor() %>%
+  tailor() |>
   adjust_probability_threshold(threshold = .9)
 
 post_obj
@@ -143,7 +148,7 @@ outputted class based on whether the probability assigned to the level
 than before.
 
 ``` r
-predict(post_res, two_class_example) %>% count(predicted)
+predict(post_res, two_class_example) |> count(predicted)
 #> # A tibble: 2 × 2
 #>   predicted     n
 #>   <fct>     <int>

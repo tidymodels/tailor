@@ -23,7 +23,7 @@
 #'
 #' # specify calibration
 #' tlr <-
-#'   tailor() %>%
+#'   tailor() |>
 #'   adjust_numeric_range(lower_limit = 1)
 #'
 #' # train tailor by passing column names. situate in a modeling workflow with

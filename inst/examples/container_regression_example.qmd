@@ -48,9 +48,9 @@ Let's deliberately fit a regression model that has poor predicted values: a boos
 #| label: bad-boost
 
 bst_fit <-
-  boost_tree(trees = 3) %>%
-  set_engine("lightgbm") %>%
-  set_mode("regression") %>%
+  boost_tree(trees = 3) |>
+  set_engine("lightgbm") |>
+  set_mode("regression") |>
   fit(time_to_delivery ~ ., data = delivery_train)
 ```
 
@@ -79,10 +79,10 @@ Ooof. One of the calibration tools for the probably package might help this. Let
 #| label: cal-resample
 
 set.seed(10)
-bst_val_pred %>%
-  vfold_cv() %>%
+bst_val_pred |>
+  vfold_cv() |>
   cal_validate_linear(truth = time_to_delivery, estimate = .pred, 
-                      smooth = TRUE, metrics = reg_metrics) %>%
+                      smooth = TRUE, metrics = reg_metrics) |>
   collect_metrics()
 ```
 
@@ -101,7 +101,7 @@ We could manually use `cal_apply()` to adjust predictions, but instead, we'll ad
 #| label: post-1
 
 post_obj <-
-  tailor() %>%
+  tailor() |>
   adjust_numeric_calibration(bst_cal) 
 post_obj
 ```
@@ -112,7 +112,7 @@ Let's add another post-processor to limit the range of predictions (just as a de
 #| label: post-2
 
 post_obj <-
-  post_obj %>%
+  post_obj |>
   adjust_numeric_range(lower_limit = 0, upper_limit = 50)
 post_obj
 ```
@@ -123,7 +123,7 @@ We have to fit the post-processor to use it. However, there are no estimation st
 #| label: test-pred
 
 post_res <- 
-  post_obj %>% 
+  post_obj |> 
   fit(bst_val_pred, outcome = c(time_to_delivery), estimate = c(.pred))
 
 bst_test_pred <- augment(bst_fit, delivery_test)
@@ -133,10 +133,10 @@ reg_metrics(bst_test_pred, truth = time_to_delivery, estimate = .pred)
 
 # With: 
 bst_test_proc_pred <- 
-  post_res %>% 
+  post_res |> 
   predict(bst_test_pred)
 
-bst_test_proc_pred %>% 
+bst_test_proc_pred |> 
   reg_metrics(truth = time_to_delivery, estimate = .pred)
 ```
 

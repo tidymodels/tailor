@@ -10,7 +10,7 @@ test_that("basic adjust_numeric_range() usage works", {
   # fitting and predicting happens without raising conditions
   expect_no_condition(
     tlr <-
-      tailor() %>%
+      tailor() |>
       adjust_numeric_range(lower_limit = 1, upper_limit = 2)
   )
 
@@ -37,15 +37,15 @@ test_that("basic adjust_numeric_range() usage works", {
 })
 
 test_that("adjustment printing", {
-  expect_snapshot(tailor() %>% adjust_numeric_range())
-  expect_snapshot(tailor() %>% adjust_numeric_range(hardhat::tune()))
-  expect_snapshot(tailor() %>% adjust_numeric_range(-1, hardhat::tune()))
-  expect_snapshot(tailor() %>% adjust_numeric_range(hardhat::tune(), 1))
+  expect_snapshot(tailor() |> adjust_numeric_range())
+  expect_snapshot(tailor() |> adjust_numeric_range(hardhat::tune()))
+  expect_snapshot(tailor() |> adjust_numeric_range(-1, hardhat::tune()))
+  expect_snapshot(tailor() |> adjust_numeric_range(hardhat::tune(), 1))
 })
 
 test_that("tunable", {
   tlr <-
-    tailor() %>%
+    tailor() |>
     adjust_numeric_range(lower_limit = 1, upper_limit = 2)
   adj_param <- tunable(tlr$adjustments[[1]])
   expect_equal(adj_param$name, c("lower_limit", "upper_limit"))

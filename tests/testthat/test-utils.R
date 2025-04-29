@@ -12,7 +12,7 @@ test_that("is_tune works", {
 
 test_that("check_tailor raises informative error", {
   expect_snapshot(error = TRUE, adjust_probability_threshold("boop"))
-  expect_no_condition(tailor() %>% adjust_probability_threshold(.5))
+  expect_no_condition(tailor() |> adjust_probability_threshold(.5))
 })
 
 test_that("check_calibration_type errors informatively", {
@@ -45,7 +45,7 @@ test_that("errors informatively without probably installed", {
     FALSE
   })
 
-  expect_snapshot(error = TRUE, tailor() %>% adjust_numeric_calibration())
+  expect_snapshot(error = TRUE, tailor() |> adjust_numeric_calibration())
 })
 
 test_that("tailor_fully_trained works", {
@@ -53,26 +53,26 @@ test_that("tailor_fully_trained works", {
   data("two_class_example", package = "modeldata")
   expect_false(tailor_fully_trained(tailor()))
   expect_false(
-    tailor_fully_trained(tailor() %>% adjust_probability_threshold(.5))
+    tailor_fully_trained(tailor() |> adjust_probability_threshold(.5))
   )
   expect_false(
     tailor_fully_trained(
-      tailor() %>%
-        adjust_probability_calibration("logistic") %>%
+      tailor() |>
+        adjust_probability_calibration("logistic") |>
         fit(
           two_class_example,
           outcome = "truth",
           estimate = predicted,
           probabilities = tidyselect::contains("Class")
-        ) %>%
+        ) |>
         adjust_probability_threshold(.5)
     )
   )
 
   expect_true(
     tailor_fully_trained(
-      tailor() %>%
-        adjust_probability_calibration("logistic") %>%
+      tailor() |>
+        adjust_probability_calibration("logistic") |>
         fit(
           two_class_example,
           outcome = "truth",
@@ -83,8 +83,8 @@ test_that("tailor_fully_trained works", {
   )
   expect_true(
     tailor_fully_trained(
-      tailor() %>%
-        adjust_probability_threshold(.5) %>%
+      tailor() |>
+        adjust_probability_threshold(.5) |>
         fit(
           two_class_example,
           outcome = "truth",
@@ -100,18 +100,18 @@ test_that("tailor_requires_fit works", {
 
   expect_false(tailor_requires_fit(tailor()))
   expect_false(
-    tailor_requires_fit(tailor() %>% adjust_probability_threshold(.5))
+    tailor_requires_fit(tailor() |> adjust_probability_threshold(.5))
   )
   expect_true(
     tailor_requires_fit(
-      tailor() %>%
+      tailor() |>
         adjust_probability_calibration("logistic")
     )
   )
   expect_true(
     tailor_requires_fit(
-      tailor() %>%
-        adjust_probability_calibration("logistic") %>%
+      tailor() |>
+        adjust_probability_calibration("logistic") |>
         adjust_probability_threshold(.5)
     )
   )
@@ -128,7 +128,7 @@ test_that("fit.tailor() errors informatively with incompatible outcome", {
   expect_snapshot(
     error = TRUE,
     fit(
-      tailor() %>% adjust_probability_threshold(.1),
+      tailor() |> adjust_probability_threshold(.1),
       two_class_example,
       outcome = c(test_numeric),
       estimate = c(predicted),
@@ -140,7 +140,7 @@ test_that("fit.tailor() errors informatively with incompatible outcome", {
   expect_snapshot(
     error = TRUE,
     fit(
-      tailor() %>% adjust_numeric_range(lower_limit = .1),
+      tailor() |> adjust_numeric_range(lower_limit = .1),
       two_class_example,
       outcome = c(truth),
       estimate = c(Class1)
@@ -151,7 +151,7 @@ test_that("fit.tailor() errors informatively with incompatible outcome", {
   expect_snapshot(
     error = TRUE,
     fit(
-      tailor() %>% adjust_probability_threshold(.1),
+      tailor() |> adjust_probability_threshold(.1),
       two_class_example,
       outcome = c(test_date),
       estimate = c(predicted),
@@ -163,7 +163,7 @@ test_that("fit.tailor() errors informatively with incompatible outcome", {
   expect_snapshot(
     error = TRUE,
     fit(
-      tailor() %>% adjust_predictions_custom(hey = "there"),
+      tailor() |> adjust_predictions_custom(hey = "there"),
       two_class_example,
       outcome = c(test_date),
       estimate = c(predicted),
@@ -183,7 +183,7 @@ test_that("fit.tailor() errors informatively with incompatible estimate", {
   expect_snapshot(
     error = TRUE,
     fit(
-      tailor() %>% adjust_probability_threshold(.1),
+      tailor() |> adjust_probability_threshold(.1),
       two_class_example,
       outcome = c(predicted),
       estimate = c(test_numeric),
@@ -195,7 +195,7 @@ test_that("fit.tailor() errors informatively with incompatible estimate", {
   expect_snapshot(
     error = TRUE,
     fit(
-      tailor() %>% adjust_numeric_range(lower_limit = .1),
+      tailor() |> adjust_numeric_range(lower_limit = .1),
       two_class_example,
       outcome = c(Class1),
       estimate = c(truth)
@@ -206,7 +206,7 @@ test_that("fit.tailor() errors informatively with incompatible estimate", {
   expect_snapshot(
     error = TRUE,
     fit(
-      tailor() %>% adjust_probability_threshold(.1),
+      tailor() |> adjust_probability_threshold(.1),
       two_class_example,
       outcome = c(truth),
       estimate = c(test_date),
@@ -218,7 +218,7 @@ test_that("fit.tailor() errors informatively with incompatible estimate", {
   expect_snapshot(
     error = TRUE,
     fit(
-      tailor() %>% adjust_predictions_custom(hey = "there"),
+      tailor() |> adjust_predictions_custom(hey = "there"),
       two_class_example,
       outcome = c(truth),
       estimate = c(test_date),
@@ -237,7 +237,7 @@ test_that("fit.tailor() errors informatively with incompatible probability", {
   expect_snapshot(
     error = TRUE,
     fit(
-      tailor() %>% adjust_probability_threshold(.1),
+      tailor() |> adjust_probability_threshold(.1),
       two_class_example,
       outcome = c(truth),
       estimate = c(predicted),
