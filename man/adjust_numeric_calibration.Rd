@@ -44,7 +44,7 @@ d_calibration
 
 # specify calibration
 tlr <-
-  tailor() \%>\%
+  tailor() |>
   adjust_numeric_calibration(method = "linear")
 
 # train tailor on a subset of data. situate in a modeling workflow with

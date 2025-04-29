@@ -4,10 +4,10 @@ extract_parameter_set_dials.tailor <- function(x, ...) {
   tuning_param <- generics::tune_args(x)
   res <-
     dplyr::inner_join(
-      tuning_param %>% dplyr::select(-tunable),
+      tuning_param |> dplyr::select(-tunable),
       all_args,
       by = c("name", "source", "component", "component_id")
-    ) %>%
+    ) |>
     dplyr::mutate(object = purrr::map(call_info, eval_call_info))
 
   dials::parameters_constr(
@@ -29,7 +29,10 @@ eval_call_info <- function(x) {
     } else {
       opts <- list()
     }
-    res <- try(rlang::eval_tidy(rlang::call2(x$fun, .ns = x$pkg, !!!opts)), silent = TRUE)
+    res <- try(
+      rlang::eval_tidy(rlang::call2(x$fun, .ns = x$pkg, !!!opts)),
+      silent = TRUE
+    )
     if (inherits(res, "try-error")) {
       cli::cli_abort(
         "Error when calling {.fn {x$fun}}: {as.character(res)}"

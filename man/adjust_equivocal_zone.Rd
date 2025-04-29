@@ -47,11 +47,11 @@ library(modeldata)
 head(two_class_example)
 
 # `predicted` gives hard class predictions based on probabilities
-two_class_example \%>\% count(predicted)
+two_class_example |> count(predicted)
 
 # when probabilities are within (.25, .75), consider them equivocal
 tlr <-
-  tailor() \%>\%
+  tailor() |>
   adjust_equivocal_zone(value = 1 / 4)
 
 tlr
@@ -69,6 +69,6 @@ tlr_fit <- fit(
 tlr_fit
 
 # adjust hard class predictions
-predict(tlr_fit, two_class_example) \%>\% count(predicted)
+predict(tlr_fit, two_class_example) |> count(predicted)
 \dontshow{\}) # examplesIf}
 }

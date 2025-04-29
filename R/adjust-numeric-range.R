@@ -23,7 +23,7 @@
 #'
 #' # specify calibration
 #' tlr <-
-#'   tailor() %>%
+#'   tailor() |>
 #'   adjust_numeric_range(lower_limit = 1)
 #'
 #' # train tailor by passing column names. situate in a modeling workflow with
@@ -83,7 +83,9 @@ print.numeric_range <- function(x, ...) {
     }
   }
 
-  cli::cli_bullets(c("*" = "Constrain numeric predictions to be {rng_txt}{trn}."))
+  cli::cli_bullets(c(
+    "*" = "Constrain numeric predictions to be {rng_txt}{trn}."
+  ))
   invisible(x)
 }
 

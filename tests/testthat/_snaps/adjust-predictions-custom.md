@@ -1,7 +1,7 @@
 # adjustment printing
 
     Code
-      tailor() %>% adjust_predictions_custom()
+      adjust_predictions_custom(tailor())
     Message
       
       -- tailor ----------------------------------------------------------------------

@@ -38,7 +38,7 @@ head(two_class_example)
 
 # use a threshold of .1 instead:
 tlr <-
-  tailor() \%>\%
+  tailor() |>
   adjust_probability_threshold(.1)
 
 # fit by supplying column names. situate in a modeling workflow
@@ -52,6 +52,6 @@ tlr_fit <- fit(
 )
 
 # adjust hard class predictions
-predict(tlr_fit, two_class_example) \%>\% head()
+predict(tlr_fit, two_class_example) |> head()
 \dontshow{\}) # examplesIf}
 }

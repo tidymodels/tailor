@@ -1,7 +1,7 @@
 # adjustment printing
 
     Code
-      tailor() %>% adjust_numeric_range()
+      adjust_numeric_range(tailor())
     Message
       
       -- tailor ----------------------------------------------------------------------
@@ -12,7 +12,7 @@
 ---
 
     Code
-      tailor() %>% adjust_numeric_range(hardhat::tune())
+      adjust_numeric_range(tailor(), hardhat::tune())
     Message
       
       -- tailor ----------------------------------------------------------------------
@@ -23,7 +23,7 @@
 ---
 
     Code
-      tailor() %>% adjust_numeric_range(-1, hardhat::tune())
+      adjust_numeric_range(tailor(), -1, hardhat::tune())
     Message
       
       -- tailor ----------------------------------------------------------------------
@@ -34,7 +34,7 @@
 ---
 
     Code
-      tailor() %>% adjust_numeric_range(hardhat::tune(), 1)
+      adjust_numeric_range(tailor(), hardhat::tune(), 1)
     Message
       
       -- tailor ----------------------------------------------------------------------

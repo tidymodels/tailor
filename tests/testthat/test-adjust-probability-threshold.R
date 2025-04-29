@@ -5,7 +5,7 @@ test_that("basic adjust_probability_threshold() usage works", {
   # fitting and predicting happens without raising conditions
   expect_no_condition(
     tlr <-
-      tailor() %>%
+      tailor() |>
       adjust_probability_threshold(.1)
   )
 
@@ -32,18 +32,22 @@ test_that("basic adjust_probability_threshold() usage works", {
   expect_equal(colnames(two_class_example), colnames(tlr_pred))
 
   # calculations match those done manually
-  manual_pred <- factor(ifelse(two_class_example$Class1 > .1, "Class1", "Class2"))
+  manual_pred <- factor(ifelse(
+    two_class_example$Class1 > .1,
+    "Class1",
+    "Class2"
+  ))
   expect_equal(tlr_pred$predicted, manual_pred)
 })
 
 test_that("adjustment printing", {
-  expect_snapshot(tailor() %>% adjust_probability_threshold())
-  expect_snapshot(tailor() %>% adjust_probability_threshold(hardhat::tune()))
+  expect_snapshot(tailor() |> adjust_probability_threshold())
+  expect_snapshot(tailor() |> adjust_probability_threshold(hardhat::tune()))
 })
 
 test_that("tunable", {
   tlr <-
-    tailor() %>%
+    tailor() |>
     adjust_probability_threshold(.1)
   adj_param <- tunable(tlr$adjustments[[1]])
   expect_equal(adj_param$name, "threshold")

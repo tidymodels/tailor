@@ -1,7 +1,7 @@
 # adjustment printing
 
     Code
-      tailor() %>% adjust_probability_calibration("logistic")
+      adjust_probability_calibration(tailor(), "logistic")
     Message
       
       -- tailor ----------------------------------------------------------------------
@@ -20,7 +20,7 @@
 ---
 
     Code
-      tailor() %>% adjust_probability_calibration("linear")
+      adjust_probability_calibration(tailor(), "linear")
     Condition
       Error in `adjust_probability_calibration()`:
       ! `method` must be one of "logistic", "multinomial", "beta", "isotonic", or "isotonic_boot", not "linear".
