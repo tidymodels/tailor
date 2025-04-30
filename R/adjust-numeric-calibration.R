@@ -131,7 +131,7 @@ tunable.numeric_calibration <- function(x, ...) {
   tibble::new_tibble(
     list(
       name = "method",
-      call_info = list(list(pkg = "dials", fun = "reg_cal_method")),
+      call_info = list(list(pkg = "dials", fun = "cal_method_reg")),
       source = "tailor",
       component = "numeric_calibration",
       component_id = "numeric_calibration"
