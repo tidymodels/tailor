@@ -97,7 +97,7 @@ test_that("tunable S3 method", {
   exp_tunable <-
     tibble::tibble(
       name = "method",
-      call_info = list(list(pkg = "dials", fun = "reg_cal_method")),
+      call_info = list(list(pkg = "dials", fun = "cal_method_reg")),
       source = "tailor",
       component = "numeric_calibration",
       component_id = "numeric_calibration"
