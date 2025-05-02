@@ -1,7 +1,7 @@
 # adjustment printing
 
     Code
-      tailor() %>% adjust_equivocal_zone()
+      adjust_equivocal_zone(tailor())
     Message
       
       -- tailor ----------------------------------------------------------------------
@@ -12,7 +12,7 @@
 ---
 
     Code
-      tailor() %>% adjust_equivocal_zone(hardhat::tune())
+      adjust_equivocal_zone(tailor(), hardhat::tune())
     Message
       
       -- tailor ----------------------------------------------------------------------

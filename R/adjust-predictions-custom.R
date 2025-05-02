@@ -24,8 +24,8 @@
 #' head(two_class_example)
 #'
 #' tlr <-
-#'   tailor() %>%
-#'   adjust_equivocal_zone() %>%
+#'   tailor() |>
+#'   adjust_equivocal_zone() |>
 #'   adjust_predictions_custom(linear_predictor = binomial()$linkfun(Class2))
 #'
 #' tlr_fit <- fit(
@@ -36,7 +36,7 @@
 #'   probabilities = c(Class1, Class2)
 #' )
 #'
-#' predict(tlr_fit, two_class_example) %>% head()
+#' predict(tlr_fit, two_class_example) |> head()
 #' @export
 adjust_predictions_custom <- function(x, ..., .pkgs = character(0)) {
   check_tailor(x)

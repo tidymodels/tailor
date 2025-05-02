@@ -8,7 +8,8 @@ validate_order <- function(orderings, type, call = caller_env()) {
   switch(
     type,
     regression = check_regression_order(orderings, call),
-    binary = , multiclass = check_classification_order(orderings, call),
+    binary = ,
+    multiclass = check_classification_order(orderings, call),
     invisible()
   )
 
@@ -18,7 +19,9 @@ validate_order <- function(orderings, type, call = caller_env()) {
 check_incompatible_types <- function(orderings, call) {
   if (all(c("numeric", "probability") %in% orderings$input)) {
     numeric_adjustments <- orderings$name[which(orderings$input == "numeric")]
-    probability_adjustments <- orderings$name[which(orderings$input == "probability")]
+    probability_adjustments <- orderings$name[which(
+      orderings$input == "probability"
+    )]
     cli_abort(
       c(
         "Can't compose adjustments for different prediction types.",
@@ -111,7 +114,9 @@ infer_type <- function(orderings) {
     return("regression")
   }
 
-  if (all(orderings$output_prob | orderings$output_class | orderings$output_all)) {
+  if (
+    all(orderings$output_prob | orderings$output_class | orderings$output_all)
+  ) {
     return("binary")
   }
 

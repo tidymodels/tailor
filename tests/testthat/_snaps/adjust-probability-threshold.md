@@ -1,7 +1,7 @@
 # adjustment printing
 
     Code
-      tailor() %>% adjust_probability_threshold()
+      adjust_probability_threshold(tailor())
     Message
       
       -- tailor ----------------------------------------------------------------------
@@ -12,7 +12,7 @@
 ---
 
     Code
-      tailor() %>% adjust_probability_threshold(hardhat::tune())
+      adjust_probability_threshold(tailor(), hardhat::tune())
     Message
       
       -- tailor ----------------------------------------------------------------------

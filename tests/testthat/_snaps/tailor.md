@@ -19,7 +19,7 @@
 ---
 
     Code
-      tailor() %>% adjust_probability_threshold(0.2)
+      adjust_probability_threshold(tailor(), 0.2)
     Message
       
       -- tailor ----------------------------------------------------------------------
@@ -30,7 +30,7 @@
 ---
 
     Code
-      tailor() %>% adjust_probability_threshold(0.2) %>% adjust_equivocal_zone()
+      adjust_equivocal_zone(adjust_probability_threshold(tailor(), 0.2))
     Message
       
       -- tailor ----------------------------------------------------------------------
@@ -42,9 +42,9 @@
 # error informatively with empty tidyselections
 
     Code
-      tailor_fit <- tailor() %>% adjust_probability_threshold(0.5) %>% fit(
-        two_class_example, outcome = "truth_WRONG", estimate = "predicted",
-        probabilities = tidyselect::contains("Class"))
+      tailor_fit <- fit(adjust_probability_threshold(tailor(), 0.5),
+      two_class_example, outcome = "truth_WRONG", estimate = "predicted",
+      probabilities = tidyselect::contains("Class"))
     Condition
       Error in `fit()`:
       ! Can't select columns that don't exist.
@@ -53,9 +53,9 @@
 ---
 
     Code
-      tailor_fit <- tailor() %>% adjust_probability_threshold(0.5) %>% fit(
-        two_class_example, outcome = contains("truth_WRONG"), estimate = "predicted",
-        probabilities = tidyselect::contains("Class"))
+      tailor_fit <- fit(adjust_probability_threshold(tailor(), 0.5),
+      two_class_example, outcome = contains("truth_WRONG"), estimate = "predicted",
+      probabilities = tidyselect::contains("Class"))
     Condition
       Error in `fit()`:
       ! `outcome` must select at least one column.
@@ -64,9 +64,9 @@
 ---
 
     Code
-      tailor_fit <- tailor() %>% adjust_probability_threshold(0.5) %>% fit(
-        two_class_example, outcome = "truth", estimate = "predicted_WRONG",
-        probabilities = tidyselect::contains("Class"))
+      tailor_fit <- fit(adjust_probability_threshold(tailor(), 0.5),
+      two_class_example, outcome = "truth", estimate = "predicted_WRONG",
+      probabilities = tidyselect::contains("Class"))
     Condition
       Error in `fit()`:
       ! Can't select columns that don't exist.
@@ -75,9 +75,9 @@
 ---
 
     Code
-      tailor_fit <- tailor() %>% adjust_probability_threshold(0.5) %>% fit(
-        two_class_example, outcome = "truth", estimate = contains("predicted_WRONG"),
-        probabilities = tidyselect::contains("Class"))
+      tailor_fit <- fit(adjust_probability_threshold(tailor(), 0.5),
+      two_class_example, outcome = "truth", estimate = contains("predicted_WRONG"),
+      probabilities = tidyselect::contains("Class"))
     Condition
       Error in `fit()`:
       ! `estimate` must select at least one column.
@@ -86,9 +86,9 @@
 ---
 
     Code
-      tailor_fit <- tailor() %>% adjust_probability_threshold(0.5) %>% fit(
-        two_class_example, outcome = contains("truth"), estimate = "predicted",
-        probabilities = tidyselect::contains("Class_WRONG"))
+      tailor_fit <- fit(adjust_probability_threshold(tailor(), 0.5),
+      two_class_example, outcome = contains("truth"), estimate = "predicted",
+      probabilities = tidyselect::contains("Class_WRONG"))
     Condition
       Error in `fit()`:
       ! `probabilities` must select at least one column.
@@ -97,9 +97,9 @@
 ---
 
     Code
-      tailor_fit <- tailor() %>% adjust_numeric_range(0.5) %>% fit(two_class_example,
-        outcome = "Class1", estimate = ".pred", probabilities = tidyselect::contains(
-          "Class_WRONG"))
+      tailor_fit <- fit(adjust_numeric_range(tailor(), 0.5), two_class_example,
+      outcome = "Class1", estimate = ".pred", probabilities = tidyselect::contains(
+        "Class_WRONG"))
     Condition
       Error in `fit()`:
       ! Can't select columns that don't exist.

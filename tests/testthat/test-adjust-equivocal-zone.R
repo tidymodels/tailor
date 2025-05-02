@@ -8,7 +8,7 @@ test_that("basic adjust_equivocal_zone() usage works", {
   # fitting and predicting happens without raising conditions
   expect_no_condition(
     tlr <-
-      tailor() %>%
+      tailor() |>
       adjust_equivocal_zone(value = 1 / 4)
   )
 
@@ -54,13 +54,13 @@ test_that("basic adjust_equivocal_zone() usage works", {
 # TODO: test sensitivity to function arguments
 
 test_that("adjustment printing", {
-  expect_snapshot(tailor() %>% adjust_equivocal_zone())
-  expect_snapshot(tailor() %>% adjust_equivocal_zone(hardhat::tune()))
+  expect_snapshot(tailor() |> adjust_equivocal_zone())
+  expect_snapshot(tailor() |> adjust_equivocal_zone(hardhat::tune()))
 })
 
 test_that("tunable", {
   tlr <-
-    tailor() %>%
+    tailor() |>
     adjust_equivocal_zone(value = 1 / 4)
   adj_param <- tunable(tlr$adjustments[[1]])
   expect_equal(adj_param$name, c("buffer"))
@@ -76,32 +76,32 @@ test_that("tunable", {
 test_that("adjust_equivocal_zone inherits previously set threshold", {
   # previously set
   tlr <-
-    tailor() %>%
-    adjust_probability_threshold(threshold = .4) %>%
+    tailor() |>
+    adjust_probability_threshold(threshold = .4) |>
     adjust_equivocal_zone(value = .2)
 
   expect_equal(tlr$adjustments[[2]]$arguments$threshold, .4)
 
   # not previously set, defualts to 1 / 2
   tlr <-
-    tailor() %>%
+    tailor() |>
     adjust_equivocal_zone(value = .2)
 
   expect_equal(tlr$adjustments[[1]]$arguments$threshold, .5)
 
   # previously set, among other things
   tlr <-
-    tailor() %>%
-    adjust_predictions_custom(.pred = identity(.pred)) %>%
-    adjust_probability_threshold(threshold = .4) %>%
+    tailor() |>
+    adjust_predictions_custom(.pred = identity(.pred)) |>
+    adjust_probability_threshold(threshold = .4) |>
     adjust_equivocal_zone(value = .2)
 
   expect_equal(tlr$adjustments[[3]]$arguments$threshold, .4)
 
   # not previously set, but other stuff happened
   tlr <-
-    tailor() %>%
-    adjust_predictions_custom(.pred = identity(.pred)) %>%
+    tailor() |>
+    adjust_predictions_custom(.pred = identity(.pred)) |>
     adjust_equivocal_zone(value = .2)
 
   expect_equal(tlr$adjustments[[2]]$arguments$threshold, .5)

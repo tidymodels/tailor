@@ -12,7 +12,7 @@ test_that("extract parameter set from tailor with no tunable parameters", {
   skip_if_not_installed("dials")
 
   tlr <-
-    tailor() %>%
+    tailor() |>
     adjust_predictions_custom()
 
   tlr_info <- extract_parameter_set_dials(tlr)
@@ -25,8 +25,8 @@ test_that("extract parameter set from tailor with a tunable parameter", {
   skip_if_not_installed("dials")
 
   tlr <-
-    tailor() %>%
-    adjust_numeric_calibration() %>%
+    tailor() |>
+    adjust_numeric_calibration() |>
     adjust_numeric_range(lower_limit = hardhat::tune())
 
   tlr_info <- extract_parameter_set_dials(tlr)
@@ -46,8 +46,8 @@ test_that("extract parameter set from tailor with multiple tunable parameters", 
   skip_if_not_installed("dials")
 
   tlr <-
-    tailor() %>%
-    adjust_numeric_calibration() %>%
+    tailor() |>
+    adjust_numeric_calibration() |>
     adjust_numeric_range(
       lower_limit = hardhat::tune(),
       upper_limit = hardhat::tune()
@@ -82,7 +82,7 @@ test_that("extract single parameter from tailor with no tunable parameters", {
   skip_if_not_installed("dials")
 
   tlr <-
-    tailor() %>%
+    tailor() |>
     adjust_numeric_calibration()
 
   expect_snapshot(
@@ -95,8 +95,8 @@ test_that("extract single parameter from tailor with tunable parameters", {
   skip_if_not_installed("dials")
 
   tlr <-
-    tailor() %>%
-    adjust_numeric_calibration() %>%
+    tailor() |>
+    adjust_numeric_calibration() |>
     adjust_numeric_range(
       lower_limit = hardhat::tune(),
       upper_limit = hardhat::tune()

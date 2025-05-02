@@ -23,7 +23,7 @@
 #'
 #' # use a threshold of .1 instead:
 #' tlr <-
-#'   tailor() %>%
+#'   tailor() |>
 #'   adjust_probability_threshold(.1)
 #'
 #' # fit by supplying column names. situate in a modeling workflow
@@ -37,7 +37,7 @@
 #' )
 #'
 #' # adjust hard class predictions
-#' predict(tlr_fit, two_class_example) %>% head()
+#' predict(tlr_fit, two_class_example) |> head()
 #' @export
 adjust_probability_threshold <- function(x, threshold = 0.5) {
   check_tailor(x)
@@ -70,7 +70,9 @@ print.probability_threshold <- function(x, ...) {
   # check for tune() first
 
   if (is_tune(x$arguments$threshold)) {
-    cli::cli_bullets(c("*" = "Adjust probability threshold to optimized value."))
+    cli::cli_bullets(c(
+      "*" = "Adjust probability threshold to optimized value."
+    ))
   } else {
     trn <- ifelse(x$trained, " [trained]", "")
     cli::cli_bullets(c(

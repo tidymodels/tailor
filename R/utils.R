@@ -14,9 +14,16 @@ is_tune <- function(x) {
   isTRUE(identical(quote(tune), x[[1]]))
 }
 
-tune_tbl <- function(name = character(), tunable = logical(), id = character(),
-                     source = character(), component = character(),
-                     component_id = character(), full = FALSE, call = caller_env()) {
+tune_tbl <- function(
+  name = character(),
+  tunable = logical(),
+  id = character(),
+  source = character(),
+  component = character(),
+  component_id = character(),
+  full = FALSE,
+  call = caller_env()
+) {
   complete_id <- id[!is.na(id)]
   dups <- duplicated(complete_id)
 
@@ -168,8 +175,16 @@ tune_id <- function(x, call = caller_env()) {
 input_vals <- c("numeric", "probability", "class", "everything")
 output_vals <- c("numeric", "probability_class", "class", "everything")
 
-new_adjustment <- function(cls, inputs, outputs, arguments, results = list(),
-                          trained, requires_fit, ...) {
+new_adjustment <- function(
+  cls,
+  inputs,
+  outputs,
+  arguments,
+  results = list(),
+  trained,
+  requires_fit,
+  ...
+) {
   inputs <- arg_match0(inputs, input_vals)
   outputs <- arg_match0(outputs, output_vals)
 
@@ -242,17 +257,34 @@ tailor_adjustment_requires_fit <- function(x) {
 # compatibility of adjustments
 adjustment_orderings <- function(adjustments) {
   tibble::new_tibble(list(
-    name = purrr::map_chr(adjustments, ~ class(.x)[1]),
-    input = purrr::map_chr(adjustments, ~ .x$inputs),
-    output_numeric = purrr::map_lgl(adjustments, ~ grepl("numeric", .x$outputs)),
-    output_prob = purrr::map_lgl(adjustments, ~ grepl("probability", .x$outputs)),
-    output_class = purrr::map_lgl(adjustments, ~ grepl("class", .x$outputs)),
-    output_all = purrr::map_lgl(adjustments, ~ grepl("everything", .x$outputs))
+    name = purrr::map_chr(adjustments, \(.x) class(.x)[1]),
+    input = purrr::map_chr(adjustments, \(.x) .x$inputs),
+    output_numeric = purrr::map_lgl(
+      adjustments,
+      \(.x) grepl("numeric", .x$outputs)
+    ),
+    output_prob = purrr::map_lgl(
+      adjustments,
+      \(.x) grepl("probability", .x$outputs)
+    ),
+    output_class = purrr::map_lgl(
+      adjustments,
+      \(.x) grepl("class", .x$outputs)
+    ),
+    output_all = purrr::map_lgl(
+      adjustments,
+      \(.x) grepl("everything", .x$outputs)
+    )
   ))
 }
 
 # ad-hoc checking --------------------------------------------------------------
-check_tailor <- function(x, calibration_type = NULL, call = caller_env(), arg = caller_arg(x)) {
+check_tailor <- function(
+  x,
+  calibration_type = NULL,
+  call = caller_env(),
+  arg = caller_arg(x)
+) {
   if (!is_tailor(x)) {
     cli_abort(
       "{.arg {arg}} should be a {.help [{.cls tailor}](tailor::tailor)}, \\
@@ -267,18 +299,31 @@ check_tailor <- function(x, calibration_type = NULL, call = caller_env(), arg = 
     type <- x$type
     switch(
       type,
-      regression =
-        check_calibration_type(calibration_type, "numeric", type, call = call),
-      binary = , multiclass =
-        check_calibration_type(calibration_type, "probability", type, call = call)
+      regression = check_calibration_type(
+        calibration_type,
+        "numeric",
+        type,
+        call = call
+      ),
+      binary = ,
+      multiclass = check_calibration_type(
+        calibration_type,
+        "probability",
+        type,
+        call = call
+      )
     )
   }
 
   invisible()
 }
 
-check_calibration_type <- function(calibration_type, calibration_type_expected,
-                                   tailor_type, call) {
+check_calibration_type <- function(
+  calibration_type,
+  calibration_type_expected,
+  tailor_type,
+  call
+) {
   if (!identical(calibration_type, calibration_type_expected)) {
     cli_abort(
       "A {.field {tailor_type}} tailor is incompatible with the adjustment \\
@@ -298,10 +343,20 @@ types_multiclass <- c("multinomial", "beta", "isotonic", "isotonic_boot")
 #       `adjust_*()` function via `arg_match0()`.
 # * `tailor_type`, the `type` argument either specified in `tailor()`
 #   or inferred in `fit.tailor()`.
-check_method <- function(method,
-                       type,
-                       arg = caller_arg(method),
-                       call = caller_env()) {
+check_method <- function(
+  method,
+  type,
+  arg = caller_arg(method),
+  call = caller_env()
+) {
+  if (is_tune(method)) {
+    cli::cli_abort(
+      "The calibration method cannot be a value of {.fn tune} at
+                   {.fn fit} time.",
+      call = call
+    )
+  }
+
   # if no `method` was supplied, infer a reasonable one based on the `type`
   if (is.null(method)) {
     switch(
@@ -346,7 +401,12 @@ check_method <- function(method,
 # at `fit()` time, we check the type of inputted variables vs the type
 # supported by the applied adjustments. where this is called currently,
 # we know already that `type` is not "unknown"
-check_variable_type <- function(variable, type, description, call = caller_env()) {
+check_variable_type <- function(
+  variable,
+  type,
+  description,
+  call = caller_env()
+) {
   if (identical(type, "unknown")) {
     return()
   }
@@ -354,8 +414,10 @@ check_variable_type <- function(variable, type, description, call = caller_env()
   is_compatible <-
     switch(
       type,
-      probability = , regression = is.numeric(variable),
-      binary = , multiclass = is.factor(variable),
+      probability = ,
+      regression = is.numeric(variable),
+      binary = ,
+      multiclass = is.factor(variable),
       FALSE
     )
 

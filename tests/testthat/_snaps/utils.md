@@ -33,7 +33,7 @@
 # errors informatively without probably installed
 
     Code
-      tailor() %>% adjust_numeric_calibration()
+      adjust_numeric_calibration(tailor())
     Condition
       Error in `adjust_numeric_calibration()`:
       ! The probably package must be available to use this adjustment.
@@ -41,7 +41,7 @@
 # fit.tailor() errors informatively with incompatible outcome
 
     Code
-      fit(tailor() %>% adjust_probability_threshold(0.1), two_class_example, outcome = c(
+      fit(adjust_probability_threshold(tailor(), 0.1), two_class_example, outcome = c(
         test_numeric), estimate = c(predicted), probabilities = c(Class1, Class2))
     Condition
       Error in `fit()`:
@@ -50,7 +50,7 @@
 ---
 
     Code
-      fit(tailor() %>% adjust_numeric_range(lower_limit = 0.1), two_class_example,
+      fit(adjust_numeric_range(tailor(), lower_limit = 0.1), two_class_example,
       outcome = c(truth), estimate = c(Class1))
     Condition
       Error in `fit()`:
@@ -59,7 +59,7 @@
 ---
 
     Code
-      fit(tailor() %>% adjust_probability_threshold(0.1), two_class_example, outcome = c(
+      fit(adjust_probability_threshold(tailor(), 0.1), two_class_example, outcome = c(
         test_date), estimate = c(predicted), probabilities = c(Class1, Class2))
     Condition
       Error in `fit()`:
@@ -68,7 +68,7 @@
 ---
 
     Code
-      fit(tailor() %>% adjust_predictions_custom(hey = "there"), two_class_example,
+      fit(adjust_predictions_custom(tailor(), hey = "there"), two_class_example,
       outcome = c(test_date), estimate = c(predicted), probabilities = c(Class1))
     Condition
       Error in `fit()`:
@@ -77,7 +77,7 @@
 # fit.tailor() errors informatively with incompatible estimate
 
     Code
-      fit(tailor() %>% adjust_probability_threshold(0.1), two_class_example, outcome = c(
+      fit(adjust_probability_threshold(tailor(), 0.1), two_class_example, outcome = c(
         predicted), estimate = c(test_numeric), probabilities = c(Class1, Class2))
     Condition
       Error in `fit()`:
@@ -86,7 +86,7 @@
 ---
 
     Code
-      fit(tailor() %>% adjust_numeric_range(lower_limit = 0.1), two_class_example,
+      fit(adjust_numeric_range(tailor(), lower_limit = 0.1), two_class_example,
       outcome = c(Class1), estimate = c(truth))
     Condition
       Error in `fit()`:
@@ -95,7 +95,7 @@
 ---
 
     Code
-      fit(tailor() %>% adjust_probability_threshold(0.1), two_class_example, outcome = c(
+      fit(adjust_probability_threshold(tailor(), 0.1), two_class_example, outcome = c(
         truth), estimate = c(test_date), probabilities = c(Class1, Class2))
     Condition
       Error in `fit()`:
@@ -104,7 +104,7 @@
 ---
 
     Code
-      fit(tailor() %>% adjust_predictions_custom(hey = "there"), two_class_example,
+      fit(adjust_predictions_custom(tailor(), hey = "there"), two_class_example,
       outcome = c(truth), estimate = c(test_date), probabilities = c(Class1))
     Condition
       Error in `fit()`:
@@ -113,7 +113,7 @@
 # fit.tailor() errors informatively with incompatible probability
 
     Code
-      fit(tailor() %>% adjust_probability_threshold(0.1), two_class_example, outcome = c(
+      fit(adjust_probability_threshold(tailor(), 0.1), two_class_example, outcome = c(
         truth), estimate = c(predicted), probabilities = c(test_date))
     Condition
       Error in `fit()`:

@@ -1,7 +1,7 @@
 # adjustment printing
 
     Code
-      tailor() %>% adjust_numeric_calibration()
+      adjust_numeric_calibration(tailor())
     Message
       
       -- tailor ----------------------------------------------------------------------
@@ -20,9 +20,17 @@
 ---
 
     Code
-      tailor() %>% adjust_numeric_calibration("binary")
+      adjust_numeric_calibration(tailor(), "binary")
     Condition
       Error in `adjust_numeric_calibration()`:
       ! `method` must be one of "linear", "isotonic", or "isotonic_boot", not "binary".
       i Did you mean "linear"?
+
+# tuning the calibration method
+
+    Code
+      fit(tlr, d_calibration, outcome = y, estimate = y_pred)
+    Condition
+      Error in `fit()`:
+      ! The calibration method cannot be a value of `tune()` at `fit()` time.
 

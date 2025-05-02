@@ -50,11 +50,11 @@
 #' library(modeldata)
 #'
 #' # `predicted` gives hard class predictions based on probabilities
-#' two_class_example %>% count(predicted)
+#' two_class_example |> count(predicted)
 #'
 #' # change the probability threshold to allot one class vs the other
 #' tlr <-
-#'   tailor() %>%
+#'   tailor() |>
 #'   adjust_probability_threshold(threshold = .1)
 #'
 #' tlr
@@ -72,7 +72,7 @@
 #' tlr_fit
 #'
 #' # adjust hard class predictions
-#' predict(tlr_fit, two_class_example) %>% count(predicted)
+#' predict(tlr_fit, two_class_example) |> count(predicted)
 #' @export
 tailor <- function() {
   new_tailor(
@@ -97,12 +97,11 @@ new_tailor <- function(type, adjustments, columns, ptype, call) {
     cli_abort("The {.arg adjustments} argument should be a list.", call = call)
   }
 
-  is_adjustment <- purrr::map_lgl(adjustments, ~inherits(.x, "adjustment"))
+  is_adjustment <- purrr::map_lgl(adjustments, \(.x) inherits(.x, "adjustment"))
   if (length(is_adjustment) > 0 && !any(is_adjustment)) {
     bad_adjustment <- names(is_adjustment)[!is_adjustment]
     cli_abort(
-      "The following {.arg adjustments} do not have the class \\
-                   {.val adjustment}: {bad_adjustment}.",
+      "The following {.arg adjustments} do not have the class {.val adjustment}: {bad_adjustment}.",
       call = call
     )
   }
