@@ -80,7 +80,18 @@ adjust_numeric_calibration <- function(x, method = NULL) {
 #' @export
 print.numeric_calibration <- function(x, ...) {
   trn <- ifelse(x$trained, " [trained]", "")
-  cli::cli_bullets(c("*" = "Re-calibrate numeric predictions.{trn}"))
+
+  if (is_tune(x$arguments$method)) {
+    method <- "tune()"
+  } else if (is.null(x$argument$method)) {
+    method <- "unknown"
+  } else {
+    method <- x$argument$method
+  }
+
+  cli::cli_bullets(c(
+    "*" = "Re-calibrate numeric predictions using {method} method.{trn}"
+  ))
   invisible(x)
 }
 

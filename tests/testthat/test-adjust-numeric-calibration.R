@@ -73,7 +73,15 @@ test_that("adjust_numeric_calibration() respects `method` argument", {
 })
 
 test_that("adjustment printing", {
-  expect_snapshot(tailor() |> adjust_numeric_calibration())
+  expect_snapshot(
+    tailor() |> adjust_numeric_calibration()
+  )
+  expect_snapshot(
+    tailor() |> adjust_numeric_calibration(method = "isotonic")
+  )
+  expect_snapshot(
+    tailor() |> adjust_numeric_calibration(method = hardhat::tune())
+  )
 })
 
 test_that("errors informatively with bad input", {
