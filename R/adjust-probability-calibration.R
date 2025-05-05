@@ -83,6 +83,7 @@ adjust_probability_calibration <- function(x, method = NULL) {
 #' @export
 print.probability_calibration <- function(x, ...) {
   trn <- ifelse(x$trained, " [trained]", "")
+
   if (is_tune(x$arguments$method)) {
     method <- "tune()"
   } else if (is.null(x$argument$method)) {
