@@ -11,8 +11,8 @@ adjust_probability_calibration(x, method = NULL)
 
 \item{method}{Character. One of \code{"logistic"}, \code{"multinomial"},
 \code{"beta"}, \code{"isotonic"}, or \code{"isotonic_boot"}, corresponding to the
-function from the \pkg{probably} package \code{\link[probably:cal_estimate_logistic]{probably::cal_estimate_logistic()}},
-\code{\link[probably:cal_estimate_multinomial]{probably::cal_estimate_multinomial()}}, etc., respectively.}
+function from the \pkg{probably} package \code{probably::cal_estimate_logistic()},
+\code{probably::cal_estimate_multinomial()}, etc., respectively.}
 }
 \description{
 Calibration is the process of adjusting a model's outputted probabilities

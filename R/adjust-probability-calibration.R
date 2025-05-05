@@ -10,8 +10,8 @@
 #' @param x A [tailor()].
 #' @param method Character. One of `"logistic"`, `"multinomial"`,
 #' `"beta"`, `"isotonic"`, or `"isotonic_boot"`, corresponding to the
-#' function from the \pkg{probably} package [probably::cal_estimate_logistic()],
-#' [probably::cal_estimate_multinomial()], etc., respectively.
+#' function from the \pkg{probably} package `probably::cal_estimate_logistic()`,
+#' `probably::cal_estimate_multinomial()`, etc., respectively.
 #'
 #' @inheritSection adjust_numeric_calibration Data Usage
 #'

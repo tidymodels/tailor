@@ -9,9 +9,9 @@
 #' @param x A [tailor()].
 #' @param method Character. One of `"linear"`, `"isotonic"`, or
 #' `"isotonic_boot"`, corresponding to the function from the \pkg{probably}
-#' package [probably::cal_estimate_linear()],
-#' [probably::cal_estimate_isotonic()], or
-#' [probably::cal_estimate_isotonic_boot()], respectively.
+#' package `probably::cal_estimate_linear()`,
+#' `probably::cal_estimate_isotonic()`, or
+#' `probably::cal_estimate_isotonic_boot()`, respectively.
 #'
 #' @section Data Usage:
 #' This adjustment requires estimation and, as such, different subsets of data
