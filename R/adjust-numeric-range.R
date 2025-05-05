@@ -61,27 +61,19 @@ adjust_numeric_range <- function(x, lower_limit = -Inf, upper_limit = Inf) {
 #' @export
 print.numeric_range <- function(x, ...) {
   trn <- ifelse(x$trained, " [trained]", "")
-  # todo could be na
-  if (!is_tune(x$arguments$lower_limit)) {
-    if (!is_tune(x$arguments$upper_limit)) {
-      rng_txt <-
-        paste0(
-          "between [",
-          signif(x$arguments$lower_limit, 3),
-          ", ",
-          signif(x$arguments$upper_limit, 3),
-          "]"
-        )
-    } else {
-      rng_txt <- paste0("between [", signif(x$arguments$lower_limit, 3), ", ?]")
-    }
+
+  if (is_tune(x$arguments$lower_limit)) {
+    lower_limit <- "?"
   } else {
-    if (!is_tune(x$arguments$upper_limit)) {
-      rng_txt <- paste0("between [?, ", signif(x$arguments$upper_limit, 3), "]")
-    } else {
-      rng_txt <- "between [?, ?]"
-    }
+    lower_limit <- signif(x$arguments$lower_limit, 3)
   }
+  if (is_tune(x$arguments$upper_limit)) {
+    upper_limit <- "?"
+  } else {
+    upper_limit <- signif(x$arguments$upper_limit, 3)
+  }
+
+  rng_txt <- paste0("between [", lower_limit, ", ", upper_limit, "]")
 
   cli::cli_bullets(c(
     "*" = "Constrain numeric predictions to be {rng_txt}{trn}."
