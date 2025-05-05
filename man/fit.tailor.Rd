@@ -51,4 +51,3 @@ on how tidymodels makes that split; when situated in a model workflow,
 tailors will automatically be trained on the appropriate subset of data.
 }
 
-\keyword{internal}

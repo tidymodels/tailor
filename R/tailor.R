@@ -180,7 +180,6 @@ print.tailor <- function(x, ...) {
 #' should be given in the order of the factor levels of the `estimate`.
 #' @param ... Currently ignored.
 #'
-#' @keywords internal
 #' @export
 fit.tailor <- function(
   object,
@@ -198,10 +197,9 @@ fit.tailor <- function(
   check_selection(enquo(outcome), columns$outcome, "outcome")
   columns$estimate <- names(tidyselect::eval_select(enquo(estimate), .data))
   check_selection(enquo(estimate), columns$estimate, "estimate")
-  columns$probabilities <- names(tidyselect::eval_select(
-    enquo(probabilities),
-    .data
-  ))
+  columns$probabilities <- names(
+    tidyselect::eval_select(enquo(probabilities), .data)
+  )
   if (
     "probability" %in%
       purrr::map_chr(object$adjustments, purrr::pluck, "inputs")
