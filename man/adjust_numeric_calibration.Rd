@@ -11,9 +11,9 @@ adjust_numeric_calibration(x, method = NULL)
 
 \item{method}{Character. One of \code{"linear"}, \code{"isotonic"}, or
 \code{"isotonic_boot"}, corresponding to the function from the \pkg{probably}
-package \code{\link[probably:cal_estimate_linear]{probably::cal_estimate_linear()}},
-\code{\link[probably:cal_estimate_isotonic]{probably::cal_estimate_isotonic()}}, or
-\code{\link[probably:cal_estimate_isotonic_boot]{probably::cal_estimate_isotonic_boot()}}, respectively.}
+package \code{probably::cal_estimate_linear()},
+\code{probably::cal_estimate_isotonic()}, or
+\code{probably::cal_estimate_isotonic_boot()}, respectively.}
 }
 \description{
 Calibration for regression models involves adjusting the model's
