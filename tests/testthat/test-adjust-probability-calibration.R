@@ -92,7 +92,19 @@ test_that("basic adjust_probability_calibration() usage works", {
 })
 
 test_that("adjustment printing", {
-  expect_snapshot(tailor() |> adjust_probability_calibration("logistic"))
+  expect_snapshot(
+    tailor() |> adjust_probability_calibration()
+  )
+})
+test_that("adjustment printing", {
+  expect_snapshot(
+    tailor() |> adjust_probability_calibration(method = "logistic")
+  )
+})
+test_that("adjustment printing", {
+  expect_snapshot(
+    tailor() |> adjust_probability_calibration(method = hardhat::tune())
+  )
 })
 
 test_that("errors informatively with bad input", {

@@ -83,7 +83,17 @@ adjust_probability_calibration <- function(x, method = NULL) {
 #' @export
 print.probability_calibration <- function(x, ...) {
   trn <- ifelse(x$trained, " [trained]", "")
-  cli::cli_bullets(c("*" = "Re-calibrate classification probabilities.{trn}"))
+  if (is_tune(x$arguments$method)) {
+    method <- "tune()"
+  } else if (is.null(x$argument$method)) {
+    method <- "unknown"
+  } else {
+    method <- x$argument$method
+  }
+
+  cli::cli_bullets(c(
+    "*" = "Re-calibrate classification probabilities using {method} method. {trn}"
+  ))
   invisible(x)
 }
 
