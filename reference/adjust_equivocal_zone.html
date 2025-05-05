@@ -42,7 +42,7 @@ tailors using this adjustment predict "[EQ]".'></head><body>
     <p>Equivocal zones describe intervals of predicted probabilities that are deemed
 too uncertain or ambiguous to be assigned a hard class. Rather than
 predicting a hard class when the probability is very close to a threshold,
-tailors using this adjustment predict "[EQ]".</p>
+tailors using this adjustment predict <code>"[EQ]"</code>.</p>
     </div>
 
     <div class="section level2">
@@ -73,10 +73,10 @@ in <code>x</code>, or <code>1 / 2</code> if not.</p></dd>
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
     <p>This function transforms the class prediction column <code>estimate</code> to have type
 <code>class_pred</code> from <code><a href="https://probably.tidymodels.org/reference/class_pred.html" class="external-link">probably::class_pred()</a></code>. You can loosely think of this
-column type as a factor, except there's a possible entry <code>[EQ]</code> that is
+column type as a factor, except there's a possible entry <code>"[EQ]"</code> that is
 <em>not</em> a level and will be excluded from performance metric calculations.
 As a result, the output column has the same number of levels as the input,
-except now has a possible entry <code>[EQ]</code> that tidymodels funcitons know to
+except now has a possible entry <code>"[EQ]"</code> that tidymodels funcitons know to
 exclude from further analyses.</p>
     </div>
     <div class="section level2">
