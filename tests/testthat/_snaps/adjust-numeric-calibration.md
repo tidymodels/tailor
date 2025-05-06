@@ -7,7 +7,29 @@
       -- tailor ----------------------------------------------------------------------
       A regression postprocessor with 1 adjustment:
       
-      * Re-calibrate numeric predictions.
+      * Re-calibrate numeric predictions using method.
+
+---
+
+    Code
+      adjust_numeric_calibration(tailor(), method = "isotonic")
+    Message
+      
+      -- tailor ----------------------------------------------------------------------
+      A regression postprocessor with 1 adjustment:
+      
+      * Re-calibrate numeric predictions using isotonic method.
+
+---
+
+    Code
+      adjust_numeric_calibration(tailor(), method = hardhat::tune())
+    Message
+      
+      -- tailor ----------------------------------------------------------------------
+      A regression postprocessor with 1 adjustment:
+      
+      * Re-calibrate numeric predictions (method marked for optimization).
 
 # errors informatively with bad input
 

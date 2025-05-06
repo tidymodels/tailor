@@ -1,13 +1,35 @@
 # adjustment printing
 
     Code
-      adjust_probability_calibration(tailor(), "logistic")
+      adjust_probability_calibration(tailor())
     Message
       
       -- tailor ----------------------------------------------------------------------
       A binary postprocessor with 1 adjustment:
       
-      * Re-calibrate classification probabilities.
+      * Re-calibrate classification probabilities using method.
+
+---
+
+    Code
+      adjust_probability_calibration(tailor(), method = "logistic")
+    Message
+      
+      -- tailor ----------------------------------------------------------------------
+      A binary postprocessor with 1 adjustment:
+      
+      * Re-calibrate classification probabilities using logistic method.
+
+---
+
+    Code
+      adjust_probability_calibration(tailor(), method = hardhat::tune())
+    Message
+      
+      -- tailor ----------------------------------------------------------------------
+      A binary postprocessor with 1 adjustment:
+      
+      * Re-calibrate classification probabilities (method marked for optimization).
 
 # errors informatively with bad input
 
