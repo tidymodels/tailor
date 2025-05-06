@@ -82,15 +82,18 @@ print.numeric_calibration <- function(x, ...) {
   trn <- ifelse(x$trained, " [trained]", "")
 
   if (is_tune(x$arguments$method)) {
-    method <- "tune()"
-  } else if (is.null(x$argument$method)) {
-    method <- "unknown"
+    method <- "(method marked for optimization)"
   } else {
-    method <- x$argument$method
+    if (is.null(x$argument$method)) {
+      method <- "unknown"
+    } else {
+      method <- x$argument$method
+    }
+    method <- paste("using", x$argument$method, "method")
   }
 
   cli::cli_bullets(c(
-    "*" = "Re-calibrate numeric predictions using {method} method.{trn}"
+    "*" = "Re-calibrate numeric predictions {method}. {trn}"
   ))
   invisible(x)
 }

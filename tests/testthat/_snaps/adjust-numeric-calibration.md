@@ -7,7 +7,7 @@
       -- tailor ----------------------------------------------------------------------
       A regression postprocessor with 1 adjustment:
       
-      * Re-calibrate numeric predictions using unknown method.
+      * Re-calibrate numeric predictions using method.
 
 ---
 
@@ -29,7 +29,7 @@
       -- tailor ----------------------------------------------------------------------
       A regression postprocessor with 1 adjustment:
       
-      * Re-calibrate numeric predictions using tune() method.
+      * Re-calibrate numeric predictions (method marked for optimization).
 
 # errors informatively with bad input
 

@@ -7,7 +7,7 @@
       -- tailor ----------------------------------------------------------------------
       A binary postprocessor with 1 adjustment:
       
-      * Re-calibrate classification probabilities using unknown method.
+      * Re-calibrate classification probabilities using method.
 
 ---
 
@@ -29,7 +29,7 @@
       -- tailor ----------------------------------------------------------------------
       A binary postprocessor with 1 adjustment:
       
-      * Re-calibrate classification probabilities using tune() method.
+      * Re-calibrate classification probabilities (method marked for optimization).
 
 # errors informatively with bad input
 
