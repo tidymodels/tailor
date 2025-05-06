@@ -2,7 +2,7 @@ pandoc: 3.1.11
 pkgdown: 2.1.2
 pkgdown_sha: ~
 articles: {}
-last_built: 2025-05-05T12:55Z
+last_built: 2025-05-06T18:58Z
 urls:
   reference: https://tailor.tidymodels.org/reference
   article: https://tailor.tidymodels.org/articles
