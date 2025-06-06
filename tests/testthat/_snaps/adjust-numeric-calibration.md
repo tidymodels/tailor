@@ -31,6 +31,17 @@
       
       * Re-calibrate numeric predictions (method marked for optimization).
 
+---
+
+    Code
+      fit(adjust_numeric_calibration(tailor()), mtcars, outcome = mpg, estimate = disp)
+    Message
+      
+      -- tailor ----------------------------------------------------------------------
+      A regression postprocessor with 1 adjustment:
+      
+      * Re-calibrate numeric predictions using method.  [trained]
+
 # errors informatively with bad input
 
     Code

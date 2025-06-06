@@ -31,6 +31,18 @@
       
       * Re-calibrate classification probabilities (method marked for optimization).
 
+---
+
+    Code
+      fit(adjust_probability_calibration(tailor()), two_class_example, outcome = c(
+        truth), estimate = c(predicted), probabilities = c(Class1, Class2))
+    Message
+      
+      -- tailor ----------------------------------------------------------------------
+      A binary postprocessor with 1 adjustment:
+      
+      * Re-calibrate classification probabilities using method.  [trained]
+
 # errors informatively with bad input
 
     Code

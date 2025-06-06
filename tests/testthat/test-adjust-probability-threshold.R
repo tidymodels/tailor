@@ -43,6 +43,17 @@ test_that("basic adjust_probability_threshold() usage works", {
 test_that("adjustment printing", {
   expect_snapshot(tailor() |> adjust_probability_threshold())
   expect_snapshot(tailor() |> adjust_probability_threshold(hardhat::tune()))
+
+  expect_snapshot(
+    tailor() |>
+      adjust_probability_threshold() |>
+      fit(
+        two_class_example,
+        outcome = c(truth),
+        estimate = c(predicted),
+        probabilities = c(Class1, Class2)
+      )
+  )
 })
 
 test_that("tunable", {

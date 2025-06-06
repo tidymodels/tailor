@@ -82,6 +82,12 @@ test_that("adjustment printing", {
   expect_snapshot(
     tailor() |> adjust_numeric_calibration(method = hardhat::tune())
   )
+
+  expect_snapshot(
+    tailor() |>
+      adjust_numeric_calibration() |>
+      fit(mtcars, outcome = mpg, estimate = disp)
+  )
 })
 
 test_that("errors informatively with bad input", {

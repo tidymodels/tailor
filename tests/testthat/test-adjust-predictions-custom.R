@@ -62,6 +62,19 @@ test_that("adjust_predictions_custom() for numerics works without setting type (
 
 test_that("adjustment printing", {
   expect_snapshot(tailor() |> adjust_predictions_custom())
+
+  expect_snapshot(
+    tailor() |>
+      adjust_predictions_custom(
+        linear_predictor = binomial()$linkfun(Class2)
+      ) |>
+      fit(
+        two_class_example,
+        outcome = c(truth),
+        estimate = c(predicted),
+        probabilities = c(Class1, Class2)
+      )
+  )
 })
 
 test_that("tunable", {
