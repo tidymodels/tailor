@@ -68,7 +68,7 @@ test_that("adjust_numeric_calibration() respects `method` argument", {
   # probably actually used an isotonic calibrator
   expect_equal(
     tlr_fit$adjustments[[1]]$results$fit$method,
-    "Isotonic regression"
+    "Isotonic regression calibration"
   )
 })
 
