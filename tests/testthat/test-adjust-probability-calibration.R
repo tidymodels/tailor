@@ -95,15 +95,25 @@ test_that("adjustment printing", {
   expect_snapshot(
     tailor() |> adjust_probability_calibration()
   )
-})
-test_that("adjustment printing", {
   expect_snapshot(
     tailor() |> adjust_probability_calibration(method = "logistic")
   )
-})
-test_that("adjustment printing", {
   expect_snapshot(
     tailor() |> adjust_probability_calibration(method = hardhat::tune())
+  )
+
+  skip_if_not_installed("modeldata")
+  data("two_class_example", package = "modeldata")
+
+  expect_snapshot(
+    tailor() |>
+      adjust_probability_calibration() |>
+      fit(
+        two_class_example,
+        outcome = c(truth),
+        estimate = c(predicted),
+        probabilities = c(Class1, Class2)
+      )
   )
 })
 

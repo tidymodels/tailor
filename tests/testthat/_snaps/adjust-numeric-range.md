@@ -42,3 +42,14 @@
       
       * Constrain numeric predictions to be between [?, 1].
 
+---
+
+    Code
+      fit(adjust_numeric_range(tailor()), mtcars, outcome = mpg, estimate = disp)
+    Message
+      
+      -- tailor ----------------------------------------------------------------------
+      A regression postprocessor with 1 adjustment:
+      
+      * Constrain numeric predictions to be between [-Inf, Inf]. [trained]
+
