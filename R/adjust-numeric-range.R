@@ -76,7 +76,7 @@ print.numeric_range <- function(x, ...) {
   rng_txt <- paste0("between [", lower_limit, ", ", upper_limit, "]")
 
   cli::cli_bullets(c(
-    "*" = "Constrain numeric predictions to be {rng_txt}{trn}."
+    "*" = "Constrain numeric predictions to be {rng_txt}. {trn}"
   ))
   invisible(x)
 }
