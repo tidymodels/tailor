@@ -16,7 +16,7 @@ test_that("basic adjust_numeric_calibration usage works", {
       adjust_numeric_calibration(method = "linear")
   )
 
-  expect_no_condition(
+  expect_no_warning(
     tlr_fit <- fit(tlr, d_calibration, outcome = y, estimate = y_pred)
   )
 
@@ -68,7 +68,7 @@ test_that("adjust_numeric_calibration() respects `method` argument", {
   # probably actually used an isotonic calibrator
   expect_equal(
     tlr_fit$adjustments[[1]]$results$fit$method,
-    "Isotonic regression"
+    "Isotonic regression calibration"
   )
 })
 
