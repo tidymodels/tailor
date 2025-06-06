@@ -77,7 +77,7 @@ print.probability_threshold <- function(x, ...) {
     trn <- ifelse(x$trained, " [trained]", "")
     cli::cli_bullets(c(
       "*" = "Adjust probability threshold to \\
-             {signif(x$arguments$threshold, digits = 3)}. {trn}"
+             {signif(x$arguments$threshold, digits = 3)}.{trn}"
     ))
   }
   invisible(x)

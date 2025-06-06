@@ -20,5 +20,5 @@
       -- tailor ----------------------------------------------------------------------
       A binary postprocessor with 1 adjustment:
       
-      * Adjust predictions using custom code.  [trained]
+      * Adjust predictions using custom code. [trained]
 

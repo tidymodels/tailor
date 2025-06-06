@@ -97,7 +97,7 @@ print.equivocal_zone <- function(x, ...) {
     trn <- ifelse(x$trained, " [trained]", "")
     cli::cli_bullets(c(
       "*" = "Add equivocal zone of size
-             {signif(x$arguments$value, digits = 3)}. {trn}"
+             {signif(x$arguments$value, digits = 3)}.{trn}"
     ))
   }
   invisible(x)

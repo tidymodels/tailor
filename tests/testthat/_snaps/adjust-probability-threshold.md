@@ -30,5 +30,5 @@
       -- tailor ----------------------------------------------------------------------
       A binary postprocessor with 1 adjustment:
       
-      * Adjust probability threshold to 0.5.  [trained]
+      * Adjust probability threshold to 0.5. [trained]
 

@@ -65,7 +65,7 @@ adjust_predictions_custom <- function(x, ..., .pkgs = character(0)) {
 #' @export
 print.predictions_custom <- function(x, ...) {
   trn <- ifelse(x$trained, " [trained]", "")
-  cli::cli_bullets(c("*" = "Adjust predictions using custom code. {trn}"))
+  cli::cli_bullets(c("*" = "Adjust predictions using custom code.{trn}"))
   invisible(x)
 }
 

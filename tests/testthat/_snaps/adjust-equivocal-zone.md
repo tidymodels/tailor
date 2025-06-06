@@ -30,5 +30,5 @@
       -- tailor ----------------------------------------------------------------------
       A binary postprocessor with 1 adjustment:
       
-      * Add equivocal zone of size 0.1.  [trained]
+      * Add equivocal zone of size 0.1. [trained]
 

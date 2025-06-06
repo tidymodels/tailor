@@ -51,5 +51,5 @@
       -- tailor ----------------------------------------------------------------------
       A regression postprocessor with 1 adjustment:
       
-      * Constrain numeric predictions to be between [-Inf, Inf].  [trained]
+      * Constrain numeric predictions to be between [-Inf, Inf]. [trained]
 

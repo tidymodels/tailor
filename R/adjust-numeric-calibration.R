@@ -93,7 +93,7 @@ print.numeric_calibration <- function(x, ...) {
   }
 
   cli::cli_bullets(c(
-    "*" = "Re-calibrate numeric predictions {method}. {trn}"
+    "*" = "Re-calibrate numeric predictions {method}.{trn}"
   ))
   invisible(x)
 }

@@ -41,7 +41,7 @@
       -- tailor ----------------------------------------------------------------------
       A binary postprocessor with 1 adjustment:
       
-      * Re-calibrate classification probabilities using method.  [trained]
+      * Re-calibrate classification probabilities using method. [trained]
 
 # errors informatively with bad input
 

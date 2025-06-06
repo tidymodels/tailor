@@ -40,7 +40,7 @@
       -- tailor ----------------------------------------------------------------------
       A regression postprocessor with 1 adjustment:
       
-      * Re-calibrate numeric predictions using method.  [trained]
+      * Re-calibrate numeric predictions using method. [trained]
 
 # errors informatively with bad input
 

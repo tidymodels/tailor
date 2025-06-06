@@ -96,7 +96,7 @@ print.probability_calibration <- function(x, ...) {
   }
 
   cli::cli_bullets(c(
-    "*" = "Re-calibrate classification probabilities {method}. {trn}"
+    "*" = "Re-calibrate classification probabilities {method}.{trn}"
   ))
   invisible(x)
 }
