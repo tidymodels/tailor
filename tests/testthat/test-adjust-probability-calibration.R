@@ -87,7 +87,7 @@ test_that("basic adjust_probability_calibration() usage works", {
   # probably actually used an isotonic calibrator
   expect_equal(
     tlr_fit$adjustments[[1]]$results$fit$method,
-    "Isotonic regression"
+    "Isotonic regression calibration"
   )
 })
 
