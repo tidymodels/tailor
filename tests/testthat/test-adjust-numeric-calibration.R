@@ -1,5 +1,3 @@
-skip_if_not_installed("probably")
-
 test_that("basic adjust_numeric_calibration usage works", {
   skip_if_not_installed("mgcv")
 

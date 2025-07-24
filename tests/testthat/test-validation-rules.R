@@ -1,5 +1,3 @@
-skip_if_not_installed("probably")
-
 test_that("validation of adjustments (regression)", {
   expect_no_condition(
     reg_tailor <-

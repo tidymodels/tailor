@@ -1,5 +1,3 @@
-skip_if_not_installed("probably")
-
 test_that("basic adjust_probability_calibration() usage works", {
   skip_if_not_installed("modeldata")
   skip_if_not_installed("mgcv")
