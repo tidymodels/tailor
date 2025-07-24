@@ -49,5 +49,7 @@ for training the tailor and evaluating its performance on predictions.
 See the Data Usage section in \code{?workflows::add_tailor()} for more information
 on how tidymodels makes that split; when situated in a model workflow,
 tailors will automatically be trained on the appropriate subset of data.
+
+Note that if \code{.data} has zero or one row, the \code{method} is changed to \code{"none"}.
 }
 

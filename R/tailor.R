@@ -164,6 +164,8 @@ print.tailor <- function(x, ...) {
 #' on how tidymodels makes that split; when situated in a model workflow,
 #' tailors will automatically be trained on the appropriate subset of data.
 #'
+#' Note that if `.data` has zero or one row, the `method` is changed to `"none"`.
+#'
 #' @param object A [tailor()].
 #' @param .data,new_data A data frame containing predictions from a model.
 #' @param outcome <[`tidy-select`][dplyr::dplyr_tidy_select]> Only required
