@@ -202,6 +202,9 @@ fit.tailor <- function(
   columns$probabilities <- names(
     tidyselect::eval_select(enquo(probabilities), .data)
   )
+  # For type = "binary", update based on number of probability estimates
+  object$type <- update_type(object$type, columns$probabilities)
+
   if (
     "probability" %in%
       purrr::map_chr(object$adjustments, purrr::pluck, "inputs")
