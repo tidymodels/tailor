@@ -1,5 +1,3 @@
-skip_if_not_installed("probably")
-
 test_that("tidy.tailor works", {
   library(tibble)
 

@@ -41,8 +41,6 @@ test_that("basic adjust_predictions_custom() usage works", {
 })
 
 test_that("adjust_predictions_custom() for numerics works without setting type (#61)", {
-  skip_if_not_installed("probably")
-
   library(tibble)
 
   set.seed(1)

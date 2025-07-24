@@ -15,7 +15,7 @@
 #'
 #' @inheritSection adjust_equivocal_zone Data Usage
 #'
-#' @examplesIf rlang::is_installed(c("probably", "modeldata"))
+#' @examplesIf rlang::is_installed(c("modeldata"))
 #' library(modeldata)
 #'
 #' # `predicted` gives hard class predictions based on probability threshold .5
