@@ -174,3 +174,40 @@ test_that("tuning the calibration method", {
     error = TRUE
   )
 })
+
+
+test_that("harden against calibration model failure", {
+  skip_if_not_installed("modeldata")
+  skip_if_not_installed("betacal")
+  library(modeldata)
+
+  # split example data
+  set.seed(1)
+  d_y_calibration <-
+    two_class_example |>
+    dplyr::mutate(truth = rep(truth[1], nrow(two_class_example)))
+  d_test <- two_class_example
+
+  tlr <-
+    tailor() |>
+    adjust_probability_calibration(method = "beta")
+
+  ###
+  expect_snapshot(
+    y_fit <- fit(
+      tlr,
+      d_y_calibration,
+      outcome = c(truth),
+      estimate = c(predicted),
+      probabilities = c(Class1, Class2)
+    )
+  )
+
+  y_pred <- predict(y_fit, d_test)
+
+  expect_true(all(y_pred$Class1 == d_test$Class1))
+  expect_true(all(y_pred$Class2 == d_test$Class2))
+  expect_true(all(y_pred$predicted == d_test$predicted))
+})
+
+

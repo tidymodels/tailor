@@ -4,7 +4,7 @@
 \alias{adjust_numeric_calibration}
 \title{Re-calibrate numeric predictions}
 \usage{
-adjust_numeric_calibration(x, method = NULL)
+adjust_numeric_calibration(x, method = NULL, ...)
 }
 \arguments{
 \item{x}{A \code{\link[=tailor]{tailor()}}.}
