@@ -29,7 +29,6 @@ test_that("basic adjust_numeric_calibration usage works", {
 
 test_that("linear adjust_numeric_calibration usage works", {
   skip_if_not_installed("mgcv")
-  skip_if_not_installed("probably")
 
   tlr <-
     tailor() |>
@@ -46,8 +45,6 @@ test_that("linear adjust_numeric_calibration usage works", {
 })
 
 test_that("isotonic adjust_numeric_calibration usage works", {
-  skip_if_not_installed("probably")
-
    tlr <-
     tailor() |>
     adjust_numeric_calibration(method = "isotonic")
@@ -64,7 +61,6 @@ test_that("isotonic adjust_numeric_calibration usage works", {
 
 
 test_that("isotonic boot adjust_numeric_calibration usage works", {
-  skip_if_not_installed("probably")
 
   tlr <-
     tailor() |>
@@ -82,7 +78,6 @@ test_that("isotonic boot adjust_numeric_calibration usage works", {
 })
 
 test_that("no adjust_numeric_calibration usage works", {
-  skip_if_not_installed("probably")
 
   tlr <-
     tailor() |>
