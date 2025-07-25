@@ -4,7 +4,7 @@
 \alias{adjust_probability_calibration}
 \title{Re-calibrate classification probability predictions}
 \usage{
-adjust_probability_calibration(x, method = NULL)
+adjust_probability_calibration(x, method = NULL, ...)
 }
 \arguments{
 \item{x}{A \code{\link[=tailor]{tailor()}}.}
@@ -13,6 +13,9 @@ adjust_probability_calibration(x, method = NULL)
 \code{"beta"}, \code{"isotonic"}, or \code{"isotonic_boot"}, corresponding to the
 function from the \pkg{probably} package \code{probably::cal_estimate_logistic()},
 \code{probably::cal_estimate_multinomial()}, etc., respectively.}
+
+\item{...}{Optional arguments to pass to the corresponding function in the
+\pkg{probably} package. These arguments must be named.}
 }
 \description{
 Calibration is the process of adjusting a model's outputted probabilities

@@ -4,7 +4,7 @@
 \alias{adjust_numeric_calibration}
 \title{Re-calibrate numeric predictions}
 \usage{
-adjust_numeric_calibration(x, method = NULL)
+adjust_numeric_calibration(x, method = NULL, ...)
 }
 \arguments{
 \item{x}{A \code{\link[=tailor]{tailor()}}.}
@@ -14,6 +14,9 @@ adjust_numeric_calibration(x, method = NULL)
 package \code{probably::cal_estimate_linear()},
 \code{probably::cal_estimate_isotonic()}, or
 \code{probably::cal_estimate_isotonic_boot()}, respectively.}
+
+\item{...}{Optional arguments to pass to the corresponding function in the
+\pkg{probably} package. These arguments must be named.}
 }
 \description{
 Calibration for regression models involves adjusting the model's

@@ -68,3 +68,11 @@
       Error in `fit()`:
       ! The calibration method cannot be a value of `tune()` at `fit()` time.
 
+# passing arguments to adjust_probability_calibration
+
+    Code
+      tlr_fit <- adjust_probability_calibration(tailor(), method = "logistic", FALSE)
+    Condition
+      Error in `adjust_probability_calibration()`:
+      ! All calibration arguments passed to `...` should have names.
+
