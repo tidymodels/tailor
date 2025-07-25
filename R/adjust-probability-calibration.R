@@ -9,7 +9,7 @@
 #'
 #' @param x A [tailor()].
 #' @param method Character. One of `"logistic"`, `"multinomial"`,
-#' `"beta"`, `"isotonic"`, or `"isotonic_boot"`, corresponding to the
+#' `"beta"`, `"isotonic"`, `"isotonic_boot"`, or `"none"`, corresponding to the
 #' function from the \pkg{probably} package `probably::cal_estimate_logistic()`,
 #' `probably::cal_estimate_multinomial()`, etc., respectively.
 #'
@@ -52,11 +52,11 @@ adjust_probability_calibration <- function(x, method = NULL) {
   validate_probably_available()
 
   check_tailor(x, calibration_type = "probability")
-  # wait to `check_method()` until `fit()` time
+  # wait to `check_cal_method()` until `fit()` time
   if (!is.null(method) & !is_tune(method)) {
     arg_match(
       method,
-      c("logistic", "multinomial", "beta", "isotonic", "isotonic_boot")
+      c("logistic", "multinomial", "beta", "isotonic", "isotonic_boot", "none")
     )
   }
 
@@ -105,7 +105,11 @@ print.probability_calibration <- function(x, ...) {
 fit.probability_calibration <- function(object, data, tailor = NULL, ...) {
   validate_probably_available()
 
-  method <- check_method(object$arguments$method, tailor$type)
+  method <- check_cal_method(
+    object$arguments$method,
+    type = tailor$type,
+    cal_data = data
+  )
   # todo: adjust_probability_calibration() should take arguments to pass to
   # cal_estimate_* via dots
   fit <-

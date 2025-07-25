@@ -114,6 +114,9 @@ infer_type <- function(orderings) {
     return("regression")
   }
 
+  # Note: default for classification is "binary"; this can be updated once
+  # the data are seen. If there are 3+ classes, the type is changed to
+  # "multiclass"
   if (
     all(orderings$output_prob | orderings$output_class | orderings$output_all)
   ) {
@@ -121,4 +124,13 @@ infer_type <- function(orderings) {
   }
 
   "unknown"
+}
+
+update_type <- function(type, probabilities) {
+  if (type  == "binary") {
+    if (length(probabilities) > 2) {
+      type <- "multiclass"
+    }
+  }
+  type
 }

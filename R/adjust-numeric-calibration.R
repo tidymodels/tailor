@@ -7,11 +7,12 @@
 #' range of outputs.
 #'
 #' @param x A [tailor()].
-#' @param method Character. One of `"linear"`, `"isotonic"`, or
-#' `"isotonic_boot"`, corresponding to the function from the \pkg{probably}
+#' @param method Character. One of `"linear"`, `"isotonic"`,`"isotonic_boot"`,
+#' or `"none"`, corresponding to the function from the \pkg{probably}
 #' package `probably::cal_estimate_linear()`,
-#' `probably::cal_estimate_isotonic()`, or
-#' `probably::cal_estimate_isotonic_boot()`, respectively.
+#' `probably::cal_estimate_isotonic()`
+#' `probably::cal_estimate_isotonic_boot()`, or
+#' `probably::cal_estimate_none()`, respectively.
 #'
 #' @section Data Usage:
 #' This adjustment requires estimation and, as such, different subsets of data
@@ -21,6 +22,8 @@
 #' situated in a workflow, tailors will automatically be estimated with
 #' appropriate subsets of data.
 #'
+#' Note that, when calling [fit.tailor()], if the calibration data have zero or
+#' one row, the `method` is changed to `"none"`.
 #' @examplesIf rlang::is_installed("probably")
 #' library(tibble)
 #'
@@ -49,11 +52,11 @@ adjust_numeric_calibration <- function(x, method = NULL) {
   validate_probably_available()
 
   check_tailor(x, calibration_type = "numeric")
-  # wait to `check_method()` until `fit()` time
+  # wait to `check_cal_method()` until `fit()` time
   if (!is.null(method) & !is_tune(method)) {
     arg_match0(
       method,
-      c("linear", "isotonic", "isotonic_boot")
+      c("linear", "isotonic", "isotonic_boot", "none")
     )
   }
 
@@ -102,7 +105,11 @@ print.numeric_calibration <- function(x, ...) {
 fit.numeric_calibration <- function(object, data, tailor = NULL, ...) {
   validate_probably_available()
 
-  method <- check_method(object$arguments$method, tailor$type)
+  method <- check_cal_method(
+    object$arguments$method,
+    type = tailor$type,
+    cal_data = data
+  )
   # todo: adjust_numeric_calibration() should take arguments to pass to
   # cal_estimate_* via dots
   fit <-

@@ -9,11 +9,12 @@ adjust_numeric_calibration(x, method = NULL)
 \arguments{
 \item{x}{A \code{\link[=tailor]{tailor()}}.}
 
-\item{method}{Character. One of \code{"linear"}, \code{"isotonic"}, or
-\code{"isotonic_boot"}, corresponding to the function from the \pkg{probably}
+\item{method}{Character. One of \code{"linear"}, \code{"isotonic"},\code{"isotonic_boot"},
+or \code{"none"}, corresponding to the function from the \pkg{probably}
 package \code{probably::cal_estimate_linear()},
-\code{probably::cal_estimate_isotonic()}, or
-\code{probably::cal_estimate_isotonic_boot()}, respectively.}
+\code{probably::cal_estimate_isotonic()}
+\code{probably::cal_estimate_isotonic_boot()}, or
+\code{probably::cal_estimate_none()}, respectively.}
 }
 \description{
 Calibration for regression models involves adjusting the model's
@@ -29,6 +30,9 @@ by the same name in \code{?workflows::add_tailor()} for more information on
 preventing data leakage with postprocessors that require estimation. When
 situated in a workflow, tailors will automatically be estimated with
 appropriate subsets of data.
+
+Note that, when calling \code{\link[=fit.tailor]{fit.tailor()}}, if the calibration data have zero or
+one row, the \code{method} is changed to \code{"none"}.
 }
 
 \examples{
