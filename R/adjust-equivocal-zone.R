@@ -27,7 +27,7 @@
 #' except now has a possible entry `"[EQ]"` that tidymodels funcitons know to
 #' exclude from further analyses.
 #'
-#' @examplesIf rlang::is_installed(c("modeldata"))
+#' @examplesIf rlang::is_installed(c("probably", "modeldata"))
 #' library(dplyr)
 #' library(modeldata)
 #'

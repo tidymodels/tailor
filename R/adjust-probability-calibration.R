@@ -16,7 +16,7 @@
 #' @inheritSection adjust_numeric_calibration Data Usage
 #'
 #' @examplesIf FALSE
-# @examplesIf rlang::is_installed(c("modeldata"))
+# @examplesIf rlang::is_installed(c("probably", "modeldata"))
 #' library(modeldata)
 #'
 #' # split example data

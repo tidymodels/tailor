@@ -1,3 +1,5 @@
+skip_if_not_installed("probably")
+
 test_that("basic adjust_equivocal_zone() usage works", {
   skip_if_not_installed("modeldata")
   library(dplyr)

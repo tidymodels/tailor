@@ -45,7 +45,7 @@
 #' If these ordering rules are violated, [tailor()] will raise an
 #' error describing the issue.
 #'
-#' @examplesIf rlang::is_installed(c("modeldata"))
+#' @examplesIf rlang::is_installed(c("probably", "modeldata"))
 #' library(dplyr)
 #' library(modeldata)
 #'

@@ -26,7 +26,6 @@ Imports:
     dplyr,
     generics,
     hardhat,
-    probably (>= 1.1.0),
     purrr,
     rlang (>= 1.1.0),
     tibble,
@@ -36,10 +35,12 @@ Suggests:
     dials,
     mgcv,
     modeldata,
+    probably (>= 1.1.0),
     testthat (>= 3.0.0),
     workflows
 Remotes:
     tidymodels/dials,
+    tidymodels/probably,
     tidymodels/workflows
 Config/Needs/website: tidyverse/tidytemplate
 Config/testthat/edition: 3
