@@ -158,4 +158,18 @@ test_that("passing arguments to adjust_numeric_calibration", {
     "cal_estimate_linear"
   )
 
+  expect_snapshot(
+    tlr_fit <-
+      tailor() |>
+      adjust_numeric_calibration(method = "linear", FALSE),
+    error = TRUE
+  )
+
+  expect_snapshot(
+    tlr_fit <-
+      tailor() |>
+      adjust_numeric_calibration(method = "linear", FALSE, select = TRUE),
+    error = TRUE
+  )
+
 })

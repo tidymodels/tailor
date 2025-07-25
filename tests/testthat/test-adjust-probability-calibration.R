@@ -197,5 +197,12 @@ test_that("passing arguments to adjust_probability_calibration", {
     "cal_estimate_logistic"
   )
 
+  expect_snapshot(
+    tlr_fit <-
+      tailor() |>
+      adjust_probability_calibration(method = "logistic", FALSE),
+    error = TRUE
+  )
+
 })
 

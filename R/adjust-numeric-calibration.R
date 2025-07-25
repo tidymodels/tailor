@@ -61,7 +61,7 @@ adjust_numeric_calibration <- function(x, method = NULL, ...) {
 
   args <- list(...)
   nms <- names(args)
-  if (any(nms == "")) {
+  if (length(args) > 0 & (is.null(nms) || any(nms == ""))) {
     cli::cli_abort(
       "All calibration arguments passed to {.arg ...} should have names."
     )
