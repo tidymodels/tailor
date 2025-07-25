@@ -142,3 +142,7 @@ test_that("tunable (multiple adjustments)", {
     )
   )
 })
+
+test_that("required packages", {
+ expect_equal(required_pkgs(tailor()), "tailor")
+})
