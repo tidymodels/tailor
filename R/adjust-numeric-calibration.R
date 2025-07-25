@@ -45,7 +45,7 @@
 #'
 #' predict(tlr_fit, d_test)
 #' @export
-adjust_numeric_calibration <- function(x, method = NULL, ...) {
+adjust_numeric_calibration <- function(x, method = NULL) {
   validate_probably_available()
 
   check_tailor(x, calibration_type = "numeric")
