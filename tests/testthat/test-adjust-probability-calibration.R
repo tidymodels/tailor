@@ -174,3 +174,28 @@ test_that("tuning the calibration method", {
     error = TRUE
   )
 })
+
+test_that("passing arguments to adjust_probability_calibration", {
+  skip_if_not_installed("modeldata")
+
+  library(modeldata)
+
+  expect_no_condition(
+    tlr_fit <-
+      tailor() |>
+      adjust_probability_calibration(method = "logistic", smooth = FALSE) |>
+      fit(
+        two_class_example,
+        outcome = c(truth),
+        estimate = c(predicted),
+        probabilities = c(Class1, Class2)
+      )
+  )
+
+  expect_s3_class(
+    tlr_fit$adjustments[[1]]$results$fit,
+    "cal_estimate_logistic"
+  )
+
+})
+

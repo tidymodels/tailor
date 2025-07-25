@@ -137,3 +137,25 @@ test_that("tuning the calibration method", {
     error = TRUE
   )
 })
+
+test_that("passing arguments to adjust_numeric_calibration", {
+
+  library(tibble)
+
+  set.seed(1)
+  d_calibration <- tibble(y = rnorm(100), y_pred = y / 2 + rnorm(100))
+  d_test <- tibble(y = rnorm(100), y_pred = y / 2 + rnorm(100))
+
+  expect_no_condition(
+    tlr_fit <-
+      tailor() |>
+      adjust_numeric_calibration(method = "linear", smooth = FALSE) |>
+      fit(d_calibration, outcome = y, estimate = y_pred)
+  )
+
+  expect_s3_class(
+    tlr_fit$adjustments[[1]]$results$fit,
+    "cal_estimate_linear"
+  )
+
+})
