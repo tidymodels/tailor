@@ -137,3 +137,27 @@ test_that("tuning the calibration method", {
     error = TRUE
   )
 })
+
+test_that("required packages for adjust_numeric_calibration", {
+  skip_if_not_installed("mgcv")
+
+  library(tibble)
+
+  set.seed(1)
+  d_calibration <- tibble(y = rnorm(100), y_pred = y / 2 + rnorm(100))
+  d_test <- tibble(y = rnorm(100), y_pred = y / 2 + rnorm(100))
+
+  expect_no_condition(
+    tlr <-
+      tailor() |>
+      adjust_numeric_calibration(method = "linear")
+  )
+
+  expect_no_warning(
+    tlr_fit <- fit(tlr, d_calibration, outcome = y, estimate = y_pred)
+  )
+
+  expect_equal(required_pkgs(tlr), c("probably", "tailor"))
+  expect_equal(required_pkgs(tlr_fit), c("mgcv", "probably", "tailor"))
+
+})

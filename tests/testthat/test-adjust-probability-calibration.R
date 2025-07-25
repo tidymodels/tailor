@@ -174,3 +174,36 @@ test_that("tuning the calibration method", {
     error = TRUE
   )
 })
+
+test_that("required packages for adjust_probability_calibration", {
+  skip_if_not_installed("mgcv")
+
+  library(modeldata)
+
+  # split example data
+  set.seed(1)
+  in_rows <- sample(c(TRUE, FALSE), nrow(two_class_example), replace = TRUE)
+  d_calibration <- two_class_example[in_rows, ]
+  d_test <- two_class_example[!in_rows, ]
+
+  # fitting and predicting happens without raising conditions
+  expect_no_condition(
+    tlr <-
+      tailor() |>
+      adjust_probability_calibration(method = "logistic")
+  )
+
+  expect_no_condition(
+    tlr_fit <- fit(
+      tlr,
+      d_calibration,
+      outcome = c(truth),
+      estimate = c(predicted),
+      probabilities = c(Class1, Class2)
+    )
+  )
+
+  expect_equal(required_pkgs(tlr), c("probably", "tailor"))
+  expect_equal(required_pkgs(tlr_fit), c("mgcv", "probably", "tailor"))
+
+})

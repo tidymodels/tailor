@@ -120,3 +120,12 @@ test_that("adjust_equivocal_zone inherits previously set threshold", {
 
   expect_equal(tlr$adjustments[[2]]$arguments$threshold, .5)
 })
+
+test_that("required packages", {
+  tlr <-
+    tailor() |>
+    adjust_equivocal_zone(value = .2)
+
+  expect_equal(required_pkgs(tlr), c("probably", "tailor"))
+})
+
