@@ -108,17 +108,21 @@ fit.probability_calibration <- function(object, data, tailor = NULL, ...) {
   method <- check_method(object$arguments$method, tailor$type)
   # todo: adjust_probability_calibration() should take arguments to pass to
   # cal_estimate_* via dots
-  fit <-
-    eval_bare(
-      call2(
-        paste0("cal_estimate_", method),
-        .data = expr(data),
-        # todo: make getters for the entries in `columns`
-        truth = tailor$columns$outcome,
-        estimate = tailor$columns$probabilities,
-        .ns = "probably"
-      )
-    )
+
+  cl <- rlang::call2(
+    paste0("cal_estimate_", method),
+    .data = expr(data),
+    # todo: make getters for the entries in `columns`
+    truth = tailor$columns$outcome,
+    estimate = tailor$columns$probabilities,
+    .ns = "probably"
+  )
+
+  fit <- try(eval_bare(cl), silent = TRUE)
+  if (inherits(fit, "try-error")) {
+    cli::cli_alert(
+      "The {object$method} calibration failed: {fit}. No calibration is applied.")
+  }
 
   new_adjustment(
     class(object),
@@ -134,6 +138,10 @@ fit.probability_calibration <- function(object, data, tailor = NULL, ...) {
 #' @export
 predict.probability_calibration <- function(object, new_data, tailor, ...) {
   validate_probably_available()
+
+  if (inherits(object$results$fit, "try-error")) {
+    return(new_data)
+  }
 
   probably::cal_apply(
     .data = new_data,
