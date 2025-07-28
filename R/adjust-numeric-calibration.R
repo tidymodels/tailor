@@ -116,8 +116,12 @@ fit.numeric_calibration <- function(object, data, tailor = NULL, ...) {
 
   fit <- try(eval_bare(cl), silent = TRUE)
   if (inherits(fit, "try-error")) {
-    cli::cli_alert(
-      "The {object$method} calibration failed: {fit}. No calibration is applied.")
+    cli::cli_warn(
+      c(
+        "The {method} calibration failed. No calibration is applied.",
+        i = fit
+      )
+    )
   }
 
   new_adjustment(

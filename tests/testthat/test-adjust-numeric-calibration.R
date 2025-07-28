@@ -139,7 +139,6 @@ test_that("tuning the calibration method", {
 })
 
 test_that("harden against calibration model failure", {
-  library(tibble)
 
   set.seed(1)
   d_calibration_pred <- tibble(y = rnorm(100), y_pred = NA_real_)
