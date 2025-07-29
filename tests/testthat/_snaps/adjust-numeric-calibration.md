@@ -67,6 +67,23 @@
       Error in `fit()`:
       ! The calibration method cannot be a value of `tune()` at `fit()` time.
 
+# passing arguments to adjust_numeric_calibration
+
+    Code
+      tlr_fit <- adjust_numeric_calibration(tailor(), method = "linear", FALSE)
+    Condition
+      Error in `adjust_numeric_calibration()`:
+      ! All calibration arguments passed to `...` should have names.
+
+---
+
+    Code
+      tlr_fit <- adjust_numeric_calibration(tailor(), method = "linear", FALSE,
+      select = TRUE)
+    Condition
+      Error in `adjust_numeric_calibration()`:
+      ! All calibration arguments passed to `...` should have names.
+
 # harden against calibration model failure
 
     Code

@@ -68,6 +68,14 @@
       Error in `fit()`:
       ! The calibration method cannot be a value of `tune()` at `fit()` time.
 
+# passing arguments to adjust_probability_calibration
+
+    Code
+      tlr_fit <- adjust_probability_calibration(tailor(), method = "logistic", FALSE)
+    Condition
+      Error in `adjust_probability_calibration()`:
+      ! All calibration arguments passed to `...` should have names.
+
 # harden against calibration model failure
 
     Code
@@ -78,6 +86,7 @@
       glm.fit: algorithm did not converge
       Warning:
       glm.fit: algorithm did not converge
-    Message
-      > The  calibration failed: Error in uniroot(function(mh) b * log(1 - mh) - a * log(mh) - inter, c(1e-16,  :    f() values at end points not of opposite sign . No calibration is applied.
+      Warning:
+      The beta calibration failed. No calibration is applied.
+      i Error in uniroot(function(mh) b * log(1 - mh) - a * log(mh) - inter, c(1e-16, : f() values at end points not of opposite sign
 
