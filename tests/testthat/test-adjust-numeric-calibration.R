@@ -139,6 +139,7 @@ test_that("tuning the calibration method", {
 })
 
 test_that("harden against calibration model failure", {
+  skip_if(getRversion() < "4.2.0")
 
   set.seed(1)
   d_calibration_pred <- tibble(y = rnorm(100), y_pred = NA_real_)
