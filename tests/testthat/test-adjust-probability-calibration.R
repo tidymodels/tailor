@@ -414,3 +414,103 @@ test_that("too few data", {
 
 })
 
+
+test_that("passing arguments to adjust_probability_calibration", {
+  skip_if_not_installed("modeldata")
+
+  library(modeldata)
+
+  expect_no_condition(
+    tlr_fit <-
+      tailor() |>
+      adjust_probability_calibration(method = "logistic", smooth = FALSE) |>
+      fit(
+        two_class_example,
+        outcome = c(truth),
+        estimate = c(predicted),
+        probabilities = c(Class1, Class2)
+      )
+  )
+
+  expect_s3_class(
+    tlr_fit$adjustments[[1]]$results$fit,
+    "cal_estimate_logistic"
+  )
+
+  expect_snapshot(
+    tlr_fit <-
+      tailor() |>
+      adjust_probability_calibration(method = "logistic", FALSE),
+    error = TRUE
+  )
+
+})
+
+test_that("required packages for adjust_probability_calibration", {
+  skip_if_not_installed("mgcv")
+  skip_if_not_installed("modeldata")
+
+  library(modeldata)
+
+  # split example data
+  set.seed(1)
+  in_rows <- sample(c(TRUE, FALSE), nrow(two_class_example), replace = TRUE)
+  d_calibration <- two_class_example[in_rows, ]
+  d_test <- two_class_example[!in_rows, ]
+
+  # fitting and predicting happens without raising conditions
+  expect_no_condition(
+    tlr <-
+      tailor() |>
+      adjust_probability_calibration(method = "logistic")
+  )
+
+  expect_no_condition(
+    tlr_fit <- fit(
+      tlr,
+      d_calibration,
+      outcome = c(truth),
+      estimate = c(predicted),
+      probabilities = c(Class1, Class2)
+    )
+  )
+
+  expect_equal(required_pkgs(tlr), c("probably", "tailor"))
+  expect_equal(required_pkgs(tlr_fit), c("mgcv", "probably", "tailor"))
+
+})
+
+test_that("harden against calibration model failure", {
+  skip_if_not_installed("modeldata")
+  skip_if_not_installed("betacal")
+
+  library(modeldata)
+
+  # split example data
+  set.seed(1)
+  d_y_calibration <-
+    two_class_example |>
+    dplyr::mutate(truth = rep(truth[1], nrow(two_class_example)))
+  d_test <- two_class_example
+
+  tlr <-
+    tailor() |>
+    adjust_probability_calibration(method = "beta")
+
+  ###
+  expect_snapshot(
+    y_fit <- fit(
+      tlr,
+      d_y_calibration,
+      outcome = c(truth),
+      estimate = c(predicted),
+      probabilities = c(Class1, Class2)
+    )
+  )
+
+  y_pred <- predict(y_fit, d_test)
+
+  expect_true(all(y_pred$Class1 == d_test$Class1))
+  expect_true(all(y_pred$Class2 == d_test$Class2))
+  expect_true(all(y_pred$predicted == d_test$predicted))
+})
