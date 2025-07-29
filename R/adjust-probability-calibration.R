@@ -15,8 +15,7 @@
 #'
 #' @inheritSection adjust_numeric_calibration Data Usage
 #'
-#' @examplesIf FALSE
-# @examplesIf rlang::is_installed(c("probably", "modeldata"))
+#' @examplesIf rlang::is_installed(c("probably", "modeldata"))
 #' library(modeldata)
 #'
 #' # split example data
@@ -32,8 +31,7 @@
 #'   tailor() |>
 #'   adjust_probability_calibration(method = "logistic")
 #'
-#' # train tailor on a subset of data. situate in a modeling workflow with
-#' # `workflows::add_tailor()` to avoid having to specify column names manually
+#' # train tailor on a subset of data.
 #' tlr_fit <- fit(
 #'   tlr,
 #'   d_calibration,

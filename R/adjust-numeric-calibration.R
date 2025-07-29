@@ -17,11 +17,7 @@
 #'
 #' @section Data Usage:
 #' This adjustment requires estimation and, as such, different subsets of data
-#' should be used to train it and evaluate its predictions. See the section
-#' by the same name in `?workflows::add_tailor()` for more information on
-#' preventing data leakage with postprocessors that require estimation. When
-#' situated in a workflow, tailors will automatically be estimated with
-#' appropriate subsets of data.
+#' should be used to train it and evaluate its predictions.
 #'
 #' @examplesIf rlang::is_installed("probably")
 #' library(tibble)
@@ -38,8 +34,7 @@
 #'   tailor() |>
 #'   adjust_numeric_calibration(method = "linear")
 #'
-#' # train tailor on a subset of data. situate in a modeling workflow with
-#' # `workflows::add_tailor()` to avoid having to specify column names manually
+#' # train tailor on a subset of data.
 #' tlr_fit <- fit(tlr, d_calibration, outcome = y, estimate = y_pred)
 #'
 #' # apply to predictions on another subset of data

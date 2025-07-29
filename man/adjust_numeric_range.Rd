@@ -28,7 +28,7 @@ not risk data leakage.
 }
 
 \examples{
-\dontshow{if (FALSE) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+\dontshow{if (rlang::is_installed(c("probably"))) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
 library(tibble)
 
 # create example data
@@ -41,8 +41,7 @@ tlr <-
   tailor() |>
   adjust_numeric_range(lower_limit = 1)
 
-# train tailor by passing column names. situate in a modeling workflow with
-# `workflows::add_tailor()` to avoid having to specify column names manually
+# train tailor by passing column names.
 tlr_fit <- fit(tlr, d, outcome = y, estimate = y_pred)
 
 predict(tlr_fit, d)

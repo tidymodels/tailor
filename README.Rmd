@@ -28,8 +28,6 @@ Postprocessors refine predictions outputted from machine learning models to impr
 * For transformation of probabilities to hard class predictions: thresholds, equivocal zones
 * For numeric distributions: calibration, range
 
-Tailors are tightly integrated with the [tidymodels](https://tidymodels.org) framework. For greatest ease of use, situate tailors in model [workflows](https://workflows.tidymodels.org) with `add_tailor()`.
-
 The package is under active development; please treat it as experimental and don't depend on the syntax staying the same.
 
 ## Installation
@@ -85,14 +83,6 @@ post_res <- fit(
 )
 
 post_res
-```
-
-When used with a model [workflow](https://workflows.tidymodels.org) via `add_tailor()`, the arguments to `fit()` a tailor will be set automatically (in addition to the data splitting needed for postprocessors that require training).
-
-Now, when passed new data, the trained tailor will determine the outputted class based on whether the probability assigned to the level `"Class1"` is above `.9`, resulting in more predictions of `"Class2"` than before.
-
-```{r}
-predict(post_res, two_class_example) |> count(predicted)
 ```
 
 Tailors compose adjustments; when several `adjust_*()` functions are called iteratively, tailors will apply them in order at `fit()` and `predict()` time. 
