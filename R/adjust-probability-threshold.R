@@ -15,6 +15,8 @@
 #'
 #' @inheritSection adjust_equivocal_zone Data Usage
 #'
+#' @return An updated [tailor()] containing the new operation.
+#'
 #' @examplesIf rlang::is_installed(c("probably", "modeldata"))
 #' library(modeldata)
 #'

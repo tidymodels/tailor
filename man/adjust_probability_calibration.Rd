@@ -18,6 +18,9 @@ use \code{"logistic"} which, despite its name, fits a generalized additive model
 \item{...}{Optional arguments to pass to the corresponding function in the
 \pkg{probably} package. These arguments must be named.}
 }
+\value{
+An updated \code{\link[=tailor]{tailor()}} containing the new operation.
+}
 \description{
 Calibration is the process of adjusting a model's outputted probabilities
 to match the observed frequencies of events. This technique aims to

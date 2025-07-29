@@ -37,6 +37,8 @@
 #' This adjustment requires estimation and, as such, different subsets of data
 #' should be used to train it and evaluate its predictions.
 #'
+#' @return An updated [tailor()] containing the new operation.
+#'
 #' @examplesIf rlang::is_installed("probably")
 #' library(tibble)
 #'

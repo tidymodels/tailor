@@ -27,6 +27,7 @@
 #' except now has a possible entry `"[EQ]"` that tidymodels functions know to
 #' exclude from further analyses.
 #'
+#' @return An updated [tailor()] containing the new operation.
 #' @examplesIf rlang::is_installed(c("probably", "modeldata"))
 #' library(dplyr)
 #' library(modeldata)

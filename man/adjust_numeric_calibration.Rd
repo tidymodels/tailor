@@ -19,6 +19,9 @@ use \code{"linear"} which, despite its name, fits a generalized additive model.}
 \item{...}{Optional arguments to pass to the corresponding function in the
 \pkg{probably} package. These arguments must be named.}
 }
+\value{
+An updated \code{\link[=tailor]{tailor()}} containing the new operation.
+}
 \description{
 Calibration for regression models involves adjusting the model's
 predictions to adjust for correlated errors, ensuring that predicted

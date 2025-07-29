@@ -42,6 +42,8 @@
 #'
 #' @inheritSection adjust_numeric_calibration Data Usage
 #'
+#' @return An updated [tailor()] containing the new operation.
+#'
 #' @references
 #' Kull, Meelis, Telmo Silva Filho, and Peter Flach. "Beta calibration: a
 #' well-founded and easily implemented improvement on logistic calibration
