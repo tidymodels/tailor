@@ -105,16 +105,24 @@ fit.numeric_calibration <- function(object, data, tailor = NULL, ...) {
   method <- check_method(object$arguments$method, tailor$type)
   # todo: adjust_numeric_calibration() should take arguments to pass to
   # cal_estimate_* via dots
-  fit <-
-    eval_bare(
-      call2(
-        paste0("cal_estimate_", method),
-        .data = data,
-        truth = tailor$columns$outcome,
-        estimate = tailor$columns$estimate,
-        .ns = "probably"
+
+  cl <- rlang::call2(
+    paste0("cal_estimate_", method),
+    .data = data,
+    truth = tailor$columns$outcome,
+    estimate = tailor$columns$estimate,
+    .ns = "probably"
+  )
+
+  fit <- try(eval_bare(cl), silent = TRUE)
+  if (inherits(fit, "try-error")) {
+    cli::cli_warn(
+      c(
+        "The {method} calibration failed. No calibration is applied.",
+        i = fit
       )
     )
+  }
 
   new_adjustment(
     class(object),
@@ -130,6 +138,10 @@ fit.numeric_calibration <- function(object, data, tailor = NULL, ...) {
 #' @export
 predict.numeric_calibration <- function(object, new_data, tailor, ...) {
   validate_probably_available()
+
+  if (inherits(object$results$fit, "try-error")) {
+    return(new_data)
+  }
 
   probably::cal_apply(new_data, object$results$fit)
 }
