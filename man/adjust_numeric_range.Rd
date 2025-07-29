@@ -28,6 +28,7 @@ not risk data leakage.
 }
 
 \examples{
+\dontshow{if (rlang::is_installed(c("probably"))) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
 library(tibble)
 
 # create example data
@@ -44,4 +45,5 @@ tlr <-
 tlr_fit <- fit(tlr, d, outcome = y, estimate = y_pred)
 
 predict(tlr_fit, d)
+\dontshow{\}) # examplesIf}
 }

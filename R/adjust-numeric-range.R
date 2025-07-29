@@ -13,7 +13,7 @@
 #'
 #' @inheritSection adjust_equivocal_zone Data Usage
 #'
-#' @examples
+#' @examplesIf rlang::is_installed(c("probably"))
 #' library(tibble)
 #'
 #' # create example data
