@@ -28,7 +28,7 @@ This function transforms the class prediction column \code{estimate} to have typ
 column type as a factor, except there's a possible entry \code{"[EQ]"} that is
 \emph{not} a level and will be excluded from performance metric calculations.
 As a result, the output column has the same number of levels as the input,
-except now has a possible entry \code{"[EQ]"} that tidymodels funcitons know to
+except now has a possible entry \code{"[EQ]"} that tidymodels functions know to
 exclude from further analyses.
 }
 \section{Data Usage}{

@@ -31,7 +31,7 @@ should be used to train it and evaluate its predictions.
 }
 
 \examples{
-\dontshow{if (FALSE) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+\dontshow{if (rlang::is_installed(c("probably", "modeldata"))) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
 library(modeldata)
 
 # split example data

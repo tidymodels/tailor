@@ -13,7 +13,7 @@
 #'
 #' @inheritSection adjust_equivocal_zone Data Usage
 #'
-#' @examplesIf FALSE
+#' @examples
 #' library(tibble)
 #'
 #' # create example data

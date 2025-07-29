@@ -24,7 +24,7 @@
 #' column type as a factor, except there's a possible entry `"[EQ]"` that is
 #' _not_ a level and will be excluded from performance metric calculations.
 #' As a result, the output column has the same number of levels as the input,
-#' except now has a possible entry `"[EQ]"` that tidymodels funcitons know to
+#' except now has a possible entry `"[EQ]"` that tidymodels functions know to
 #' exclude from further analyses.
 #'
 #' @examplesIf rlang::is_installed(c("probably", "modeldata"))
