@@ -11,9 +11,7 @@ adjust_numeric_range()
 
 For ad-hoc adjustments, see adjust_predictions_custom().
 Tailors must be trained with fit() before being applied to
-new data with predict(). Tailors are tightly integrated
-with the tidymodels framework; for greatest ease
-of use, situate tailors in model workflows with ?workflows::add_tailor()."><meta property="og:description" content="Tailors compose iterative adjustments to model predictions. After
+new data with predict()."><meta property="og:description" content="Tailors compose iterative adjustments to model predictions. After
 initializing a tailor with this function, add adjustment specifications
 with adjust_*() functions:
 For probability distributions: adjust_probability_calibration()
@@ -25,9 +23,7 @@ adjust_numeric_range()
 
 For ad-hoc adjustments, see adjust_predictions_custom().
 Tailors must be trained with fit() before being applied to
-new data with predict(). Tailors are tightly integrated
-with the tidymodels framework; for greatest ease
-of use, situate tailors in model workflows with ?workflows::add_tailor()."></head><body>
+new data with predict()."></head><body>
     <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
 
 
@@ -70,9 +66,7 @@ with <code>adjust_*()</code> functions:</p><ul><li><p>For probability distributi
 <code><a href="adjust_numeric_range.html">adjust_numeric_range()</a></code></p></li>
 </ul><p>For ad-hoc adjustments, see <code><a href="adjust_predictions_custom.html">adjust_predictions_custom()</a></code>.</p>
 <p>Tailors must be trained with <a href="fit.tailor.html">fit()</a> before being applied to
-new data with <a href="fit.tailor.html">predict()</a>. Tailors are tightly integrated
-with the <a href="https://tidymodels.org" class="external-link">tidymodels</a> framework; for greatest ease
-of use, situate tailors in model workflows with <code>?workflows::add_tailor()</code>.</p>
+new data with <a href="fit.tailor.html">predict()</a>.</p>
     </div>
 
     <div class="section level2">
@@ -129,8 +123,7 @@ error describing the issue.</p>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">•</span> Adjust probability threshold to 0.1.</span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="co"># fit by supplying column names. situate in a modeling workflow</span></span></span>
-<span class="r-in"><span><span class="co"># with `workflows::add_tailor()` to avoid having to do so manually</span></span></span>
+<span class="r-in"><span><span class="co"># fit by supplying column names.</span></span></span>
 <span class="r-in"><span><span class="va">tlr_fit</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://generics.r-lib.org/reference/fit.html" class="external-link">fit</a></span><span class="op">(</span></span></span>
 <span class="r-in"><span>  <span class="va">tlr</span>,</span></span>
 <span class="r-in"><span>  <span class="va">two_class_example</span>,</span></span>

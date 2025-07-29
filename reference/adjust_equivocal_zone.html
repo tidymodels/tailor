@@ -76,7 +76,7 @@ in <code>x</code>, or <code>1 / 2</code> if not.</p></dd>
 column type as a factor, except there's a possible entry <code>"[EQ]"</code> that is
 <em>not</em> a level and will be excluded from performance metric calculations.
 As a result, the output column has the same number of levels as the input,
-except now has a possible entry <code>"[EQ]"</code> that tidymodels funcitons know to
+except now has a possible entry <code>"[EQ]"</code> that tidymodels functions know to
 exclude from further analyses.</p>
     </div>
     <div class="section level2">
@@ -134,8 +134,7 @@ not risk data leakage.</p>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">•</span> Add equivocal zone of size 0.25.</span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="co"># fit by supplying column names. situate in a modeling workflow</span></span></span>
-<span class="r-in"><span><span class="co"># with `workflows::add_tailor()` to avoid having to do so manually</span></span></span>
+<span class="r-in"><span><span class="co"># fit by supplying column names.</span></span></span>
 <span class="r-in"><span><span class="va">tlr_fit</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://generics.r-lib.org/reference/fit.html" class="external-link">fit</a></span><span class="op">(</span></span></span>
 <span class="r-in"><span>  <span class="va">tlr</span>,</span></span>
 <span class="r-in"><span>  <span class="va">two_class_example</span>,</span></span>

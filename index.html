@@ -56,7 +56,6 @@
 <li>For transformation of probabilities to hard class predictions: thresholds, equivocal zones</li>
 <li>For numeric distributions: calibration, range</li>
 </ul>
-<p>Tailors are tightly integrated with the <a href="https://tidymodels.org" class="external-link">tidymodels</a> framework. For greatest ease of use, situate tailors in model <a href="https://workflows.tidymodels.org" class="external-link">workflows</a> with <code>add_tailor()</code>.</p>
 <p>The package is under active development; please treat it as experimental and don’t depend on the syntax staying the same.</p>
 <div class="section level2">
 <h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
@@ -131,15 +130,6 @@
 <span><span class="co">#&gt; A binary postprocessor with 1 adjustment:</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; • Adjust probability threshold to 0.9. [trained]</span></span></code></pre></div>
-<p>When used with a model <a href="https://workflows.tidymodels.org" class="external-link">workflow</a> via <code>add_tailor()</code>, the arguments to <code><a href="https://generics.r-lib.org/reference/fit.html" class="external-link">fit()</a></code> a tailor will be set automatically (in addition to the data splitting needed for postprocessors that require training).</p>
-<p>Now, when passed new data, the trained tailor will determine the outputted class based on whether the probability assigned to the level <code>"Class1"</code> is above <code>.9</code>, resulting in more predictions of <code>"Class2"</code> than before.</p>
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/predict.html" class="external-link">predict</a></span><span class="op">(</span><span class="va">post_res</span>, <span class="va">two_class_example</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/count.html" class="external-link">count</a></span><span class="op">(</span><span class="va">predicted</span><span class="op">)</span></span>
-<span><span class="co">#&gt; # A tibble: 2 × 2</span></span>
-<span><span class="co">#&gt;   predicted     n</span></span>
-<span><span class="co">#&gt;   &lt;fct&gt;     &lt;int&gt;</span></span>
-<span><span class="co">#&gt; 1 Class1      180</span></span>
-<span><span class="co">#&gt; 2 Class2      320</span></span></code></pre></div>
 <p>Tailors compose adjustments; when several <code>adjust_*()</code> functions are called iteratively, tailors will apply them in order at <code><a href="https://generics.r-lib.org/reference/fit.html" class="external-link">fit()</a></code> and <code><a href="https://rdrr.io/r/stats/predict.html" class="external-link">predict()</a></code> time.</p>
 </div>
 </div>

@@ -78,17 +78,12 @@ function from the <span class="pkg">probably</span> package <code><a href="https
 
 
 <p>This adjustment requires estimation and, as such, different subsets of data
-should be used to train it and evaluate its predictions. See the section
-by the same name in <code>?workflows::add_tailor()</code> for more information on
-preventing data leakage with postprocessors that require estimation. When
-situated in a workflow, tailors will automatically be estimated with
-appropriate subsets of data.</p>
+should be used to train it and evaluate its predictions.</p>
     </div>
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span></span></span>
-<span class="r-in"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://modeldata.tidymodels.org" class="external-link">modeldata</a></span><span class="op">)</span></span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://modeldata.tidymodels.org" class="external-link">modeldata</a></span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># split example data</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">1</span><span class="op">)</span></span></span>
@@ -97,14 +92,20 @@ appropriate subsets of data.</p>
 <span class="r-in"><span><span class="va">d_test</span> <span class="op">&lt;-</span> <span class="va">two_class_example</span><span class="op">[</span><span class="op">!</span><span class="va">in_rows</span>, <span class="op">]</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">d_calibration</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    truth      Class1       Class2 predicted</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1 Class2 0.003589243 0.9964107574    Class2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3 Class2 0.110893522 0.8891064779    Class2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4 Class1 0.735161703 0.2648382969    Class1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6 Class1 0.999275071 0.0007249286    Class1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 7 Class1 0.999201149 0.0007988510    Class1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 8 Class1 0.812351997 0.1876480026    Class1</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># specify calibration</span></span></span>
 <span class="r-in"><span><span class="va">tlr</span> <span class="op">&lt;-</span></span></span>
 <span class="r-in"><span>  <span class="fu"><a href="tailor.html">tailor</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span></span>
 <span class="r-in"><span>  <span class="fu">adjust_probability_calibration</span><span class="op">(</span>method <span class="op">=</span> <span class="st">"logistic"</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="co"># train tailor on a subset of data. situate in a modeling workflow with</span></span></span>
-<span class="r-in"><span><span class="co"># `workflows::add_tailor()` to avoid having to specify column names manually</span></span></span>
+<span class="r-in"><span><span class="co"># train tailor on a subset of data.</span></span></span>
 <span class="r-in"><span><span class="va">tlr_fit</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://generics.r-lib.org/reference/fit.html" class="external-link">fit</a></span><span class="op">(</span></span></span>
 <span class="r-in"><span>  <span class="va">tlr</span>,</span></span>
 <span class="r-in"><span>  <span class="va">d_calibration</span>,</span></span>
@@ -115,9 +116,29 @@ appropriate subsets of data.</p>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># apply to predictions on another subset of data</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">d_test</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     truth       Class1      Class2 predicted</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2  Class1 0.6786210540 0.321378946    Class1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5  Class2 0.0162399603 0.983760040    Class2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9  Class2 0.4570372595 0.542962741    Class2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 10 Class2 0.0976377342 0.902362266    Class2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 16 Class1 0.9919162773 0.008083723    Class1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 17 Class2 0.0004250834 0.999574917    Class2</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/stats/predict.html" class="external-link">predict</a></span><span class="op">(</span><span class="va">tlr_fit</span>, <span class="va">d_test</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="op">}</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 244 × 4</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    truth     Class1    Class2 predicted</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dbl[1d]&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl[1d]&gt;</span> <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span> Class1    0.459     0.541  Class2   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span> Class2    0.039<span style="text-decoration: underline;">6</span>    0.960  Class2   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span> Class2    0.333     0.667  Class2   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span> Class2    0.095<span style="text-decoration: underline;">4</span>    0.905  Class2   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span> Class1    0.964     0.035<span style="text-decoration: underline;">9</span> Class1   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span> Class2    0.032<span style="text-decoration: underline;">8</span>    0.967  Class2   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span> Class2    0.112     0.888  Class2   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span> Class1    0.665     0.335  Class1   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span> Class1    0.957     0.043<span style="text-decoration: underline;">4</span> Class1   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span> Class2    0.053<span style="text-decoration: underline;">4</span>    0.947  Class2   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 234 more rows</span></span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
