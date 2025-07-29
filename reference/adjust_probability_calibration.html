@@ -65,7 +65,8 @@ occurring.</p>
 <dd><p>Character. One of <code>"logistic"</code>, <code>"multinomial"</code>,
 <code>"beta"</code>, <code>"isotonic"</code>, or <code>"isotonic_boot"</code>, corresponding to the
 function from the <span class="pkg">probably</span> package <code><a href="https://probably.tidymodels.org/reference/cal_estimate_logistic.html" class="external-link">probably::cal_estimate_logistic()</a></code>,
-<code><a href="https://probably.tidymodels.org/reference/cal_estimate_multinomial.html" class="external-link">probably::cal_estimate_multinomial()</a></code>, etc., respectively.</p></dd>
+<code><a href="https://probably.tidymodels.org/reference/cal_estimate_multinomial.html" class="external-link">probably::cal_estimate_multinomial()</a></code>, etc., respectively.  The default is to
+use <code>"logistic"</code> which, despite its name, fits a generalized additive model.</p></dd>
 
 
 <dt id="arg--">...<a class="anchor" aria-label="anchor" href="#arg--"></a></dt>
@@ -74,11 +75,47 @@ function from the <span class="pkg">probably</span> package <code><a href="https
 
 </dl></div>
     <div class="section level2">
+    <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
+    <p>An updated <code><a href="tailor.html">tailor()</a></code> containing the new operation.</p>
+    </div>
+    <div class="section level2">
+    <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
+    <p>The "logistic" and "multinomial" methods fit models that predict the observed
+classes as a function of the predicted class probabilities. These models
+remove any overt systematic trends from the linear predictor and correct new
+predictions. The underlying code fits that model using <code><a href="https://rdrr.io/pkg/mgcv/man/gam.html" class="external-link">mgcv::gam()</a></code>.
+If <code>smooth = FALSE</code> is passed to the <code>...</code>, it uses <code><a href="https://rdrr.io/r/stats/glm.html" class="external-link">stats::glm()</a></code> for binary
+outcomes or <code><a href="https://rdrr.io/pkg/nnet/man/multinom.html" class="external-link">nnet::multinom()</a></code> for 3+ classes.</p>
+<p>The isotonic method uses <code><a href="https://rdrr.io/r/stats/isoreg.html" class="external-link">stats::isoreg()</a></code> to force the predicted
+probabilities to increase with the observed outcome class. This creates a
+step function that will map new predictions to values that are monotonically
+increasing with the binary (0/1) form of the outcome. One side effect is
+that there are fewer, perhaps far fewer, unique predicted probabilities.
+For 3+ classes, this is done using a one-versus-all strategy that ensures
+that the probabilities add to 1.0. The "isotonic boot" method resamples the
+data and generates multiple isotonic regressions that are averaged and used
+to correct the predictions. This may not be perfectly monotonic, but the
+number of unique calibrated predictions increases with the number of
+bootstrap samples (controlled by passing the <code>times</code> argument to <code>...</code>).</p>
+<p>Beta calibration (Kull <em>et al</em>, 2017) assumes that the probability estimates
+follow a Beta distribution. This leads to a sigmoidal model that can be fit
+to the data via maximum likelihood. There are a few different ways to fit
+the model; see <code><a href="https://rdrr.io/pkg/betacal/man/beta_calibration.html" class="external-link">betacal:: beta_calibration()</a></code> options <code>parameters</code> to select
+a specific sigmoidal model.</p>
+    </div>
+    <div class="section level2">
     <h2 id="data-usage">Data Usage<a class="anchor" aria-label="anchor" href="#data-usage"></a></h2>
 
 
 <p>This adjustment requires estimation and, as such, different subsets of data
 should be used to train it and evaluate its predictions.</p>
+    </div>
+    <div class="section level2">
+    <h2 id="references">References<a class="anchor" aria-label="anchor" href="#references"></a></h2>
+    <p>Kull, Meelis, Telmo Silva Filho, and Peter Flach. "Beta calibration: a
+well-founded and easily implemented improvement on logistic calibration
+for binary classifiers." Artificial intelligence and statistics. PMLR, 2017.</p>
+<p><a href="https://aml4td.org/chapters/cls-metrics.html#sec-cls-calibration" class="external-link">https://aml4td.org/chapters/cls-metrics.html#sec-cls-calibration</a></p>
     </div>
 
     <div class="section level2">

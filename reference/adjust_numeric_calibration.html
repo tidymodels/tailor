@@ -63,7 +63,8 @@ range of outputs.</p>
 <code>"isotonic_boot"</code>, corresponding to the function from the <span class="pkg">probably</span>
 package <code><a href="https://probably.tidymodels.org/reference/cal_estimate_linear.html" class="external-link">probably::cal_estimate_linear()</a></code>,
 <code><a href="https://probably.tidymodels.org/reference/cal_estimate_isotonic.html" class="external-link">probably::cal_estimate_isotonic()</a></code>, or
-<code><a href="https://probably.tidymodels.org/reference/cal_estimate_isotonic_boot.html" class="external-link">probably::cal_estimate_isotonic_boot()</a></code>, respectively.</p></dd>
+<code><a href="https://probably.tidymodels.org/reference/cal_estimate_isotonic_boot.html" class="external-link">probably::cal_estimate_isotonic_boot()</a></code>, respectively. The default is to
+use <code>"linear"</code> which, despite its name, fits a generalized additive model.</p></dd>
 
 
 <dt id="arg--">...<a class="anchor" aria-label="anchor" href="#arg--"></a></dt>
@@ -71,6 +72,27 @@ package <code><a href="https://probably.tidymodels.org/reference/cal_estimate_li
 <span class="pkg">probably</span> package. These arguments must be named.</p></dd>
 
 </dl></div>
+    <div class="section level2">
+    <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
+    <p>An updated <code><a href="tailor.html">tailor()</a></code> containing the new operation.</p>
+    </div>
+    <div class="section level2">
+    <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
+    <p>The "linear" method fits a model that predicts the observed versus the
+predicted outcome values. This model is used to remove any overt systematic
+trends from the data, equivalent to removing the model residuals from new
+data. The underlying code fits that model using <code><a href="https://rdrr.io/pkg/mgcv/man/gam.html" class="external-link">mgcv::gam()</a></code>. If
+<code>smooth = FALSE</code> is passed to the <code>...</code>, it uses <code><a href="https://rdrr.io/r/stats/lm.html" class="external-link">stats::lm()</a></code>.</p>
+<p>The isotonic method uses <code><a href="https://rdrr.io/r/stats/isoreg.html" class="external-link">stats::isoreg()</a></code> to force the predicted values to
+increase with the observed outcome. This creates a step function that will
+map new predictions to values that are monotonically increasing with the
+outcome. One side effect is that there are fewer, perhaps far fewer, unique
+predicted values. The "isotonic boot" method resamples the data and generates
+multiple isotonic regressions that are averaged and used to correct the
+predictions. This may not be perfectly monotonic, but the number of unique
+calibrated predictions increases with the number of bootstrap samples
+(controlled by passing the <code>times</code> argument to <code>...</code>).</p>
+    </div>
     <div class="section level2">
     <h2 id="data-usage">Data Usage<a class="anchor" aria-label="anchor" href="#data-usage"></a></h2>
 

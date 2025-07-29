@@ -75,6 +75,18 @@ new data with <a href="fit.tailor.html">predict()</a>.</p>
     </div>
 
     <div class="section level2">
+    <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
+    <p>An object of class <code>tailor</code> with elements:</p><ul><li><p><code>type</code>: The type of task (e.g., regression)</p></li>
+<li><p><code>adjustments</code>: A list containing the sequential options specified by the
+user.</p></li>
+<li><p><code>columns</code>: the data set column names for the true outcome values and the
+predictions of various types. If these are not specified, then <code>NULL</code>.
+These are usual</p></li>
+<li><p><code>ptype</code>: a zero-row slice of the data containing the <code>columns</code>.</p></li>
+</ul><p>Most of these values are set when an adjustment is added to the tailor or
+when <code><a href="fit.tailor.html">fit.tailor()</a></code> is used.</p>
+    </div>
+    <div class="section level2">
     <h2 id="ordering-of-adjustments">Ordering of adjustments<a class="anchor" aria-label="anchor" href="#ordering-of-adjustments"></a></h2>
 
 
