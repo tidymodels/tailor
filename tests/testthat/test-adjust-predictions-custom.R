@@ -87,3 +87,14 @@ test_that("tunable", {
   adj_param <- tunable(tlr$adjustments[[1]])
   expect_equal(adj_param, no_param)
 })
+
+test_that("required packages", {
+  tlr <-
+    tailor() |>
+    adjust_predictions_custom(
+      linear_predictor = binomial()$linkfun(Class2),
+      .pkgs = "potato"
+      )
+
+  expect_equal(required_pkgs(tlr), c("potato", "tailor"))
+})

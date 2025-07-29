@@ -150,10 +150,14 @@ predict.probability_calibration <- function(object, new_data, tailor, ...) {
   )
 }
 
-# todo probably needs required_pkgs methods for cal objects
 #' @export
 required_pkgs.probability_calibration <- function(x, ...) {
-  c("tailor", "probably")
+  res <- c("tailor", "probably")
+
+  if (x$trained) {
+    res <- c(res, required_pkgs(x$results$fit))
+  }
+  sort(unique(res))
 }
 
 #' @export

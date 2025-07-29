@@ -146,10 +146,14 @@ predict.numeric_calibration <- function(object, new_data, tailor, ...) {
   probably::cal_apply(new_data, object$results$fit)
 }
 
-# todo probably needs required_pkgs methods for cal objects
 #' @export
 required_pkgs.numeric_calibration <- function(x, ...) {
-  c("tailor", "probably")
+  res <- c("tailor", "probably")
+
+  if (x$trained) {
+    res <- c(res, required_pkgs(x$results$fit))
+  }
+  sort(unique(res))
 }
 
 #' @export

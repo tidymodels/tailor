@@ -169,3 +169,27 @@ test_that("harden against calibration model failure", {
   expect_true(all(y_pred$y_pred == d_test$y_pred))
 })
 
+test_that("required packages for adjust_numeric_calibration", {
+  skip_if_not_installed("mgcv")
+
+  library(tibble)
+
+  set.seed(1)
+  d_calibration <- tibble(y = rnorm(100), y_pred = y / 2 + rnorm(100))
+  d_test <- tibble(y = rnorm(100), y_pred = y / 2 + rnorm(100))
+
+  expect_no_condition(
+    tlr <-
+      tailor() |>
+      adjust_numeric_calibration(method = "linear")
+  )
+
+  expect_no_warning(
+    tlr_fit <- fit(tlr, d_calibration, outcome = y, estimate = y_pred)
+  )
+
+  expect_equal(required_pkgs(tlr), c("probably", "tailor"))
+  expect_equal(required_pkgs(tlr_fit), c("mgcv", "probably", "tailor"))
+
+})
+
