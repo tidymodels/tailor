@@ -176,6 +176,37 @@ test_that("tuning the calibration method", {
   )
 })
 
+test_that("passing arguments to adjust_probability_calibration", {
+  skip_if_not_installed("modeldata")
+
+  library(modeldata)
+
+  expect_no_condition(
+    tlr_fit <-
+      tailor() |>
+      adjust_probability_calibration(method = "logistic", smooth = FALSE) |>
+      fit(
+        two_class_example,
+        outcome = c(truth),
+        estimate = c(predicted),
+        probabilities = c(Class1, Class2)
+      )
+  )
+
+  expect_s3_class(
+    tlr_fit$adjustments[[1]]$results$fit,
+    "cal_estimate_logistic"
+  )
+
+  expect_snapshot(
+    tlr_fit <-
+      tailor() |>
+      adjust_probability_calibration(method = "logistic", FALSE),
+    error = TRUE
+  )
+
+})
+
 test_that("required packages for adjust_probability_calibration", {
   skip_if_not_installed("mgcv")
   skip_if_not_installed("modeldata")
@@ -244,3 +275,4 @@ test_that("harden against calibration model failure", {
   expect_true(all(y_pred$Class2 == d_test$Class2))
   expect_true(all(y_pred$predicted == d_test$predicted))
 })
+

@@ -7,7 +7,7 @@
 #' that probability accurately reflects the true likelihood of that outcome
 #' occurring.
 #'
-#' @param x A [tailor()].
+#' @inheritParams adjust_numeric_calibration
 #' @param method Character. One of `"logistic"`, `"multinomial"`,
 #' `"beta"`, `"isotonic"`, or `"isotonic_boot"`, corresponding to the
 #' function from the \pkg{probably} package `probably::cal_estimate_logistic()`,
@@ -47,7 +47,7 @@
 #' predict(tlr_fit, d_test)
 #'
 #' @export
-adjust_probability_calibration <- function(x, method = NULL) {
+adjust_probability_calibration <- function(x, method = NULL, ...) {
   validate_probably_available()
 
   check_tailor(x, calibration_type = "probability")
@@ -59,12 +59,21 @@ adjust_probability_calibration <- function(x, method = NULL) {
     )
   }
 
+  args <- list(...)
+  nms <- names(args)
+  if (length(args) > 0 & (is.null(nms) || any(nms == ""))) {
+    cli::cli_abort(
+      "All calibration arguments passed to {.arg ...} should have names."
+    )
+  }
+  args$method <- method
+
   adj <-
     new_adjustment(
       "probability_calibration",
       inputs = "probability",
       outputs = "probability_class",
-      arguments = list(method = method),
+      arguments = args,
       results = list(),
       trained = FALSE,
       requires_fit = TRUE
@@ -105,22 +114,29 @@ fit.probability_calibration <- function(object, data, tailor = NULL, ...) {
   validate_probably_available()
 
   method <- check_method(object$arguments$method, tailor$type)
-  # todo: adjust_probability_calibration() should take arguments to pass to
-  # cal_estimate_* via dots
 
   cl <- rlang::call2(
     paste0("cal_estimate_", method),
-    .data = expr(data),
-    # todo: make getters for the entries in `columns`
+    .data = quote(data),
+    # TODO: make getters for the entries in `columns`
     truth = tailor$columns$outcome,
     estimate = tailor$columns$probabilities,
     .ns = "probably"
   )
 
+  other_args <- object$arguments[names(object$arguments) != "method"]
+  if (length(other_args) > 0) {
+    cl <- rlang::call_modify(cl, !!!other_args)
+  }
+
   fit <- try(eval_bare(cl), silent = TRUE)
   if (inherits(fit, "try-error")) {
-    cli::cli_alert(
-      "The {object$method} calibration failed: {fit}. No calibration is applied.")
+    cli::cli_warn(
+      c(
+        "The {method} calibration failed. No calibration is applied.",
+        i = fit
+      )
+    )
   }
 
   new_adjustment(
