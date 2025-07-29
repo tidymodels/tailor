@@ -3,10 +3,8 @@ skip_if_not_installed("probably")
 test_that("basic adjust_numeric_calibration usage works", {
   skip_if_not_installed("mgcv")
 
-  library(tibble)
-
   set.seed(1)
-  d_calibration <- tibble(y = rnorm(100), y_pred = y / 2 + rnorm(100))
+  d_calibration <- tibble::tibble(y = rnorm(100), y_pred = y / 2 + rnorm(100))
   d_test <- tibble(y = rnorm(100), y_pred = y / 2 + rnorm(100))
 
   # fitting and predicting happens without raising conditions
@@ -37,10 +35,8 @@ test_that("basic adjust_numeric_calibration usage works", {
 })
 
 test_that("adjust_numeric_calibration() respects `method` argument", {
-  library(tibble)
-
   set.seed(1)
-  d_calibration <- tibble(y = rnorm(100), y_pred = y / 2 + rnorm(100))
+  d_calibration <- tibble::tibble(y = rnorm(100), y_pred = y / 2 + rnorm(100))
   d_test <- tibble(y = rnorm(100), y_pred = y / 2 + rnorm(100))
 
   expect_no_condition(
@@ -121,10 +117,8 @@ test_that("tunable S3 method", {
 
 
 test_that("tuning the calibration method", {
-  library(tibble)
-
   set.seed(1)
-  d_calibration <- tibble(y = rnorm(100), y_pred = y / 2 + rnorm(100))
+  d_calibration <- tibble::tibble(y = rnorm(100), y_pred = y / 2 + rnorm(100))
   d_test <- tibble(y = rnorm(100), y_pred = y / 2 + rnorm(100))
 
   tlr <-
@@ -139,11 +133,8 @@ test_that("tuning the calibration method", {
 })
 
 test_that("passing arguments to adjust_numeric_calibration", {
-
-  library(tibble)
-
   set.seed(1)
-  d_calibration <- tibble(y = rnorm(100), y_pred = y / 2 + rnorm(100))
+  d_calibration <- tibble::tibble(y = rnorm(100), y_pred = y / 2 + rnorm(100))
   d_test <- tibble(y = rnorm(100), y_pred = y / 2 + rnorm(100))
 
   expect_no_condition(
@@ -171,5 +162,25 @@ test_that("passing arguments to adjust_numeric_calibration", {
       adjust_numeric_calibration(method = "linear", FALSE, select = TRUE),
     error = TRUE
   )
+})
+
+
+test_that("required packages for adjust_numeric_calibration", {
+  skip_if_not_installed("mgcv")
+
+  set.seed(1)
+  d_calibration <- tibble::tibble(y = rnorm(100), y_pred = y / 2 + rnorm(100))
+  d_test <- tibble(y = rnorm(100), y_pred = y / 2 + rnorm(100))
+
+  tlr <-
+    tailor() |>
+    adjust_numeric_calibration(method = "linear")
+
+  expect_no_warning(
+    tlr_fit <- fit(tlr, d_calibration, outcome = y, estimate = y_pred)
+  )
+
+  expect_equal(required_pkgs(tlr), c("probably", "tailor"))
+  expect_equal(required_pkgs(tlr_fit), c("mgcv", "probably", "tailor"))
 
 })
