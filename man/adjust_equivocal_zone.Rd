@@ -56,8 +56,7 @@ tlr <-
 
 tlr
 
-# fit by supplying column names. situate in a modeling workflow
-# with `workflows::add_tailor()` to avoid having to do so manually
+# fit by supplying column names.
 tlr_fit <- fit(
   tlr,
   two_class_example,

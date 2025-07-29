@@ -21,9 +21,7 @@ with \verb{adjust_*()} functions:
 For ad-hoc adjustments, see \code{\link[=adjust_predictions_custom]{adjust_predictions_custom()}}.
 
 Tailors must be trained with \link[=fit.tailor]{fit()} before being applied to
-new data with \link[=predict.tailor]{predict()}. Tailors are tightly integrated
-with the \href{https://tidymodels.org}{tidymodels} framework; for greatest ease
-of use, situate tailors in model workflows with \code{?workflows::add_tailor()}.
+new data with \link[=predict.tailor]{predict()}.
 }
 \section{Ordering of adjustments}{
 
@@ -67,8 +65,7 @@ tlr <-
 
 tlr
 
-# fit by supplying column names. situate in a modeling workflow
-# with `workflows::add_tailor()` to avoid having to do so manually
+# fit by supplying column names.
 tlr_fit <- fit(
   tlr,
   two_class_example,

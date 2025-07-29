@@ -41,8 +41,7 @@ tlr <-
   tailor() |>
   adjust_numeric_range(lower_limit = 1)
 
-# train tailor by passing column names. situate in a modeling workflow with
-# `workflows::add_tailor()` to avoid having to specify column names manually
+# train tailor by passing column names.
 tlr_fit <- fit(tlr, d, outcome = y, estimate = y_pred)
 
 predict(tlr_fit, d)

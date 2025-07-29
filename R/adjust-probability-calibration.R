@@ -32,8 +32,7 @@
 #'   tailor() |>
 #'   adjust_probability_calibration(method = "logistic")
 #'
-#' # train tailor on a subset of data. situate in a modeling workflow with
-#' # `workflows::add_tailor()` to avoid having to specify column names manually
+#' # train tailor on a subset of data.
 #' tlr_fit <- fit(
 #'   tlr,
 #'   d_calibration,
