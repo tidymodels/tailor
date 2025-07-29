@@ -13,7 +13,8 @@ adjust_numeric_calibration(x, method = NULL, ...)
 \code{"isotonic_boot"}, corresponding to the function from the \pkg{probably}
 package \code{probably::cal_estimate_linear()},
 \code{probably::cal_estimate_isotonic()}, or
-\code{probably::cal_estimate_isotonic_boot()}, respectively.}
+\code{probably::cal_estimate_isotonic_boot()}, respectively. The default is to
+use \code{"linear"} which, despite its name, fits a generalized additive model.}
 
 \item{...}{Optional arguments to pass to the corresponding function in the
 \pkg{probably} package. These arguments must be named.}
@@ -23,6 +24,23 @@ Calibration for regression models involves adjusting the model's
 predictions to adjust for correlated errors, ensuring that predicted
 values align closely with actual observed values across the entire
 range of outputs.
+}
+\details{
+The "linear" method fits a model that predicts the observed versus the
+predicted outcome values. This model is used to remove any overt systematic
+trends from the data, equivalent to removing the model residuals from new
+data. The underlying code fits that model using \code{\link[mgcv:gam]{mgcv::gam()}}. If
+\code{smooth = FALSE} is passed to the \code{...}, it uses \code{\link[stats:lm]{stats::lm()}}.
+
+The isotonic method uses \code{\link[stats:isoreg]{stats::isoreg()}} to force the predicted values to
+increase with the observed outcome. This creates a step function that will
+map new predictions to values that are monotonically increasing with the
+outcome. One side effect is that there are fewer, perhaps far fewer, unique
+predicted values. The "isotonic boot" method resamples the data and generates
+multiple isotonic regressions that are averaged and used to correct the
+predictions. This may not be perfectly monotonic, but the number of unique
+calibrated predictions increases with the number of bootstrap samples
+(controlled by passing the \code{times} argument to \code{...}).
 }
 \section{Data Usage}{
 
