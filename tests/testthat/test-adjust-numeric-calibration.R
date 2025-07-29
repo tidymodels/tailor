@@ -201,15 +201,12 @@ test_that("too few data", {
 })
 
 test_that("passing arguments to adjust_numeric_calibration", {
-  set.seed(1)
-  d_calibration <- tibble::tibble(y = rnorm(100), y_pred = y / 2 + rnorm(100))
-  d_test <- tibble(y = rnorm(100), y_pred = y / 2 + rnorm(100))
 
   expect_no_condition(
     tlr_fit <-
       tailor() |>
       adjust_numeric_calibration(method = "linear", smooth = FALSE) |>
-      fit(d_calibration, outcome = y, estimate = y_pred)
+      fit(d_reg_calibration, outcome = y, estimate = y_pred)
   )
 
   expect_s3_class(
@@ -267,12 +264,6 @@ test_that("harden against calibration model failure", {
 test_that("required packages for adjust_numeric_calibration", {
   skip_if_not_installed("mgcv")
 
-  library(tibble)
-
-  set.seed(1)
-  d_calibration <- tibble(y = rnorm(100), y_pred = y / 2 + rnorm(100))
-  d_test <- tibble(y = rnorm(100), y_pred = y / 2 + rnorm(100))
-
   expect_no_condition(
     tlr <-
       tailor() |>
@@ -280,7 +271,7 @@ test_that("required packages for adjust_numeric_calibration", {
   )
 
   expect_no_warning(
-    tlr_fit <- fit(tlr, d_calibration, outcome = y, estimate = y_pred)
+    tlr_fit <- fit(tlr, d_reg_calibration, outcome = y, estimate = y_pred)
   )
 
   expect_equal(required_pkgs(tlr), c("probably", "tailor"))

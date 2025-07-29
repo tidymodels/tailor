@@ -448,15 +448,6 @@ test_that("passing arguments to adjust_probability_calibration", {
 
 test_that("required packages for adjust_probability_calibration", {
   skip_if_not_installed("mgcv")
-  skip_if_not_installed("modeldata")
-
-  library(modeldata)
-
-  # split example data
-  set.seed(1)
-  in_rows <- sample(c(TRUE, FALSE), nrow(two_class_example), replace = TRUE)
-  d_calibration <- two_class_example[in_rows, ]
-  d_test <- two_class_example[!in_rows, ]
 
   # fitting and predicting happens without raising conditions
   expect_no_condition(
@@ -468,10 +459,10 @@ test_that("required packages for adjust_probability_calibration", {
   expect_no_condition(
     tlr_fit <- fit(
       tlr,
-      d_calibration,
-      outcome = c(truth),
+      d_bin_calibration,
+      outcome = c(y),
       estimate = c(predicted),
-      probabilities = c(Class1, Class2)
+      probabilities = c(a, b)
     )
   )
 
