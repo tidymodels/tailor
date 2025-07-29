@@ -37,5 +37,7 @@ For adjustments that don't require estimating parameters, training with
 For others, as in \code{\link[=adjust_numeric_calibration]{adjust_numeric_calibration()}}, adjustments actually
 learn from data; in that case, separate subsets of data ought to be used
 for training the tailor and evaluating its performance on predictions.
+
+Note that if \code{.data} has zero or one row, the \code{method} is changed to \code{"none"}.
 }
 
