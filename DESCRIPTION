@@ -35,13 +35,12 @@ Imports:
     vctrs
 Suggests: 
     betacal,
-    dials,
+    dials (>= 1.4.1),
     mgcv,
     modeldata,
     probably (>= 1.1.0),
     testthat (>= 3.0.0)
 Remotes:
-    tidymodels/dials,
     tidymodels/probably
 Config/Needs/website: tidyverse/tidytemplate
 Config/testthat/edition: 3
