@@ -76,3 +76,17 @@
       Error in `adjust_probability_calibration()`:
       ! All calibration arguments passed to `...` should have names.
 
+# harden against calibration model failure
+
+    Code
+      y_fit <- fit(tlr, d_y_calibration, outcome = c(truth), estimate = c(predicted),
+      probabilities = c(Class1, Class2))
+    Condition
+      Warning:
+      glm.fit: algorithm did not converge
+      Warning:
+      glm.fit: algorithm did not converge
+      Warning:
+      The beta calibration failed. No calibration is applied.
+      i Error in uniroot(function(mh) b * log(1 - mh) - a * log(mh) - inter, c(1e-16, : f() values at end points not of opposite sign
+

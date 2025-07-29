@@ -84,3 +84,27 @@
       Error in `adjust_numeric_calibration()`:
       ! All calibration arguments passed to `...` should have names.
 
+# harden against calibration model failure
+
+    Code
+      pred_fit <- fit(tlr, d_calibration_pred, outcome = y, estimate = y_pred)
+    Condition
+      Warning:
+      Too few unique observations for spline-based calibrator. Setting `smooth = FALSE`.
+      Warning in `glm.fit()`:
+      no observations informative at iteration 1
+      Warning:
+      glm.fit: algorithm did not converge
+      Warning:
+      The linear calibration failed. No calibration is applied.
+      i Error in fit$rank : object of type 'closure' is not subsettable
+
+---
+
+    Code
+      y_fit <- fit(tlr, d_calibration_y, outcome = y, estimate = y_pred)
+    Condition
+      Warning:
+      The linear calibration failed. No calibration is applied.
+      i Error in mgcv::gam(f_model, data = .data, ...) : Not enough (non-NA) data to do anything meaningful
+
