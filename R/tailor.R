@@ -15,9 +15,7 @@
 #' For ad-hoc adjustments, see [adjust_predictions_custom()].
 #'
 #' Tailors must be trained with [fit()][fit.tailor()] before being applied to
-#' new data with [predict()][predict.tailor()]. Tailors are tightly integrated
-#' with the [tidymodels](https://tidymodels.org) framework; for greatest ease
-#' of use, situate tailors in model workflows with `?workflows::add_tailor()`.
+#' new data with [predict()][predict.tailor()].
 #'
 #' @section Ordering of adjustments:
 #'
@@ -59,8 +57,7 @@
 #'
 #' tlr
 #'
-#' # fit by supplying column names. situate in a modeling workflow
-#' # with `workflows::add_tailor()` to avoid having to do so manually
+#' # fit by supplying column names.
 #' tlr_fit <- fit(
 #'   tlr,
 #'   two_class_example,
@@ -150,9 +147,6 @@ print.tailor <- function(x, ...) {
 #' These functions apply `fit()` and `predict()` methods for each adjustment
 #' added to a tailor, in the order in which they were applied.
 #'
-#' Users do not need to interface with these methods directly when tailors
-#' are situated inside model workflows with `?workflows::add_tailor()`.
-#'
 #' @section Data Usage:
 #'
 #' For adjustments that don't require estimating parameters, training with
@@ -160,25 +154,16 @@ print.tailor <- function(x, ...) {
 #' For others, as in [adjust_numeric_calibration()], adjustments actually
 #' learn from data; in that case, separate subsets of data ought to be used
 #' for training the tailor and evaluating its performance on predictions.
-#' See the Data Usage section in `?workflows::add_tailor()` for more information
-#' on how tidymodels makes that split; when situated in a model workflow,
-#' tailors will automatically be trained on the appropriate subset of data.
 #'
 #' Note that if `.data` has zero or one row, the `method` is changed to `"none"`.
 #'
 #' @param object A [tailor()].
 #' @param .data,new_data A data frame containing predictions from a model.
-#' @param outcome <[`tidy-select`][dplyr::dplyr_tidy_select]> Only required
-#' when used independently of `?workflows::add_tailor()`.
+#' @param outcome <[`tidy-select`][dplyr::dplyr_tidy_select]>
 #' The column name of the outcome variable.
-#' @param estimate <[`tidy-select`][dplyr::dplyr_tidy_select]> Only required
-#' when used independently of `?workflows::add_tailor()`.
-#' The column name of the point estimate (e.g. predicted
-#' class), In tidymodels, this corresponds to column names `.pred`,
-#' `.pred_class`, or `.pred_time`.
-#' @param probabilities <[`tidy-select`][dplyr::dplyr_tidy_select]> Only required
-#' when used independently of `?workflows::add_tailor()` for the `"binary"` or
-#' `"multiclass"` types. The column names of class probability estimates. These
+#' @param estimate <[`tidy-select`][dplyr::dplyr_tidy_select]>
+#' @param probabilities <[`tidy-select`][dplyr::dplyr_tidy_select]> The column
+#' names of class probability estimates. These
 #' should be given in the order of the factor levels of the `estimate`.
 #' @param ... Currently ignored.
 #'
@@ -321,4 +306,11 @@ tunable.tailor <- function(x, ...) {
     }
   }
   res
+}
+
+#' @export
+required_pkgs.tailor <- function(x, ...) {
+  res <- purrr::map(x$adjustments, required_pkgs)
+  res <- c("tailor", unlist(res))
+  sort(unique(res))
 }

@@ -13,14 +13,12 @@
 #' `probably::cal_estimate_isotonic()`
 #' `probably::cal_estimate_isotonic_boot()`, or
 #' `probably::cal_estimate_none()`, respectively.
+#' @param ... Optional arguments to pass to the corresponding function in the
+#' \pkg{probably} package. These arguments must be named.
 #'
 #' @section Data Usage:
 #' This adjustment requires estimation and, as such, different subsets of data
-#' should be used to train it and evaluate its predictions. See the section
-#' by the same name in `?workflows::add_tailor()` for more information on
-#' preventing data leakage with postprocessors that require estimation. When
-#' situated in a workflow, tailors will automatically be estimated with
-#' appropriate subsets of data.
+#' should be used to train it and evaluate its predictions.
 #'
 #' Note that, when calling [fit.tailor()], if the calibration data have zero or
 #' one row, the `method` is changed to `"none"`.
@@ -39,8 +37,7 @@
 #'   tailor() |>
 #'   adjust_numeric_calibration(method = "linear")
 #'
-#' # train tailor on a subset of data. situate in a modeling workflow with
-#' # `workflows::add_tailor()` to avoid having to specify column names manually
+#' # train tailor on a subset of data.
 #' tlr_fit <- fit(tlr, d_calibration, outcome = y, estimate = y_pred)
 #'
 #' # apply to predictions on another subset of data
@@ -48,7 +45,7 @@
 #'
 #' predict(tlr_fit, d_test)
 #' @export
-adjust_numeric_calibration <- function(x, method = NULL) {
+adjust_numeric_calibration <- function(x, method = NULL, ...) {
   validate_probably_available()
 
   check_tailor(x, calibration_type = "numeric")
@@ -60,12 +57,21 @@ adjust_numeric_calibration <- function(x, method = NULL) {
     )
   }
 
+  args <- list(...)
+  nms <- names(args)
+  if (length(args) > 0 & (is.null(nms) || any(nms == ""))) {
+    cli::cli_abort(
+      "All calibration arguments passed to {.arg ...} should have names."
+    )
+  }
+  args$method <- method
+
   adj <-
     new_adjustment(
       "numeric_calibration",
       inputs = "numeric",
       outputs = "numeric",
-      arguments = list(method = method),
+      arguments = args,
       results = list(),
       trained = FALSE,
       requires_fit = TRUE
@@ -87,12 +93,12 @@ print.numeric_calibration <- function(x, ...) {
   if (is_tune(x$arguments$method)) {
     method <- "(method marked for optimization)"
   } else {
-    if (is.null(x$argument$method)) {
+    if (is.null(x$arguments$method)) {
       method <- "unknown"
     } else {
-      method <- x$argument$method
+      method <- x$arguments$method
     }
-    method <- paste("using", x$argument$method, "method")
+    method <- paste("using", x$arguments$method, "method")
   }
 
   cli::cli_bullets(c(
@@ -110,18 +116,29 @@ fit.numeric_calibration <- function(object, data, tailor = NULL, ...) {
     type = tailor$type,
     cal_data = data
   )
-  # todo: adjust_numeric_calibration() should take arguments to pass to
-  # cal_estimate_* via dots
-  fit <-
-    eval_bare(
-      call2(
-        paste0("cal_estimate_", method),
-        .data = data,
-        truth = tailor$columns$outcome,
-        estimate = tailor$columns$estimate,
-        .ns = "probably"
+
+  cl <- rlang::call2(
+    paste0("cal_estimate_", method),
+    .data = data,
+    truth = tailor$columns$outcome,
+    estimate = tailor$columns$estimate,
+    .ns = "probably"
+  )
+
+  other_args <- object$arguments[names(object$arguments) != "method"]
+  if (length(other_args) > 0) {
+    cl <- rlang::call_modify(cl, !!!other_args)
+  }
+
+  fit <- try(eval_bare(cl), silent = TRUE)
+  if (inherits(fit, "try-error")) {
+    cli::cli_warn(
+      c(
+        "The {method} calibration failed. No calibration is applied.",
+        i = fit
       )
     )
+  }
 
   new_adjustment(
     class(object),
@@ -138,13 +155,21 @@ fit.numeric_calibration <- function(object, data, tailor = NULL, ...) {
 predict.numeric_calibration <- function(object, new_data, tailor, ...) {
   validate_probably_available()
 
+  if (inherits(object$results$fit, "try-error")) {
+    return(new_data)
+  }
+
   probably::cal_apply(new_data, object$results$fit)
 }
 
-# todo probably needs required_pkgs methods for cal objects
 #' @export
 required_pkgs.numeric_calibration <- function(x, ...) {
-  c("tailor", "probably")
+  res <- c("tailor", "probably")
+
+  if (x$trained) {
+    res <- c(res, required_pkgs(x$results$fit))
+  }
+  sort(unique(res))
 }
 
 #' @export

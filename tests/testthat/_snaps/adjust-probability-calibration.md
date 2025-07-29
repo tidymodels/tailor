@@ -34,8 +34,8 @@
 ---
 
     Code
-      fit(adjust_probability_calibration(tailor()), d_bin_calibration, outcome = c(y),
-      estimate = c(predicted), probabilities = c(a, b))
+      fit(adjust_probability_calibration(tailor()), two_class_example, outcome = c(
+        truth), estimate = c(predicted), probabilities = c(Class1, Class2))
     Message
       
       -- tailor ----------------------------------------------------------------------
@@ -49,7 +49,7 @@
       adjust_probability_calibration(tailor(), "boop")
     Condition
       Error in `adjust_probability_calibration()`:
-      ! `method` must be one of "logistic", "multinomial", "beta", "isotonic", "isotonic_boot", or "none", not "boop".
+      ! `method` must be one of "logistic", "multinomial", "beta", "isotonic", or "isotonic_boot", not "boop".
 
 ---
 
@@ -57,30 +57,36 @@
       adjust_probability_calibration(tailor(), "linear")
     Condition
       Error in `adjust_probability_calibration()`:
-      ! `method` must be one of "logistic", "multinomial", "beta", "isotonic", "isotonic_boot", or "none", not "linear".
+      ! `method` must be one of "logistic", "multinomial", "beta", "isotonic", or "isotonic_boot", not "linear".
 
 # tuning the calibration method
 
     Code
-      fit(tlr, d_bin_calibration, outcome = c(y), estimate = c(predicted),
-      probabilities = c(a, b))
+      fit(tlr, d_calibration, outcome = c(truth), estimate = c(predicted),
+      probabilities = c(Class1, Class2))
     Condition
       Error in `fit()`:
       ! The calibration method cannot be a value of `tune()` at `fit()` time.
 
-# too few data
+# passing arguments to adjust_probability_calibration
 
     Code
-      tlr_fit <- fit(tlr, d_bin_calibration[0, ], outcome = c(y), estimate = c(
-        predicted), probabilities = c(a, b))
-    Message
-      The calibration data has 0 rows. There is not enough data for calibration so `method` is changed from "logistic" to "none".
+      tlr_fit <- adjust_probability_calibration(tailor(), method = "logistic", FALSE)
+    Condition
+      Error in `adjust_probability_calibration()`:
+      ! All calibration arguments passed to `...` should have names.
 
----
+# harden against calibration model failure
 
     Code
-      tlr_fit <- fit(tlr, d_bin_calibration[1, ], outcome = c(y), estimate = c(
-        predicted), probabilities = c(a, b))
-    Message
-      The calibration data has 1 row. There is not enough data for calibration so `method` is changed from "logistic" to "none".
+      y_fit <- fit(tlr, d_y_calibration, outcome = c(truth), estimate = c(predicted),
+      probabilities = c(Class1, Class2))
+    Condition
+      Warning:
+      glm.fit: algorithm did not converge
+      Warning:
+      glm.fit: algorithm did not converge
+      Warning:
+      The beta calibration failed. No calibration is applied.
+      i Error in uniroot(function(mh) b * log(1 - mh) - a * log(mh) - inter, c(1e-16, : f() values at end points not of opposite sign
 

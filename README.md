@@ -26,11 +26,6 @@ ones:
   thresholds, equivocal zones
 - For numeric distributions: calibration, range
 
-Tailors are tightly integrated with the
-[tidymodels](https://tidymodels.org) framework. For greatest ease of
-use, situate tailors in model
-[workflows](https://workflows.tidymodels.org) with `add_tailor()`.
-
 The package is under active development; please treat it as experimental
 and don’t depend on the syntax staying the same.
 
@@ -135,25 +130,6 @@ post_res
 #> A binary postprocessor with 1 adjustment:
 #> 
 #> • Adjust probability threshold to 0.9. [trained]
-```
-
-When used with a model [workflow](https://workflows.tidymodels.org) via
-`add_tailor()`, the arguments to `fit()` a tailor will be set
-automatically (in addition to the data splitting needed for
-postprocessors that require training).
-
-Now, when passed new data, the trained tailor will determine the
-outputted class based on whether the probability assigned to the level
-`"Class1"` is above `.9`, resulting in more predictions of `"Class2"`
-than before.
-
-``` r
-predict(post_res, two_class_example) |> count(predicted)
-#> # A tibble: 2 × 2
-#>   predicted     n
-#>   <fct>     <int>
-#> 1 Class1      180
-#> 2 Class2      320
 ```
 
 Tailors compose adjustments; when several `adjust_*()` functions are

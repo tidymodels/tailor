@@ -4,17 +4,19 @@
 \alias{adjust_numeric_calibration}
 \title{Re-calibrate numeric predictions}
 \usage{
-adjust_numeric_calibration(x, method = NULL)
+adjust_numeric_calibration(x, method = NULL, ...)
 }
 \arguments{
 \item{x}{A \code{\link[=tailor]{tailor()}}.}
 
-\item{method}{Character. One of \code{"linear"}, \code{"isotonic"},\code{"isotonic_boot"},
-or \code{"none"}, corresponding to the function from the \pkg{probably}
+\item{method}{Character. One of \code{"linear"}, \code{"isotonic"}, or
+\code{"isotonic_boot"}, corresponding to the function from the \pkg{probably}
 package \code{probably::cal_estimate_linear()},
-\code{probably::cal_estimate_isotonic()}
-\code{probably::cal_estimate_isotonic_boot()}, or
-\code{probably::cal_estimate_none()}, respectively.}
+\code{probably::cal_estimate_isotonic()}, or
+\code{probably::cal_estimate_isotonic_boot()}, respectively.}
+
+\item{...}{Optional arguments to pass to the corresponding function in the
+\pkg{probably} package. These arguments must be named.}
 }
 \description{
 Calibration for regression models involves adjusting the model's
@@ -25,14 +27,7 @@ range of outputs.
 \section{Data Usage}{
 
 This adjustment requires estimation and, as such, different subsets of data
-should be used to train it and evaluate its predictions. See the section
-by the same name in \code{?workflows::add_tailor()} for more information on
-preventing data leakage with postprocessors that require estimation. When
-situated in a workflow, tailors will automatically be estimated with
-appropriate subsets of data.
-
-Note that, when calling \code{\link[=fit.tailor]{fit.tailor()}}, if the calibration data have zero or
-one row, the \code{method} is changed to \code{"none"}.
+should be used to train it and evaluate its predictions.
 }
 
 \examples{
@@ -51,8 +46,7 @@ tlr <-
   tailor() |>
   adjust_numeric_calibration(method = "linear")
 
-# train tailor on a subset of data. situate in a modeling workflow with
-# `workflows::add_tailor()` to avoid having to specify column names manually
+# train tailor on a subset of data.
 tlr_fit <- fit(tlr, d_calibration, outcome = y, estimate = y_pred)
 
 # apply to predictions on another subset of data

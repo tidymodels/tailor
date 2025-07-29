@@ -4,15 +4,18 @@
 \alias{adjust_probability_calibration}
 \title{Re-calibrate classification probability predictions}
 \usage{
-adjust_probability_calibration(x, method = NULL)
+adjust_probability_calibration(x, method = NULL, ...)
 }
 \arguments{
 \item{x}{A \code{\link[=tailor]{tailor()}}.}
 
 \item{method}{Character. One of \code{"logistic"}, \code{"multinomial"},
-\code{"beta"}, \code{"isotonic"}, \code{"isotonic_boot"}, or \code{"none"}, corresponding to the
+\code{"beta"}, \code{"isotonic"}, or \code{"isotonic_boot"}, corresponding to the
 function from the \pkg{probably} package \code{probably::cal_estimate_logistic()},
 \code{probably::cal_estimate_multinomial()}, etc., respectively.}
+
+\item{...}{Optional arguments to pass to the corresponding function in the
+\pkg{probably} package. These arguments must be named.}
 }
 \description{
 Calibration is the process of adjusting a model's outputted probabilities
@@ -24,18 +27,11 @@ occurring.
 \section{Data Usage}{
 
 This adjustment requires estimation and, as such, different subsets of data
-should be used to train it and evaluate its predictions. See the section
-by the same name in \code{?workflows::add_tailor()} for more information on
-preventing data leakage with postprocessors that require estimation. When
-situated in a workflow, tailors will automatically be estimated with
-appropriate subsets of data.
-
-Note that, when calling \code{\link[=fit.tailor]{fit.tailor()}}, if the calibration data have zero or
-one row, the \code{method} is changed to \code{"none"}.
+should be used to train it and evaluate its predictions.
 }
 
 \examples{
-\dontshow{if (FALSE) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+\dontshow{if (rlang::is_installed(c("probably", "modeldata"))) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
 library(modeldata)
 
 # split example data
@@ -51,8 +47,7 @@ tlr <-
   tailor() |>
   adjust_probability_calibration(method = "logistic")
 
-# train tailor on a subset of data. situate in a modeling workflow with
-# `workflows::add_tailor()` to avoid having to specify column names manually
+# train tailor on a subset of data.
 tlr_fit <- fit(
   tlr,
   d_calibration,

@@ -37,12 +37,10 @@ Suggests:
     mgcv,
     modeldata,
     probably (>= 1.1.0),
-    testthat (>= 3.0.0),
-    workflows
+    testthat (>= 3.0.0)
 Remotes:
     tidymodels/dials,
-    tidymodels/probably,
-    tidymodels/workflows
+    tidymodels/probably
 Config/Needs/website: tidyverse/tidytemplate
 Config/testthat/edition: 3
 Config/usethis/last-upkeep: 2025-04-29

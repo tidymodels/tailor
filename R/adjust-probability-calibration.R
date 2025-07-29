@@ -7,7 +7,7 @@
 #' that probability accurately reflects the true likelihood of that outcome
 #' occurring.
 #'
-#' @param x A [tailor()].
+#' @inheritParams adjust_numeric_calibration
 #' @param method Character. One of `"logistic"`, `"multinomial"`,
 #' `"beta"`, `"isotonic"`, `"isotonic_boot"`, or `"none"`, corresponding to the
 #' function from the \pkg{probably} package `probably::cal_estimate_logistic()`,
@@ -15,8 +15,7 @@
 #'
 #' @inheritSection adjust_numeric_calibration Data Usage
 #'
-#' @examplesIf FALSE
-# @examplesIf rlang::is_installed(c("probably", "modeldata"))
+#' @examplesIf rlang::is_installed(c("probably", "modeldata"))
 #' library(modeldata)
 #'
 #' # split example data
@@ -32,8 +31,7 @@
 #'   tailor() |>
 #'   adjust_probability_calibration(method = "logistic")
 #'
-#' # train tailor on a subset of data. situate in a modeling workflow with
-#' # `workflows::add_tailor()` to avoid having to specify column names manually
+#' # train tailor on a subset of data.
 #' tlr_fit <- fit(
 #'   tlr,
 #'   d_calibration,
@@ -48,7 +46,7 @@
 #' predict(tlr_fit, d_test)
 #'
 #' @export
-adjust_probability_calibration <- function(x, method = NULL) {
+adjust_probability_calibration <- function(x, method = NULL, ...) {
   validate_probably_available()
 
   check_tailor(x, calibration_type = "probability")
@@ -60,12 +58,21 @@ adjust_probability_calibration <- function(x, method = NULL) {
     )
   }
 
+  args <- list(...)
+  nms <- names(args)
+  if (length(args) > 0 & (is.null(nms) || any(nms == ""))) {
+    cli::cli_abort(
+      "All calibration arguments passed to {.arg ...} should have names."
+    )
+  }
+  args$method <- method
+
   adj <-
     new_adjustment(
       "probability_calibration",
       inputs = "probability",
       outputs = "probability_class",
-      arguments = list(method = method),
+      arguments = args,
       results = list(),
       trained = FALSE,
       requires_fit = TRUE
@@ -110,19 +117,30 @@ fit.probability_calibration <- function(object, data, tailor = NULL, ...) {
     type = tailor$type,
     cal_data = data
   )
-  # todo: adjust_probability_calibration() should take arguments to pass to
-  # cal_estimate_* via dots
-  fit <-
-    eval_bare(
-      call2(
-        paste0("cal_estimate_", method),
-        .data = expr(data),
-        # todo: make getters for the entries in `columns`
-        truth = tailor$columns$outcome,
-        estimate = tailor$columns$probabilities,
-        .ns = "probably"
+
+  cl <- rlang::call2(
+    paste0("cal_estimate_", method),
+    .data = quote(data),
+    # TODO: make getters for the entries in `columns`
+    truth = tailor$columns$outcome,
+    estimate = tailor$columns$probabilities,
+    .ns = "probably"
+  )
+
+  other_args <- object$arguments[names(object$arguments) != "method"]
+  if (length(other_args) > 0) {
+    cl <- rlang::call_modify(cl, !!!other_args)
+  }
+
+  fit <- try(eval_bare(cl), silent = TRUE)
+  if (inherits(fit, "try-error")) {
+    cli::cli_warn(
+      c(
+        "The {method} calibration failed. No calibration is applied.",
+        i = fit
       )
     )
+  }
 
   new_adjustment(
     class(object),
@@ -139,6 +157,10 @@ fit.probability_calibration <- function(object, data, tailor = NULL, ...) {
 predict.probability_calibration <- function(object, new_data, tailor, ...) {
   validate_probably_available()
 
+  if (inherits(object$results$fit, "try-error")) {
+    return(new_data)
+  }
+
   probably::cal_apply(
     .data = new_data,
     object = object$results$fit,
@@ -146,10 +168,14 @@ predict.probability_calibration <- function(object, new_data, tailor, ...) {
   )
 }
 
-# todo probably needs required_pkgs methods for cal objects
 #' @export
 required_pkgs.probability_calibration <- function(x, ...) {
-  c("tailor", "probably")
+  res <- c("tailor", "probably")
+
+  if (x$trained) {
+    res <- c(res, required_pkgs(x$results$fit))
+  }
+  sort(unique(res))
 }
 
 #' @export

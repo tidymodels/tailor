@@ -73,3 +73,11 @@ test_that("tunable", {
     c("name", "call_info", "source", "component", "component_id")
   )
 })
+
+test_that("required packages", {
+  tlr <-
+    tailor() |>
+    adjust_probability_threshold(.1)
+
+  expect_equal(required_pkgs(tlr), "tailor")
+})
