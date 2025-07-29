@@ -11,13 +11,33 @@
 #' `"isotonic_boot"`, corresponding to the function from the \pkg{probably}
 #' package `probably::cal_estimate_linear()`,
 #' `probably::cal_estimate_isotonic()`, or
-#' `probably::cal_estimate_isotonic_boot()`, respectively.
+#' `probably::cal_estimate_isotonic_boot()`, respectively. The default is to
+#' use `"linear"` which, despite its name, fits a generalized additive model.
 #' @param ... Optional arguments to pass to the corresponding function in the
 #' \pkg{probably} package. These arguments must be named.
+#'
+#' @details
+#' The "linear" method fits a model that predicts the observed versus the
+#' predicted outcome values. This model is used to remove any overt systematic
+#' trends from the data, equivalent to removing the model residuals from new
+#' data. The underlying code fits that model using [mgcv::gam()]. If
+#' `smooth = FALSE` is passed to the `...`, it uses [stats::lm()].
+#'
+#' The isotonic method uses [stats::isoreg()] to force the predicted values to
+#' increase with the observed outcome. This creates a step function that will
+#' map new predictions to values that are monotonically increasing with the
+#' outcome. One side effect is that there are fewer, perhaps far fewer, unique
+#' predicted values. The "isotonic boot" method resamples the data and generates
+#' multiple isotonic regressions that are averaged and used to correct the
+#' predictions. This may not be perfectly monotonic, but the number of unique
+#' calibrated predictions increases with the number of bootstrap samples
+#' (controlled by passing the `times` argument to `...`).
 #'
 #' @section Data Usage:
 #' This adjustment requires estimation and, as such, different subsets of data
 #' should be used to train it and evaluate its predictions.
+#'
+#' @return An updated [tailor()] containing the new operation.
 #'
 #' @examplesIf rlang::is_installed("probably")
 #' library(tibble)

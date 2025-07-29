@@ -43,6 +43,18 @@
 #' If these ordering rules are violated, [tailor()] will raise an
 #' error describing the issue.
 #'
+#' @return An object of class `tailor` with elements:
+#'
+#' - `type`: The type of task (e.g., regression)
+#' - `adjustments`: A list containing the sequential options specified by the
+#'    user.
+#' - `columns`: the data set column names for the true outcome values and the
+#'    predictions of various types. If these are not specified, then `NULL`.
+#'    These are usual
+#' - `ptype`: a zero-row slice of the data containing the `columns`.
+#'
+#' Most of these values are set when an adjustment is added to the tailor or
+#' when [fit.tailor()] is used.
 #' @examplesIf rlang::is_installed(c("probably", "modeldata"))
 #' library(dplyr)
 #' library(modeldata)
@@ -165,6 +177,31 @@ print.tailor <- function(x, ...) {
 #' should be given in the order of the factor levels of the `estimate`.
 #' @param ... Currently ignored.
 #'
+#' @return An updated [tailor()] objects. Any estimates produced and saved by
+#' [fit.tailor()] are saved in the `adjustments` element of the tailor.
+#'
+#' @examplesIf rlang::is_installed(c("probably", "modeldata"))
+#' library(modeldata)
+#'
+#' # `predicted` gives hard class predictions based on probability threshold .5
+#' head(two_class_example)
+#'
+#' # use a threshold of .1 instead:
+#' tlr <-
+#'   tailor() |>
+#'   adjust_probability_threshold(.1)
+#'
+#' # fit by supplying column names.
+#' tlr_fit <- fit(
+#'   tlr,
+#'   two_class_example,
+#'   outcome = c(truth),
+#'   estimate = c(predicted),
+#'   probabilities = c(Class1, Class2)
+#' )
+#'
+#' # adjust hard class predictions
+#' predict(tlr_fit, two_class_example) |> head()
 #' @export
 fit.tailor <- function(
   object,

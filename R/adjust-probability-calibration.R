@@ -11,9 +11,45 @@
 #' @param method Character. One of `"logistic"`, `"multinomial"`,
 #' `"beta"`, `"isotonic"`, or `"isotonic_boot"`, corresponding to the
 #' function from the \pkg{probably} package `probably::cal_estimate_logistic()`,
-#' `probably::cal_estimate_multinomial()`, etc., respectively.
+#' `probably::cal_estimate_multinomial()`, etc., respectively.  The default is to
+#' use `"logistic"` which, despite its name, fits a generalized additive model.
+#'
+#' @details
+#' The "logistic" and "multinomial" methods fit models that predict the observed
+#' classes as a function of the predicted class probabilities. These models
+#' remove any overt systematic trends from the linear predictor and correct new
+#' predictions. The underlying code fits that model using [mgcv::gam()].
+#' If `smooth = FALSE` is passed to the `...`, it uses [stats::glm()] for binary
+#' outcomes or [nnet::multinom()] for 3+ classes.
+#'
+#' The isotonic method uses [stats::isoreg()] to force the predicted
+#' probabilities to increase with the observed outcome class. This creates a
+#' step function that will map new predictions to values that are monotonically
+#' increasing with the binary (0/1) form of the outcome. One side effect is
+#' that there are fewer, perhaps far fewer, unique predicted probabilities.
+#' For 3+ classes, this is done using a one-versus-all strategy that ensures
+#' that the probabilities add to 1.0. The "isotonic boot" method resamples the
+#' data and generates multiple isotonic regressions that are averaged and used
+#' to correct the predictions. This may not be perfectly monotonic, but the
+#' number of unique calibrated predictions increases with the number of
+#' bootstrap samples (controlled by passing the `times` argument to `...`).
+#'
+#' Beta calibration (Kull _et al_, 2017) assumes that the probability estimates
+#' follow a Beta distribution. This leads to a sigmoidal model that can be fit
+#' to the data via maximum likelihood. There are a few different ways to fit
+#' the model; see [betacal:: beta_calibration()] options `parameters` to select
+#' a specific sigmoidal model.
 #'
 #' @inheritSection adjust_numeric_calibration Data Usage
+#'
+#' @return An updated [tailor()] containing the new operation.
+#'
+#' @references
+#' Kull, Meelis, Telmo Silva Filho, and Peter Flach. "Beta calibration: a
+#' well-founded and easily implemented improvement on logistic calibration
+#' for binary classifiers." Artificial intelligence and statistics. PMLR, 2017.
+#'
+#' \url{https://aml4td.org/chapters/cls-metrics.html#sec-cls-calibration}
 #'
 #' @examplesIf rlang::is_installed(c("probably", "modeldata"))
 #' library(modeldata)

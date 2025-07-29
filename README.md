@@ -5,10 +5,6 @@
 
 <!-- badges: start -->
 
-[![Lifecycle:
-experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
-[![CRAN
-status](https://www.r-pkg.org/badges/version/tailor)](https://CRAN.R-project.org/package=tailor)
 [![R-CMD-check](https://github.com/tidymodels/tailor/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/tidymodels/tailor/actions/workflows/R-CMD-check.yaml)
 [![Codecov test
 coverage](https://codecov.io/gh/tidymodels/tailor/graph/badge.svg)](https://app.codecov.io/gh/tidymodels/tailor)
@@ -26,8 +22,8 @@ ones:
   thresholds, equivocal zones
 - For numeric distributions: calibration, range
 
-The package is under active development; please treat it as experimental
-and don’t depend on the syntax staying the same.
+The package is under active development; please treat it as somewhat
+experimental. Some breaking changes may occur in the first few versions.
 
 ## Installation
 

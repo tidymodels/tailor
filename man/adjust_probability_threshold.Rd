@@ -11,6 +11,9 @@ adjust_probability_threshold(x, threshold = 0.5)
 
 \item{threshold}{A numeric value (between zero and one) or \code{\link[hardhat:tune]{hardhat::tune()}}.}
 }
+\value{
+An updated \code{\link[=tailor]{tailor()}} containing the new operation.
+}
 \description{
 Many machine learning systems determine hard class predictions by
 first predicting the probability of an event and then predicting that
