@@ -167,6 +167,8 @@ print.tailor <- function(x, ...) {
 #' learn from data; in that case, separate subsets of data ought to be used
 #' for training the tailor and evaluating its performance on predictions.
 #'
+#' Note that if `.data` has zero or one row, the `method` is changed to `"none"`.
+#'
 #' @param object A [tailor()].
 #' @param .data,new_data A data frame containing predictions from a model.
 #' @param outcome <[`tidy-select`][dplyr::dplyr_tidy_select]>
@@ -222,6 +224,9 @@ fit.tailor <- function(
   columns$probabilities <- names(
     tidyselect::eval_select(enquo(probabilities), .data)
   )
+  # For type = "binary", update based on number of probability estimates
+  object$type <- update_type(object$type, columns$probabilities)
+
   if (
     "probability" %in%
       purrr::map_chr(object$adjustments, purrr::pluck, "inputs")

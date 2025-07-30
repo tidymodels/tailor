@@ -9,10 +9,12 @@
 #'
 #' @inheritParams adjust_numeric_calibration
 #' @param method Character. One of `"logistic"`, `"multinomial"`,
-#' `"beta"`, `"isotonic"`, or `"isotonic_boot"`, corresponding to the
+#' `"beta"`, `"isotonic"`, `"isotonic_boot"`, or `"none"`, corresponding to the
 #' function from the \pkg{probably} package `probably::cal_estimate_logistic()`,
 #' `probably::cal_estimate_multinomial()`, etc., respectively.  The default is to
 #' use `"logistic"` which, despite its name, fits a generalized additive model.
+#' Note that when [fit.tailor()] is called, the value may be changed to `"none"`
+#' if there is insufficient data.
 #'
 #' @details
 #' The "logistic" and "multinomial" methods fit models that predict the observed
@@ -86,11 +88,11 @@ adjust_probability_calibration <- function(x, method = NULL, ...) {
   validate_probably_available()
 
   check_tailor(x, calibration_type = "probability")
-  # wait to `check_method()` until `fit()` time
+  # We will check the method again during `fit()` using `check_cal_method()`
   if (!is.null(method) & !is_tune(method)) {
     arg_match(
       method,
-      c("logistic", "multinomial", "beta", "isotonic", "isotonic_boot")
+      c("logistic", "multinomial", "beta", "isotonic", "isotonic_boot", "none")
     )
   }
 
@@ -148,7 +150,11 @@ print.probability_calibration <- function(x, ...) {
 fit.probability_calibration <- function(object, data, tailor = NULL, ...) {
   validate_probably_available()
 
-  method <- check_method(object$arguments$method, tailor$type)
+  method <- check_cal_method(
+    object$arguments$method,
+    type = tailor$type,
+    cal_data = data
+  )
 
   cl <- rlang::call2(
     paste0("cal_estimate_", method),

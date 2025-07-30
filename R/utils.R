@@ -333,9 +333,9 @@ check_calibration_type <- function(
   }
 }
 
-types_regression <- c("linear", "isotonic", "isotonic_boot")
-types_binary <- c("logistic", "beta", "isotonic", "isotonic_boot")
-types_multiclass <- c("multinomial", "beta", "isotonic", "isotonic_boot")
+types_regression <- c("linear", "isotonic", "isotonic_boot", "none")
+types_binary <- c("logistic", "beta", "isotonic", "isotonic_boot", "none")
+types_multiclass <- c("multinomial", "beta", "isotonic", "isotonic_boot", "none")
 # a check function to be called when a tailor is being `fit()`ted.
 # by the time a tailor is fitted, we have:
 # * `method`, the `method` argument passed to an `adjust_*` function
@@ -343,9 +343,10 @@ types_multiclass <- c("multinomial", "beta", "isotonic", "isotonic_boot")
 #       `adjust_*()` function via `arg_match0()`.
 # * `tailor_type`, the `type` argument either specified in `tailor()`
 #   or inferred in `fit.tailor()`.
-check_method <- function(
+check_cal_method <- function(
   method,
   type,
+  cal_data,
   arg = caller_arg(method),
   call = caller_env()
 ) {
@@ -355,6 +356,15 @@ check_method <- function(
                    {.fn fit} time.",
       call = call
     )
+  }
+
+  if (nrow(cal_data) < 2) {
+    cli::cli_warn(
+      "The calibration data has {nrow(cal_data)} row{?s}. There is not enough
+      data for calibration so {.arg method} is changed from {.val {method}}
+      to {.val none}."
+    )
+    method <- "none"
   }
 
   # if no `method` was supplied, infer a reasonable one based on the `type`

@@ -3,10 +3,6 @@ skip_if_not_installed("probably")
 test_that("basic adjust_numeric_calibration usage works", {
   skip_if_not_installed("mgcv")
 
-  set.seed(1)
-  d_calibration <- tibble::tibble(y = rnorm(100), y_pred = y / 2 + rnorm(100))
-  d_test <- tibble(y = rnorm(100), y_pred = y / 2 + rnorm(100))
-
   # fitting and predicting happens without raising conditions
   expect_no_condition(
     tlr <-
@@ -15,11 +11,11 @@ test_that("basic adjust_numeric_calibration usage works", {
   )
 
   expect_no_warning(
-    tlr_fit <- fit(tlr, d_calibration, outcome = y, estimate = y_pred)
+    tlr_fit <- fit(tlr, d_reg_calibration, outcome = y, estimate = y_pred)
   )
 
   expect_no_condition(
-    tlr_pred <- predict(tlr_fit, d_test)
+    tlr_pred <- predict(tlr_fit, d_reg_test)
   )
 
   # classes are as expected
@@ -28,16 +24,77 @@ test_that("basic adjust_numeric_calibration usage works", {
   expect_s3_class(tlr_pred, "tbl_df")
 
   # column names are as expected
-  expect_equal(colnames(d_test), colnames(tlr_pred))
+  expect_equal(colnames(d_reg_test), colnames(tlr_pred))
+})
 
-  # calculations match those done manually
-  # TODO: write out the probably code manually here
+test_that("linear adjust_numeric_calibration usage works", {
+  skip_if_not_installed("mgcv")
+
+  tlr <-
+    tailor() |>
+    adjust_numeric_calibration(method = "linear")
+
+  tlr_fit <- fit(tlr, d_reg_calibration, outcome = y, estimate = y_pred)
+  tlr_pred <- predict(tlr_fit, d_reg_test)
+
+  expect_s3_class(
+    tlr_fit$adjustments[[1]]$results$fit,
+    c("cal_estimate_linear_spline", "cal_regression", "cal_object")
+  )
+  expect_true(all(d_reg_test$y_pred != tlr_pred$y_pred))
+})
+
+test_that("isotonic adjust_numeric_calibration usage works", {
+   tlr <-
+    tailor() |>
+    adjust_numeric_calibration(method = "isotonic")
+
+  tlr_fit <- fit(tlr, d_reg_calibration, outcome = y, estimate = y_pred)
+  tlr_pred <- predict(tlr_fit, d_reg_test)
+
+  expect_s3_class(
+    tlr_fit$adjustments[[1]]$results$fit,
+    c("cal_estimate_isotonic", "cal_regression", "cal_object")
+  )
+  expect_true(all(d_reg_test$y_pred != tlr_pred$y_pred))
+})
+
+
+test_that("isotonic boot adjust_numeric_calibration usage works", {
+
+  tlr <-
+    tailor() |>
+    adjust_numeric_calibration(method = "isotonic_boot")
+
+  set.seed(1)
+  tlr_fit <- fit(tlr, d_reg_calibration, outcome = y, estimate = y_pred)
+  tlr_pred <- predict(tlr_fit, d_reg_test)
+
+  expect_s3_class(
+    tlr_fit$adjustments[[1]]$results$fit,
+    c("cal_estimate_isotonic_boot", "cal_regression", "cal_object")
+  )
+  expect_true(all(d_reg_test$y_pred != tlr_pred$y_pred))
+})
+
+test_that("no adjust_numeric_calibration usage works", {
+
+  tlr <-
+    tailor() |>
+    adjust_numeric_calibration(method = "none")
+
+  set.seed(1)
+  tlr_fit <- fit(tlr, d_reg_calibration, outcome = y, estimate = y_pred)
+  tlr_pred <- predict(tlr_fit, d_reg_test)
+
+  expect_s3_class(
+    tlr_fit$adjustments[[1]]$results$fit,
+    c("cal_estimate_none", "cal_regression", "cal_object")
+  )
+  expect_true(all(d_reg_test$y_pred == tlr_pred$y_pred))
 })
 
 test_that("adjust_numeric_calibration() respects `method` argument", {
-  set.seed(1)
-  d_calibration <- tibble::tibble(y = rnorm(100), y_pred = y / 2 + rnorm(100))
-  d_test <- tibble(y = rnorm(100), y_pred = y / 2 + rnorm(100))
 
   expect_no_condition(
     tlr <-
@@ -46,11 +103,11 @@ test_that("adjust_numeric_calibration() respects `method` argument", {
   )
 
   expect_no_condition(
-    tlr_fit <- fit(tlr, d_calibration, outcome = y, estimate = y_pred)
+    tlr_fit <- fit(tlr, d_reg_calibration, outcome = y, estimate = y_pred)
   )
 
   expect_no_condition(
-    tlr_pred <- predict(tlr_fit, d_test)
+    tlr_pred <- predict(tlr_fit, d_reg_test)
   )
 
   # classes are as expected
@@ -59,7 +116,7 @@ test_that("adjust_numeric_calibration() respects `method` argument", {
   expect_s3_class(tlr_pred, "tbl_df")
 
   # column names are as expected
-  expect_equal(colnames(d_test), colnames(tlr_pred))
+  expect_equal(colnames(d_reg_test), colnames(tlr_pred))
 
   # probably actually used an isotonic calibrator
   expect_equal(
@@ -117,9 +174,6 @@ test_that("tunable S3 method", {
 
 
 test_that("tuning the calibration method", {
-  set.seed(1)
-  d_calibration <- tibble::tibble(y = rnorm(100), y_pred = y / 2 + rnorm(100))
-  d_test <- tibble(y = rnorm(100), y_pred = y / 2 + rnorm(100))
 
   tlr <-
     tailor() |>
@@ -127,21 +181,32 @@ test_that("tuning the calibration method", {
   expect_true(tailor:::is_tune(tlr$adjustments[[1]]$arguments$method))
 
   expect_snapshot(
-    fit(tlr, d_calibration, outcome = y, estimate = y_pred),
+    fit(tlr, d_reg_calibration, outcome = y, estimate = y_pred),
     error = TRUE
   )
 })
 
+test_that("too few data", {
+  tlr <-
+    tailor() |>
+    adjust_numeric_calibration(method = "linear")
+
+  expect_snapshot(
+    fit(tlr, d_reg_calibration[0,], outcome = y, estimate = y_pred)
+  )
+  expect_snapshot(
+    fit(tlr, d_reg_calibration[1,], outcome = y, estimate = y_pred)
+  )
+
+})
+
 test_that("passing arguments to adjust_numeric_calibration", {
-  set.seed(1)
-  d_calibration <- tibble::tibble(y = rnorm(100), y_pred = y / 2 + rnorm(100))
-  d_test <- tibble(y = rnorm(100), y_pred = y / 2 + rnorm(100))
 
   expect_no_condition(
     tlr_fit <-
       tailor() |>
       adjust_numeric_calibration(method = "linear", smooth = FALSE) |>
-      fit(d_calibration, outcome = y, estimate = y_pred)
+      fit(d_reg_calibration, outcome = y, estimate = y_pred)
   )
 
   expect_s3_class(
@@ -199,12 +264,6 @@ test_that("harden against calibration model failure", {
 test_that("required packages for adjust_numeric_calibration", {
   skip_if_not_installed("mgcv")
 
-  library(tibble)
-
-  set.seed(1)
-  d_calibration <- tibble(y = rnorm(100), y_pred = y / 2 + rnorm(100))
-  d_test <- tibble(y = rnorm(100), y_pred = y / 2 + rnorm(100))
-
   expect_no_condition(
     tlr <-
       tailor() |>
@@ -212,7 +271,7 @@ test_that("required packages for adjust_numeric_calibration", {
   )
 
   expect_no_warning(
-    tlr_fit <- fit(tlr, d_calibration, outcome = y, estimate = y_pred)
+    tlr_fit <- fit(tlr, d_reg_calibration, outcome = y, estimate = y_pred)
   )
 
   expect_equal(required_pkgs(tlr), c("probably", "tailor"))

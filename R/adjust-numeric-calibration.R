@@ -7,12 +7,14 @@
 #' range of outputs.
 #'
 #' @param x A [tailor()].
-#' @param method Character. One of `"linear"`, `"isotonic"`, or
-#' `"isotonic_boot"`, corresponding to the function from the \pkg{probably}
+#' @param method Character. One of `"linear"`, `"isotonic"`,`"isotonic_boot"`,
+#' or `"none"`, corresponding to the function from the \pkg{probably}
 #' package `probably::cal_estimate_linear()`,
 #' `probably::cal_estimate_isotonic()`, or
 #' `probably::cal_estimate_isotonic_boot()`, respectively. The default is to
 #' use `"linear"` which, despite its name, fits a generalized additive model.
+#' Note that when [fit.tailor()] is called, the value may be changed to `"none"`
+#' if there is insufficient data.
 #' @param ... Optional arguments to pass to the corresponding function in the
 #' \pkg{probably} package. These arguments must be named.
 #'
@@ -36,6 +38,9 @@
 #' @section Data Usage:
 #' This adjustment requires estimation and, as such, different subsets of data
 #' should be used to train it and evaluate its predictions.
+#'
+#' Note that, when calling [fit.tailor()], if the calibration data have zero or
+#' one row, the `method` is changed to `"none"`.
 #'
 #' @return An updated [tailor()] containing the new operation.
 #'
@@ -66,11 +71,11 @@ adjust_numeric_calibration <- function(x, method = NULL, ...) {
   validate_probably_available()
 
   check_tailor(x, calibration_type = "numeric")
-  # wait to `check_method()` until `fit()` time
+  # We will check the method again during `fit()` using `check_cal_method()`
   if (!is.null(method) & !is_tune(method)) {
     arg_match0(
       method,
-      c("linear", "isotonic", "isotonic_boot")
+      c("linear", "isotonic", "isotonic_boot", "none")
     )
   }
 
@@ -128,7 +133,11 @@ print.numeric_calibration <- function(x, ...) {
 fit.numeric_calibration <- function(object, data, tailor = NULL, ...) {
   validate_probably_available()
 
-  method <- check_method(object$arguments$method, tailor$type)
+  method <- check_cal_method(
+    object$arguments$method,
+    type = tailor$type,
+    cal_data = data
+  )
 
   cl <- rlang::call2(
     paste0("cal_estimate_", method),
