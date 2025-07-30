@@ -6,6 +6,21 @@
 \usage{
 tailor()
 }
+\value{
+An object of class \code{tailor} with elements:
+\itemize{
+\item \code{type}: The type of task (e.g., regression)
+\item \code{adjustments}: A list containing the sequential options specified by the
+user.
+\item \code{columns}: the data set column names for the true outcome values and the
+predictions of various types. If these are not specified, then \code{NULL}.
+These are usual
+\item \code{ptype}: a zero-row slice of the data containing the \code{columns}.
+}
+
+Most of these values are set when an adjustment is added to the tailor or
+when \code{\link[=fit.tailor]{fit.tailor()}} is used.
+}
 \description{
 Tailors compose iterative adjustments to model predictions. After
 initializing a tailor with this function, add adjustment specifications

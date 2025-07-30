@@ -12,10 +12,14 @@ adjust_probability_calibration(x, method = NULL, ...)
 \item{method}{Character. One of \code{"logistic"}, \code{"multinomial"},
 \code{"beta"}, \code{"isotonic"}, \code{"isotonic_boot"}, or \code{"none"}, corresponding to the
 function from the \pkg{probably} package \code{probably::cal_estimate_logistic()},
-\code{probably::cal_estimate_multinomial()}, etc., respectively.}
+\code{probably::cal_estimate_multinomial()}, etc., respectively.  The default is to
+use \code{"logistic"} which, despite its name, fits a generalized additive model.}
 
 \item{...}{Optional arguments to pass to the corresponding function in the
 \pkg{probably} package. These arguments must be named.}
+}
+\value{
+An updated \code{\link[=tailor]{tailor()}} containing the new operation.
 }
 \description{
 Calibration is the process of adjusting a model's outputted probabilities
@@ -23,6 +27,32 @@ to match the observed frequencies of events. This technique aims to
 ensure that when a model predicts a certain probability for an outcome,
 that probability accurately reflects the true likelihood of that outcome
 occurring.
+}
+\details{
+The "logistic" and "multinomial" methods fit models that predict the observed
+classes as a function of the predicted class probabilities. These models
+remove any overt systematic trends from the linear predictor and correct new
+predictions. The underlying code fits that model using \code{\link[mgcv:gam]{mgcv::gam()}}.
+If \code{smooth = FALSE} is passed to the \code{...}, it uses \code{\link[stats:glm]{stats::glm()}} for binary
+outcomes or \code{\link[nnet:multinom]{nnet::multinom()}} for 3+ classes.
+
+The isotonic method uses \code{\link[stats:isoreg]{stats::isoreg()}} to force the predicted
+probabilities to increase with the observed outcome class. This creates a
+step function that will map new predictions to values that are monotonically
+increasing with the binary (0/1) form of the outcome. One side effect is
+that there are fewer, perhaps far fewer, unique predicted probabilities.
+For 3+ classes, this is done using a one-versus-all strategy that ensures
+that the probabilities add to 1.0. The "isotonic boot" method resamples the
+data and generates multiple isotonic regressions that are averaged and used
+to correct the predictions. This may not be perfectly monotonic, but the
+number of unique calibrated predictions increases with the number of
+bootstrap samples (controlled by passing the \code{times} argument to \code{...}).
+
+Beta calibration (Kull \emph{et al}, 2017) assumes that the probability estimates
+follow a Beta distribution. This leads to a sigmoidal model that can be fit
+to the data via maximum likelihood. There are a few different ways to fit
+the model; see \code{\link[betacal:beta_calibration]{betacal:: beta_calibration()}} options \code{parameters} to select
+a specific sigmoidal model.
 }
 \section{Data Usage}{
 
@@ -64,4 +94,11 @@ head(d_test)
 
 predict(tlr_fit, d_test)
 \dontshow{\}) # examplesIf}
+}
+\references{
+Kull, Meelis, Telmo Silva Filho, and Peter Flach. "Beta calibration: a
+well-founded and easily implemented improvement on logistic calibration
+for binary classifiers." Artificial intelligence and statistics. PMLR, 2017.
+
+\url{https://aml4td.org/chapters/cls-metrics.html#sec-cls-calibration}
 }

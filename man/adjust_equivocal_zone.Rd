@@ -16,6 +16,9 @@ value is the size of the buffer around the threshold.}
 Defaults to \code{adjust_probability_threshold(threshold)} if previously set
 in \code{x}, or \code{1 / 2} if not.}
 }
+\value{
+An updated \code{\link[=tailor]{tailor()}} containing the new operation.
+}
 \description{
 Equivocal zones describe intervals of predicted probabilities that are deemed
 too uncertain or ambiguous to be assigned a hard class. Rather than

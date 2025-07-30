@@ -14,6 +14,9 @@ adjust_predictions_custom(x, ..., .pkgs = character(0))
 \item{.pkgs}{A character string of extra packages that are needed to execute
 the commands.}
 }
+\value{
+An updated \code{\link[=tailor]{tailor()}} containing the new operation.
+}
 \description{
 This adjustment functions allows for arbitrary transformations of model
 predictions using \code{\link[dplyr:mutate]{dplyr::mutate()}} statements.

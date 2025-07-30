@@ -12,6 +12,9 @@ adjust_numeric_range(x, lower_limit = -Inf, upper_limit = Inf)
 \item{upper_limit, lower_limit}{A numeric value, NA (for no truncation) or
 \code{\link[hardhat:tune]{hardhat::tune()}}.}
 }
+\value{
+An updated \code{\link[=tailor]{tailor()}} containing the new operation.
+}
 \description{
 Truncating ranges involves limiting the output of a model to a specific
 range of values, typically to avoid extreme or unrealistic predictions.
