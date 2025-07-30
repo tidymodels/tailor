@@ -63,10 +63,12 @@ occurring.</p>
 
 <dt id="arg-method">method<a class="anchor" aria-label="anchor" href="#arg-method"></a></dt>
 <dd><p>Character. One of <code>"logistic"</code>, <code>"multinomial"</code>,
-<code>"beta"</code>, <code>"isotonic"</code>, or <code>"isotonic_boot"</code>, corresponding to the
+<code>"beta"</code>, <code>"isotonic"</code>, <code>"isotonic_boot"</code>, or <code>"none"</code>, corresponding to the
 function from the <span class="pkg">probably</span> package <code><a href="https://probably.tidymodels.org/reference/cal_estimate_logistic.html" class="external-link">probably::cal_estimate_logistic()</a></code>,
 <code><a href="https://probably.tidymodels.org/reference/cal_estimate_multinomial.html" class="external-link">probably::cal_estimate_multinomial()</a></code>, etc., respectively.  The default is to
-use <code>"logistic"</code> which, despite its name, fits a generalized additive model.</p></dd>
+use <code>"logistic"</code> which, despite its name, fits a generalized additive model.
+Note that when <code><a href="fit.tailor.html">fit.tailor()</a></code> is called, the value may be changed to <code>"none"</code>
+if there is insufficient data.</p></dd>
 
 
 <dt id="arg--">...<a class="anchor" aria-label="anchor" href="#arg--"></a></dt>
@@ -109,6 +111,8 @@ a specific sigmoidal model.</p>
 
 <p>This adjustment requires estimation and, as such, different subsets of data
 should be used to train it and evaluate its predictions.</p>
+<p>Note that, when calling <code><a href="fit.tailor.html">fit.tailor()</a></code>, if the calibration data have zero or
+one row, the <code>method</code> is changed to <code>"none"</code>.</p>
     </div>
     <div class="section level2">
     <h2 id="references">References<a class="anchor" aria-label="anchor" href="#references"></a></h2>

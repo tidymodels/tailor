@@ -59,12 +59,14 @@ range of outputs.</p>
 
 
 <dt id="arg-method">method<a class="anchor" aria-label="anchor" href="#arg-method"></a></dt>
-<dd><p>Character. One of <code>"linear"</code>, <code>"isotonic"</code>, or
-<code>"isotonic_boot"</code>, corresponding to the function from the <span class="pkg">probably</span>
+<dd><p>Character. One of <code>"linear"</code>, <code>"isotonic"</code>,<code>"isotonic_boot"</code>,
+or <code>"none"</code>, corresponding to the function from the <span class="pkg">probably</span>
 package <code><a href="https://probably.tidymodels.org/reference/cal_estimate_linear.html" class="external-link">probably::cal_estimate_linear()</a></code>,
 <code><a href="https://probably.tidymodels.org/reference/cal_estimate_isotonic.html" class="external-link">probably::cal_estimate_isotonic()</a></code>, or
 <code><a href="https://probably.tidymodels.org/reference/cal_estimate_isotonic_boot.html" class="external-link">probably::cal_estimate_isotonic_boot()</a></code>, respectively. The default is to
-use <code>"linear"</code> which, despite its name, fits a generalized additive model.</p></dd>
+use <code>"linear"</code> which, despite its name, fits a generalized additive model.
+Note that when <code><a href="fit.tailor.html">fit.tailor()</a></code> is called, the value may be changed to <code>"none"</code>
+if there is insufficient data.</p></dd>
 
 
 <dt id="arg--">...<a class="anchor" aria-label="anchor" href="#arg--"></a></dt>
@@ -99,6 +101,8 @@ calibrated predictions increases with the number of bootstrap samples
 
 <p>This adjustment requires estimation and, as such, different subsets of data
 should be used to train it and evaluate its predictions.</p>
+<p>Note that, when calling <code><a href="fit.tailor.html">fit.tailor()</a></code>, if the calibration data have zero or
+one row, the <code>method</code> is changed to <code>"none"</code>.</p>
     </div>
 
     <div class="section level2">
