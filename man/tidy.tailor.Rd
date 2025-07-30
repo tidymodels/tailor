@@ -22,3 +22,9 @@ training with a separate calibration set.
 \description{
 Describe a tailor's adjustments in a tibble with one row per adjustment.
 }
+\examples{
+tailor() |>
+  adjust_numeric_range(lower_limit = 1) |>
+  tidy()
+
+}

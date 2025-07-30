@@ -13,6 +13,11 @@
 #' their ordering, whether they've been trained, and whether they require
 #' training with a separate calibration set.
 #'
+#' @examples
+#' tailor() |>
+#'   adjust_numeric_range(lower_limit = 1) |>
+#'   tidy()
+#'
 #' @export
 tidy.tailor <- function(x, number = NA, ...) {
   n_adjustments <- length(x$adjustments)
