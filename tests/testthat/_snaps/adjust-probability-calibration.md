@@ -73,7 +73,8 @@
     Code
       tlr_fit <- fit(tlr, d_bin_calibration[0, ], outcome = c(y), estimate = c(
         predicted), probabilities = c(a, b))
-    Message
+    Condition
+      Warning:
       The calibration data has 0 rows. There is not enough data for calibration so `method` is changed from "logistic" to "none".
 
 ---
@@ -81,7 +82,8 @@
     Code
       tlr_fit <- fit(tlr, d_bin_calibration[1, ], outcome = c(y), estimate = c(
         predicted), probabilities = c(a, b))
-    Message
+    Condition
+      Warning:
       The calibration data has 1 row. There is not enough data for calibration so `method` is changed from "logistic" to "none".
 
 # passing arguments to adjust_probability_calibration

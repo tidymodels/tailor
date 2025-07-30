@@ -205,6 +205,9 @@ test_that("multinomial adjust_probability_calibration usage works", {
     estimate = c(predicted),
     probabilities = c(a, b, c)
   )
+
+  expect_equal(tlr_fit$type, "multiclass")
+
   tlr_pred <- predict(tlr_fit, d_mlt_test)
 
   expect_s3_class(

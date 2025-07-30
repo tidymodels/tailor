@@ -13,6 +13,8 @@
 #' `probably::cal_estimate_isotonic()`, or
 #' `probably::cal_estimate_isotonic_boot()`, respectively. The default is to
 #' use `"linear"` which, despite its name, fits a generalized additive model.
+#' Note that when [fit.tailor()] is called, the value may be changed to `"none"`
+#' if there is insufficient data.
 #' @param ... Optional arguments to pass to the corresponding function in the
 #' \pkg{probably} package. These arguments must be named.
 #'
@@ -69,7 +71,7 @@ adjust_numeric_calibration <- function(x, method = NULL, ...) {
   validate_probably_available()
 
   check_tailor(x, calibration_type = "numeric")
-  # wait to `check_cal_method()` until `fit()` time
+  # We will check the method again during `fit()` using `check_cal_method()`
   if (!is.null(method) & !is_tune(method)) {
     arg_match0(
       method,

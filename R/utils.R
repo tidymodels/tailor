@@ -359,7 +359,7 @@ check_cal_method <- function(
   }
 
   if (nrow(cal_data) < 2) {
-    cli::cli_inform(
+    cli::cli_warn(
       "The calibration data has {nrow(cal_data)} row{?s}. There is not enough
       data for calibration so {.arg method} is changed from {.val {method}}
       to {.val none}."

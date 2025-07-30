@@ -13,7 +13,9 @@ adjust_probability_calibration(x, method = NULL, ...)
 \code{"beta"}, \code{"isotonic"}, \code{"isotonic_boot"}, or \code{"none"}, corresponding to the
 function from the \pkg{probably} package \code{probably::cal_estimate_logistic()},
 \code{probably::cal_estimate_multinomial()}, etc., respectively.  The default is to
-use \code{"logistic"} which, despite its name, fits a generalized additive model.}
+use \code{"logistic"} which, despite its name, fits a generalized additive model.
+Note that when \code{\link[=fit.tailor]{fit.tailor()}} is called, the value may be changed to \code{"none"}
+if there is insufficient data.}
 
 \item{...}{Optional arguments to pass to the corresponding function in the
 \pkg{probably} package. These arguments must be named.}

@@ -71,8 +71,10 @@
 
     Code
       fit(tlr, d_reg_calibration[0, ], outcome = y, estimate = y_pred)
-    Message
+    Condition
+      Warning:
       The calibration data has 0 rows. There is not enough data for calibration so `method` is changed from "linear" to "none".
+    Message
       
       -- tailor ----------------------------------------------------------------------
       A regression postprocessor with 1 adjustment:
@@ -83,8 +85,10 @@
 
     Code
       fit(tlr, d_reg_calibration[1, ], outcome = y, estimate = y_pred)
-    Message
+    Condition
+      Warning:
       The calibration data has 1 row. There is not enough data for calibration so `method` is changed from "linear" to "none".
+    Message
       
       -- tailor ----------------------------------------------------------------------
       A regression postprocessor with 1 adjustment:

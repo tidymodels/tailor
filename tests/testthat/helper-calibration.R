@@ -1,11 +1,10 @@
-library(dplyr)
-
 set.seed(1)
 d_reg_calibration <- dplyr::tibble(y = rnorm(100), y_pred = y / 2 + rnorm(100))
 d_reg_test <- dplyr::tibble(y = rnorm(100), y_pred = y / 2 + rnorm(100))
 
 # ------------------------------------------------------------------------------
 
+# Columns `a` and `b` are class probability estimate columns.
 set.seed(1)
 d_bin_calibration <-
   dplyr::tibble(y = factor(rep(letters[1:2], each = 50)), a = runif(100)) |>
@@ -20,6 +19,7 @@ set.seed(1)
 probs <- matrix(runif(2 * 3 * 3 * 50), ncol = 3)
 probs <- apply(probs, 1, function(x) x/sum(x))
 
+# Columns `a`, `b`, and `c` are class probability estimate columns.
 d_mlt_calibration <-
   dplyr::tibble(
     y = factor(rep(letters[1:3], each = 50)),

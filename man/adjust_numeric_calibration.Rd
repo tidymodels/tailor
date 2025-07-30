@@ -14,7 +14,9 @@ or \code{"none"}, corresponding to the function from the \pkg{probably}
 package \code{probably::cal_estimate_linear()},
 \code{probably::cal_estimate_isotonic()}, or
 \code{probably::cal_estimate_isotonic_boot()}, respectively. The default is to
-use \code{"linear"} which, despite its name, fits a generalized additive model.}
+use \code{"linear"} which, despite its name, fits a generalized additive model.
+Note that when \code{\link[=fit.tailor]{fit.tailor()}} is called, the value may be changed to \code{"none"}
+if there is insufficient data.}
 
 \item{...}{Optional arguments to pass to the corresponding function in the
 \pkg{probably} package. These arguments must be named.}
