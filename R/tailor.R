@@ -346,8 +346,11 @@ tunable.tailor <- function(x, ...) {
 }
 
 #' @export
-required_pkgs.tailor <- function(x, ...) {
+required_pkgs.tailor <- function(x, infra = TRUE, ...) {
   res <- purrr::map(x$adjustments, required_pkgs)
-  res <- c("tailor", unlist(res))
+  res <- unlist(res)
+  if (infra) {
+    res <- c("tailor", res)
+  }
   sort(unique(res))
 }
