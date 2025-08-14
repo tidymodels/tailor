@@ -23,8 +23,9 @@ training with a separate calibration set.
 Describe a tailor's adjustments in a tibble with one row per adjustment.
 }
 \examples{
+\dontshow{if (rlang::is_installed("probably")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
 tailor() |>
   adjust_numeric_range(lower_limit = 1) |>
   tidy()
-
+\dontshow{\}) # examplesIf}
 }
