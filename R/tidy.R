@@ -13,7 +13,7 @@
 #' their ordering, whether they've been trained, and whether they require
 #' training with a separate calibration set.
 #'
-#' @examples
+#' @examplesIf rlang::is_installed("probably")
 #' tailor() |>
 #'   adjust_numeric_range(lower_limit = 1) |>
 #'   tidy()
