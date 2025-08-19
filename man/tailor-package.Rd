@@ -5,7 +5,7 @@
 \alias{tailor-package}
 \title{tailor: Iterative Steps for Postprocessing Model Predictions}
 \description{
-Postprocessors refine predictions outputted from machine learning models to improve predictive performance or better satisfy distributional limitations. This package introduces 'tailor' objects, which compose iterative adjustments to model predictions. A number of pre-written adjustments are provided with the package, like calibration \doi{10.1007/978-94-010-1276-8_19} and equivocal zones \doi{10.1007/978-1-4614-6849-3}, as well as utilities to compose new ones. Tailors are tightly integrated with the 'tidymodels' framework.
+Postprocessors refine predictions outputted from machine learning models to improve predictive performance or better satisfy distributional limitations. This package introduces 'tailor' objects, which compose iterative adjustments to model predictions. A number of pre-written adjustments are provided with the package, such as calibration. See Lichtenstein, Fischhoff, and Phillips (1977) \doi{10.1007/978-94-010-1276-8_19}. Other methods and utilities to compose new adjustments are also included. Tailors are tightly integrated with the 'tidymodels' framework.
 }
 \seealso{
 Useful links:
