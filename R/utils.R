@@ -4,6 +4,10 @@
 #'
 #' @keywords internal
 #' @name tailor-internals
+#' @return `tailor_fully_trained()` and `tailor_requires_fit()` both
+#' return a single logical for the condition described in the function names.
+#' Each evaluates the condition for each adjustment method contained in the
+#' [tailor()] object.
 NULL
 
 # tuning machinery -------------------------------------------------------------

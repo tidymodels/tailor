@@ -10,6 +10,12 @@ tailor_fully_trained(x)
 
 tailor_requires_fit(x)
 }
+\value{
+\code{tailor_fully_trained()} and \code{tailor_requires_fit()} both
+return a single logical for the condition described in the function names.
+Each evaluates the condition for each adjustment method contained in the
+\code{\link[=tailor]{tailor()}} object.
+}
 \description{
 Utilities for use in downstream packages.
 }
