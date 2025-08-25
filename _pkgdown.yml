@@ -1,6 +1,16 @@
 url: https://tailor.tidymodels.org
+
 template:
+  package: tidytemplate
   bootstrap: 5
+  bslib:
+    primary: "#CA225E"
+  includes:
+      in_header: |
+        <script defer data-domain="tailor.tidymodels.org,all.tidymodels.org" src="https://plausible.io/js/plausible.js"></script>
+
+development:
+  mode: auto
 
 reference:
 - title: "Create a tailor object"
@@ -26,4 +36,3 @@ reference:
   - fit.tailor
   - predict.tailor
   - tidy.tailor
-  
